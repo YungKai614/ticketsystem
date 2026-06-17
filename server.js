@@ -184,7 +184,7 @@ app.get('/{*path}', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`ICT Helpdesk Ticketsystem läuft auf http://localhost:${PORT}`);
   readDB(); // initialize DB if not exists
