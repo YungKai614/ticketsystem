@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICT Helpdesk – Ticketsystem</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0f1f3d; --blue:#1a56db; --blue-l:#e8f0fe; --teal:#0e9f6e; --teal-l:#e3fcef;
+  --amber:#d97706; --amber-l:#fef3c7; --red:#e02424; --red-l:#fde8e8;
+  --purple:#7e3af2; --purple-l:#edebfe;
+  --g50:#f9fafb; --g100:#f3f4f6; --g200:#e5e7eb; --g400:#9ca3af;
+  --g500:#6b7280; --g600:#4b5563; --g800:#1f2937; --white:#fff;
+  --r:8px; --rl:12px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:14px;scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--g50);color:var(--g800);display:flex;min-height:100vh}
+
+/* SIDEBAR */
+.sb{width:220px;min-height:100vh;background:var(--navy);color:#fff;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform .2s}
+.sb-brand{padding:18px 14px 14px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-mono{font-family:'JetBrains Mono',monospace;font-size:10px;color:#7dd3fc;letter-spacing:.08em;text-transform:uppercase}
+.sb-name{font-size:14px;font-weight:600;margin-top:3px}
+.sb-sub{font-size:11px;color:rgba(255,255,255,.4);margin-top:1px}
+.nav-sec{padding:14px 10px 6px;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.28)}
+.ni{display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:13px;color:rgba(255,255,255,.6);cursor:pointer;border-radius:6px;margin:1px 6px;transition:background .15s,color .15s;border:none;background:none;width:calc(100% - 12px);text-align:left}
+.ni:hover{background:rgba(255,255,255,.07);color:#fff}
+.ni.active{background:rgba(29,86,219,.4);color:#fff}
+.ni-icon{font-size:16px;width:20px;text-align:center}
+.ni-badge{margin-left:auto;background:var(--red);color:#fff;font-size:10px;font-weight:600;border-radius:10px;padding:1px 6px}
+.ni-badge.blue{background:var(--blue)}
+.sb-footer{margin-top:auto;padding:12px 14px;border-top:1px solid rgba(255,255,255,.1);font-size:11px;color:rgba(255,255,255,.35)}
+.u-row{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.u-av{width:28px;height:28px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff}
+
+/* MAIN */
+.main{margin-left:220px;flex:1;display:flex;flex-direction:column;min-height:100vh}
+
+/* TOPBAR */
+.topbar{background:var(--white);border-bottom:1px solid var(--g200);padding:0 20px;height:50px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:50}
+.topbar-title{font-size:15px;font-weight:600;flex:1}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:var(--r);font-size:12px;font-weight:500;cursor:pointer;border:1px solid transparent;transition:background .15s;font-family:'Inter',sans-serif}
+.btn-primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+.btn-primary:hover{background:#1748c8}
+.btn-ghost{background:transparent;border-color:var(--g200);color:var(--g600)}
+.btn-ghost:hover{background:var(--g50)}
+.btn-danger{background:var(--red-l);color:var(--red);border-color:#fca5a5}
+.btn-danger:hover{background:#fee2e2}
+.btn-success{background:var(--teal-l);color:var(--teal);border-color:#6ee7b7}
+
+/* CONTENT */
+.content{padding:20px;flex:1}
+.view{display:none}.view.active{display:block}
+
+/* KPI */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.kpi-card{background:var(--white);border:1px solid var(--g200);border-radius:var(--rl);padding:14px 16px}
+.kpi-lbl{font-size:11px;color:var(--g500);text-transform:uppercase;letter-spacing:.05em;font-weight:500}
+.kpi-val{font-size:28px;font-weight:600;font-family:'JetBrains Mono',monospace;margin-top:4px}
+.kpi-val.blue{color:var(--blue)}.kpi-val.teal{color:var(--teal)}.kpi-val.amber{color:var(--amber)}.kpi-val.red{color:var(--red)}
+.kpi-sub{font-size:11px;color:var(--g400);margin-top:3px}
+
+/* CARDS */
+.card{background:var(--white);border:1px solid var(--g200);border-radius:var(--rl);margin-bottom:16px;overflow:hidden}
+.card-hd{padding:13px 16px;border-bottom:1px solid var(--g200);display:flex;align-items:center;gap:10px}
+.card-hd h3{font-size:14px;font-weight:600;flex:1}
+
+/* FILTER BAR */
+.filter-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 16px;border-bottom:1px solid var(--g200);background:var(--g50)}
+input[type=text],select,textarea{border:1px solid var(--g200);border-radius:var(--r);padding:6px 10px;font-size:12px;font-family:'Inter',sans-serif;background:var(--white);color:var(--g800)}
+input[type=text]:focus,select:focus,textarea:focus{outline:2px solid var(--blue);outline-offset:0;border-color:var(--blue)}
+.search-wrap{position:relative}
+.search-wrap input{padding-left:28px;width:180px}
+.search-wrap::before{content:'🔍';position:absolute;left:8px;top:50%;transform:translateY(-50%);font-size:11px;pointer-events:none}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{text-align:left;padding:9px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--g400);border-bottom:1px solid var(--g200);background:var(--g50);white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--g100);cursor:pointer;transition:background .1s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#eff6ff}
+td{padding:10px 12px;vertical-align:top}
+.td-id{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--blue);white-space:nowrap}
+.td-title{font-weight:500}
+.td-sub{font-size:11px;color:var(--g400);margin-top:2px}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500;white-space:nowrap}
+.b-open{background:var(--blue-l);color:var(--blue)}
+.b-progress{background:var(--amber-l);color:var(--amber)}
+.b-resolved{background:var(--teal-l);color:var(--teal)}
+.b-closed{background:var(--g100);color:var(--g500)}
+.b-critical{background:var(--red-l);color:var(--red)}
+.b-high{background:#fef3c7;color:#b45309}
+.b-medium{background:var(--blue-l);color:var(--blue)}
+.b-low{background:var(--g100);color:var(--g500)}
+.b-silver{background:#f1f5f9;color:#475569;border:1px solid #cbd5e1}
+.b-gold{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+.b-platinum{background:var(--purple-l);color:var(--purple);border:1px solid #c4b5fd}
+.b-1st{background:var(--blue-l);color:var(--blue)}
+.b-2nd{background:var(--amber-l);color:var(--amber)}
+.b-3rd{background:var(--red-l);color:var(--red)}
+
+/* MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto}
+.modal-bg.open{display:flex}
+.modal{background:var(--white);border-radius:var(--rl);width:660px;max-width:100%;border:1px solid var(--g200)}
+.modal-hd{padding:15px 18px;border-bottom:1px solid var(--g200);display:flex;align-items:center;gap:10px}
+.modal-hd h3{font-size:15px;font-weight:600;flex:1}
+.modal-close{background:none;border:none;font-size:18px;color:var(--g400);cursor:pointer;padding:2px 6px;border-radius:4px;line-height:1}
+.modal-close:hover{background:var(--g100)}
+.modal-body{padding:18px}
+.modal-ft{padding:13px 18px;border-top:1px solid var(--g200);display:flex;gap:8px;justify-content:flex-end}
+
+/* FORM */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.fg{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+.fg label{font-size:12px;font-weight:500;color:var(--g600)}
+.fg input,.fg select,.fg textarea{font-size:13px;width:100%;padding:7px 10px}
+textarea{resize:vertical;min-height:75px}
+
+/* DETAIL */
+.det-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.meta-box{background:var(--g50);border-radius:var(--r);padding:9px 11px}
+.meta-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--g400);margin-bottom:2px}
+.meta-val{font-size:13px;font-weight:500}
+.tl{margin-top:14px}
+.tl-item{display:flex;gap:10px;padding-bottom:12px;position:relative}
+.tl-item:last-child{padding-bottom:0}
+.tl-item::before{content:'';position:absolute;left:11px;top:24px;bottom:0;width:1px;background:var(--g200)}
+.tl-item:last-child::before{display:none}
+.tl-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;margin-top:2px}
+.tl-dot.open{background:var(--blue-l);color:var(--blue)}
+.tl-dot.update{background:var(--amber-l);color:var(--amber)}
+.tl-dot.resolve{background:var(--teal-l);color:var(--teal)}
+.tl-dot.escalate{background:#fde8e8;color:#e02424}
+.tl-dot.close{background:var(--g100);color:var(--g500)}
+.tl-title{font-size:13px;font-weight:500}
+.tl-time{font-size:11px;color:var(--g400);margin-top:1px}
+.tl-note{font-size:12px;color:var(--g600);margin-top:4px;background:var(--g50);border-radius:6px;padding:6px 8px;border:1px solid var(--g200)}
+
+/* ADD COMMENT */
+.comment-box{margin-top:14px;padding-top:14px;border-top:1px solid var(--g200)}
+.comment-box label{font-size:12px;font-weight:500;color:var(--g600);display:block;margin-bottom:4px}
+.comment-box textarea{width:100%;font-size:13px;padding:7px 10px;border:1px solid var(--g200);border-radius:var(--r);font-family:'Inter',sans-serif;resize:vertical;min-height:60px}
+.comment-box textarea:focus{outline:2px solid var(--blue);border-color:var(--blue)}
+.comment-actions{display:flex;gap:8px;margin-top:8px}
+
+/* SLA */
+.sla-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.sla-card{background:var(--white);border:1px solid var(--g200);border-radius:var(--rl);overflow:hidden}
+.sla-card.feat{border-color:var(--amber);border-width:2px}
+.sla-hd{padding:14px;background:var(--g50);border-bottom:1px solid var(--g200)}
+.sla-card.feat .sla-hd{background:var(--amber-l)}
+.sla-tier{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--g400)}
+.sla-card.feat .sla-tier{color:var(--amber)}
+.sla-name{font-size:18px;font-weight:600;color:var(--navy);margin-top:2px}
+.sla-desc{font-size:12px;color:var(--g500);margin-top:3px;line-height:1.5}
+.sla-row{display:flex;justify-content:space-between;padding:7px 13px;border-bottom:1px solid var(--g100);gap:8px}
+.sla-row:last-child{border-bottom:none}
+.sla-k{font-size:12px;color:var(--g400)}
+.sla-v{font-size:12px;font-weight:500;text-align:right}
+.sla-v.mono{font-family:'JetBrains Mono',monospace;color:var(--blue)}
+
+/* BARS */
+.bar-wrap{margin-bottom:10px}
+.bar-hd{display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px}
+.bar-track{background:var(--g100);border-radius:4px;height:7px}
+.bar-fill{height:7px;border-radius:4px;transition:width .4s}
+
+/* FLOW */
+.flow-wrap{overflow-x:auto;padding:20px}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--g800);color:#fff;padding:10px 18px;border-radius:var(--r);font-size:13px;z-index:999;transform:translateY(80px);opacity:0;transition:all .3s}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{background:var(--teal)}
+.toast.error{background:var(--red)}
+
+/* LOADING */
+.loading{text-align:center;padding:40px;color:var(--g400);font-size:13px}
+
+/* PAGINATION */
+.pagi{display:flex;align-items:center;gap:8px;padding:10px 16px;border-top:1px solid var(--g200);font-size:12px;color:var(--g500)}
+
+/* PUBLIC PORTAL */
+.portal-hero{background:var(--navy);color:#fff;padding:40px 24px;text-align:center;border-radius:var(--rl);margin-bottom:20px}
+.portal-hero h2{font-size:22px;font-weight:600;margin-bottom:8px}
+.portal-hero p{font-size:13px;color:rgba(255,255,255,.6);max-width:420px;margin:0 auto}
+.portal-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+@media(max-width:700px){
+  .sb{transform:translateX(-220px)}
+  .sb.open{transform:translateX(0)}
+  .main{margin-left:0}
+  .kpi-row{grid-template-columns:1fr 1fr}
+  .sla-grid{grid-template-columns:1fr}
+  .det-meta{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .portal-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sb" id="sidebar">
+  <div class="sb-brand">
+    <div class="sb-mono">ICT-437 · M437</div>
+    <div class="sb-name">ICT Helpdesk</div>
+    <div class="sb-sub">Ticketsystem · Web</div>
+  </div>
+  <div class="nav-sec">Übersicht</div>
+  <button class="ni active" onclick="nav('dashboard',this)"><span class="ni-icon">📊</span>Dashboard</button>
+  <div class="nav-sec">Support</div>
+  <button class="ni" onclick="nav('tickets',this)"><span class="ni-icon">🎫</span>Alle Tickets<span class="ni-badge blue" id="nb-open">…</span></button>
+  <button class="ni" onclick="nav('portal',this)"><span class="ni-icon">🌐</span>Kundenportal</button>
+  <button class="ni" onclick="openNew()"><span class="ni-icon">➕</span>Neues Ticket</button>
+  <div class="nav-sec">Organisation</div>
+  <button class="ni" onclick="nav('flow',this)"><span class="ni-icon">🔄</span>Ablaufdiagramm</button>
+  <button class="ni" onclick="nav('org',this)"><span class="ni-icon">🏢</span>Organigramm</button>
+  <div class="nav-sec">Konfiguration</div>
+  <button class="ni" onclick="nav('sla',this)"><span class="ni-icon">📋</span>SLA-Modelle</button>
+  <div class="sb-footer">
+    <div class="u-row">
+      <div class="u-av">NM</div>
+      <div>
+        <div style="font-size:12px;color:rgba(255,255,255,.75);font-weight:500">Nils Müller</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.35)">CIO · Admin</div>
+      </div>
+    </div>
+    <div>ICT-Consulting AG · Modul 437</div>
+  </div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <button class="btn btn-ghost" style="display:none" id="menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+    <div class="topbar-title" id="topbar-title">Dashboard</div>
+    <button class="btn btn-primary" onclick="openNew()">＋ Neues Ticket</button>
+  </div>
+
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div class="view active" id="view-dashboard">
+      <div class="kpi-row" id="kpi-row">
+        <div class="kpi-card"><div class="kpi-lbl">Offene Tickets</div><div class="kpi-val blue" id="k-open">…</div><div class="kpi-sub">Offen + In Bearbeitung</div></div>
+        <div class="kpi-card"><div class="kpi-lbl">Gelöst</div><div class="kpi-val teal" id="k-res">…</div><div class="kpi-sub">Erstlösungsquote Ziel: 40%</div></div>
+        <div class="kpi-card"><div class="kpi-lbl">Total Tickets</div><div class="kpi-val amber" id="k-total">…</div><div class="kpi-sub">Alle erfasst</div></div>
+        <div class="kpi-card"><div class="kpi-lbl">Kritisch offen</div><div class="kpi-val red" id="k-crit">…</div><div class="kpi-sub">Critical + ungeklärt</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px">
+        <div class="card">
+          <div class="card-hd"><h3>Neueste Tickets</h3><button class="btn btn-ghost" onclick="nav('tickets',null)" style="font-size:11px;padding:4px 9px">Alle →</button></div>
+          <div id="dash-table"><div class="loading">Lade…</div></div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-hd"><h3>Tickets nach Level</h3></div>
+            <div style="padding:14px" id="level-bars"><div class="loading">…</div></div>
+          </div>
+          <div class="card">
+            <div class="card-hd"><h3>SLA-Verteilung</h3></div>
+            <div style="padding:14px" id="sla-bars"><div class="loading">…</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TICKETS -->
+    <div class="view" id="view-tickets">
+      <div class="card">
+        <div class="card-hd"><h3>Alle Tickets</h3><span id="ticket-count" style="font-size:12px;color:var(--g400)"></span></div>
+        <div class="filter-bar">
+          <div class="search-wrap"><input type="text" id="srch" placeholder="Suchen…" oninput="loadTickets()" style="width:170px"></div>
+          <select id="f-status" onchange="loadTickets()">
+            <option value="">Alle Status</option>
+            <option value="Offen">Offen</option>
+            <option value="In Bearbeitung">In Bearbeitung</option>
+            <option value="Gelöst">Gelöst</option>
+            <option value="Geschlossen">Geschlossen</option>
+          </select>
+          <select id="f-level" onchange="loadTickets()">
+            <option value="">Alle Level</option>
+            <option value="1st">1st Level</option>
+            <option value="2nd">2nd Level</option>
+            <option value="3rd">3rd Level</option>
+          </select>
+          <select id="f-sla" onchange="loadTickets()">
+            <option value="">Alle SLA</option>
+            <option value="Silver">Silver</option>
+            <option value="Gold">Gold</option>
+            <option value="Platinum">Platinum</option>
+          </select>
+          <select id="f-prio" onchange="loadTickets()">
+            <option value="">Alle Prioritäten</option>
+            <option value="Critical">Critical</option>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </select>
+        </div>
+        <div id="ticket-table"><div class="loading">Lade Tickets…</div></div>
+        <div class="pagi"><span id="ticket-count2"></span></div>
+      </div>
+    </div>
+
+    <!-- PORTAL -->
+    <div class="view" id="view-portal">
+      <div class="portal-hero">
+        <h2>🌐 Kundenportal</h2>
+        <p>Erstellen Sie ein neues Support-Ticket oder prüfen Sie den Status eines bestehenden Tickets.</p>
+      </div>
+      <div class="portal-grid">
+        <div class="card">
+          <div class="card-hd"><h3>Neues Ticket einreichen</h3></div>
+          <div style="padding:16px">
+            <div class="fg"><label>Ihr Name *</label><input type="text" id="p-name" placeholder="Max Mustermann"></div>
+            <div class="fg"><label>Betreff *</label><input type="text" id="p-title" placeholder="z.B. Drucker druckt nicht"></div>
+            <div class="fg"><label>Beschreibung *</label><textarea id="p-desc" placeholder="Bitte beschreiben Sie das Problem möglichst genau…"></textarea></div>
+            <div class="form-row">
+              <div class="fg" style="margin-bottom:0"><label>Kategorie</label>
+                <select id="p-cat">
+                  <option>User &amp; App</option><option>Network</option>
+                  <option>Windows/OS</option><option>Unix</option>
+                  <option>Hardware</option><option>Security</option>
+                </select>
+              </div>
+              <div class="fg" style="margin-bottom:0"><label>Dringlichkeit</label>
+                <select id="p-prio">
+                  <option value="Low">Niedrig – kann warten</option>
+                  <option value="Medium" selected>Normal</option>
+                  <option value="High">Hoch – blockiert mich</option>
+                  <option value="Critical">Kritisch – Ausfall</option>
+                </select>
+              </div>
+            </div>
+            <div class="fg" style="margin-top:10px"><label>Ihr SLA-Vertrag</label>
+              <select id="p-sla"><option value="Silver">Silver</option><option value="Gold">Gold</option><option value="Platinum">Platinum</option></select>
+            </div>
+            <button class="btn btn-primary" style="width:100%;margin-top:8px;justify-content:center" onclick="portalSubmit()">Ticket einreichen →</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-hd"><h3>Ticket-Status prüfen</h3></div>
+          <div style="padding:16px">
+            <div class="fg"><label>Ticket-ID eingeben</label>
+              <input type="text" id="p-lookup" placeholder="z.B. T-0001" style="font-family:'JetBrains Mono',monospace">
+            </div>
+            <button class="btn btn-ghost" style="width:100%;justify-content:center;margin-bottom:16px" onclick="portalLookup()">Status abrufen</button>
+            <div id="p-result"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FLOW -->
+    <div class="view" id="view-flow">
+      <div class="card">
+        <div class="card-hd"><h3>Ticket-Ablaufdiagramm — 1st / 2nd / 3rd Level</h3></div>
+        <div class="flow-wrap">
+          <svg viewBox="0 0 720 520" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12" style="min-width:620px">
+            <defs>
+              <marker id="a0" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3z" fill="#9ca3af"/></marker>
+              <marker id="ab" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3z" fill="#1a56db"/></marker>
+              <marker id="aa" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3z" fill="#d97706"/></marker>
+              <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3z" fill="#e02424"/></marker>
+              <marker id="at" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3z" fill="#0e9f6e"/></marker>
+            </defs>
+            <text x="10" y="20" font-size="10" font-weight="600" fill="#9ca3af" letter-spacing="1">EINGANG</text>
+            <text x="10" y="160" font-size="10" font-weight="600" fill="#1a56db" letter-spacing="1">1ST LEVEL (SPOC)</text>
+            <text x="10" y="300" font-size="10" font-weight="600" fill="#d97706" letter-spacing="1">2ND LEVEL</text>
+            <text x="10" y="430" font-size="10" font-weight="600" fill="#e02424" letter-spacing="1">3RD LEVEL (EXTERN)</text>
+            <line x1="0" y1="30" x2="720" y2="30" stroke="#e5e7eb" stroke-width="1"/>
+            <line x1="0" y1="170" x2="720" y2="170" stroke="#e8f0fe" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <line x1="0" y1="310" x2="720" y2="310" stroke="#fef3c7" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <line x1="0" y1="440" x2="720" y2="440" stroke="#fde8e8" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <rect x="270" y="35" width="160" height="40" rx="6" fill="#f3f4f6" stroke="#e5e7eb"/>
+            <text x="350" y="52" text-anchor="middle" font-weight="600" fill="#1f2937">Kundenanfrage</text>
+            <text x="350" y="66" text-anchor="middle" font-size="10" fill="#9ca3af">Telefon · E-Mail · Portal</text>
+            <line x1="350" y1="75" x2="350" y2="120" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#a0)"/>
+            <polygon points="350,120 430,145 350,170 270,145" fill="#e8f0fe" stroke="#1a56db" stroke-width="1.5"/>
+            <text x="350" y="140" text-anchor="middle" font-weight="600" fill="#1a56db">Triage</text>
+            <text x="350" y="155" text-anchor="middle" font-size="10" fill="#1748c8">Kategorie + Priorität?</text>
+            <line x1="350" y1="170" x2="350" y2="195" stroke="#1a56db" stroke-width="1.5" marker-end="url(#ab)"/>
+            <rect x="240" y="195" width="220" height="38" rx="6" fill="#e8f0fe" stroke="#1a56db" stroke-width="1.5"/>
+            <text x="350" y="210" text-anchor="middle" font-weight="600" fill="#1748c8">1st Level Bearbeitung</text>
+            <text x="350" y="224" text-anchor="middle" font-size="10" fill="#1748c8">SPOC löst Routinefall</text>
+            <line x1="350" y1="233" x2="350" y2="258" stroke="#1a56db" stroke-width="1.5" marker-end="url(#ab)"/>
+            <polygon points="350,258 415,275 350,292 285,275" fill="#e8f0fe" stroke="#1a56db" stroke-width="1.5"/>
+            <text x="350" y="272" text-anchor="middle" font-weight="600" fill="#1a56db">Gelöst?</text>
+            <text x="350" y="286" text-anchor="middle" font-size="10" fill="#1748c8">Erstlösungsquote ≥ 40%</text>
+            <line x1="415" y1="275" x2="570" y2="275" stroke="#0e9f6e" stroke-width="1.5" marker-end="url(#at)"/>
+            <text x="490" y="268" text-anchor="middle" font-size="10" fill="#0e9f6e">Ja</text>
+            <rect x="570" y="255" width="100" height="38" rx="6" fill="#e3fcef" stroke="#0e9f6e" stroke-width="1.5"/>
+            <text x="620" y="271" text-anchor="middle" font-weight="600" fill="#065f46">Ticket gelöst</text>
+            <text x="620" y="284" text-anchor="middle" font-size="10" fill="#0e9f6e">Dokumentiert</text>
+            <line x1="350" y1="292" x2="350" y2="330" stroke="#d97706" stroke-width="1.5" marker-end="url(#aa)"/>
+            <text x="360" y="313" font-size="10" fill="#d97706">Nein → weiterleiten</text>
+            <rect x="230" y="330" width="240" height="38" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+            <text x="350" y="345" text-anchor="middle" font-weight="600" fill="#92400e">2nd Level Bearbeitung</text>
+            <text x="350" y="359" text-anchor="middle" font-size="10" fill="#d97706">Network · Unix · Windows · User&amp;App</text>
+            <line x1="350" y1="368" x2="350" y2="393" stroke="#d97706" stroke-width="1.5" marker-end="url(#aa)"/>
+            <polygon points="350,393 415,408 350,423 285,408" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+            <text x="350" y="405" text-anchor="middle" font-weight="600" fill="#d97706">Gelöst?</text>
+            <text x="350" y="419" text-anchor="middle" font-size="10" fill="#d97706">Fachkompetenz 2nd Level</text>
+            <line x1="415" y1="408" x2="520" y2="408" stroke="#0e9f6e" stroke-width="1.5" marker-end="url(#at)"/>
+            <text x="466" y="401" text-anchor="middle" font-size="10" fill="#0e9f6e">Ja</text>
+            <rect x="520" y="388" width="100" height="38" rx="6" fill="#e3fcef" stroke="#0e9f6e" stroke-width="1.5"/>
+            <text x="570" y="404" text-anchor="middle" font-weight="600" fill="#065f46">Ticket gelöst</text>
+            <text x="570" y="417" text-anchor="middle" font-size="10" fill="#0e9f6e">2nd Level</text>
+            <line x1="350" y1="423" x2="350" y2="455" stroke="#e02424" stroke-width="1.5" marker-end="url(#ar)"/>
+            <text x="358" y="441" font-size="10" fill="#e02424">Nein → Hersteller</text>
+            <rect x="220" y="455" width="260" height="40" rx="6" fill="#fde8e8" stroke="#e02424" stroke-width="1.5"/>
+            <text x="350" y="471" text-anchor="middle" font-weight="600" fill="#991b1b">3rd Level — Extern beim Hersteller</text>
+            <text x="350" y="485" text-anchor="middle" font-size="10" fill="#e02424">Onsite Senior Engineers · Know-How-Transfer</text>
+            <path d="M620 293 L660 293 L660 475 L480 475" stroke="#6b7280" stroke-width="1" fill="none" stroke-dasharray="4,2" marker-end="url(#a0)"/>
+            <text x="648" y="390" text-anchor="middle" font-size="10" fill="#9ca3af" transform="rotate(-90 648 390)">Feedback/KB</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORG -->
+    <div class="view" id="view-org">
+      <div class="card">
+        <div class="card-hd"><h3>Organigramm — Support-Abteilung</h3></div>
+        <div style="overflow-x:auto;padding:20px">
+          <svg viewBox="0 0 680 380" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12" style="min-width:580px">
+            <rect x="265" y="10" width="150" height="36" rx="6" fill="#0f1f3d"/>
+            <text x="340" y="24" text-anchor="middle" font-weight="600" fill="white" font-size="13">Support</text>
+            <text x="340" y="38" text-anchor="middle" fill="rgba(255,255,255,.6)" font-size="10">ICT-Consulting AG</text>
+            <line x1="340" y1="46" x2="340" y2="70" stroke="#9ca3af" stroke-width="1.5"/>
+            <line x1="120" y1="70" x2="560" y2="70" stroke="#9ca3af" stroke-width="1.5"/>
+            <line x1="120" y1="70" x2="120" y2="95" stroke="#9ca3af" stroke-width="1.5"/>
+            <line x1="340" y1="70" x2="340" y2="95" stroke="#9ca3af" stroke-width="1.5"/>
+            <line x1="560" y1="70" x2="560" y2="95" stroke="#9ca3af" stroke-width="1.5"/>
+            <rect x="30" y="95" width="180" height="36" rx="6" fill="#bfdbfe" stroke="#1a56db" stroke-width="1.5"/>
+            <text x="120" y="109" text-anchor="middle" font-weight="600" fill="#1e40af" font-size="12">1st Level (SPOC)</text>
+            <text x="120" y="123" text-anchor="middle" fill="#1a56db" font-size="10">Single Point of Contact</text>
+            <rect x="250" y="95" width="180" height="36" rx="6" fill="#d1fae5" stroke="#0e9f6e" stroke-width="1.5"/>
+            <text x="340" y="109" text-anchor="middle" font-weight="600" fill="#065f46" font-size="12">2nd Level</text>
+            <text x="340" y="123" text-anchor="middle" fill="#0e9f6e" font-size="10">Fachgruppen (4 Bereiche)</text>
+            <rect x="470" y="95" width="180" height="36" rx="6" fill="#d1fae5" stroke="#0e9f6e" stroke-width="1.5"/>
+            <text x="560" y="109" text-anchor="middle" font-weight="600" fill="#065f46" font-size="12">Onsite Support</text>
+            <text x="560" y="123" text-anchor="middle" fill="#0e9f6e" font-size="10">Know-How Transfer</text>
+            <line x1="120" y1="131" x2="120" y2="155" stroke="#1a56db" stroke-width="1"/>
+            <line x1="45" y1="155" x2="195" y2="155" stroke="#1a56db" stroke-width="1"/>
+            <line x1="45" y1="155" x2="45" y2="165" stroke="#1a56db" stroke-width="1"/>
+            <line x1="120" y1="155" x2="120" y2="165" stroke="#1a56db" stroke-width="1"/>
+            <line x1="195" y1="155" x2="195" y2="165" stroke="#1a56db" stroke-width="1"/>
+            <rect x="5" y="165" width="80" height="28" rx="4" fill="#eff6ff" stroke="#bfdbfe"/>
+            <text x="45" y="179" text-anchor="middle" fill="#1e40af" font-size="10" font-weight="500">User &amp; App Jr.</text>
+            <rect x="80" y="165" width="80" height="28" rx="4" fill="#eff6ff" stroke="#bfdbfe"/>
+            <text x="120" y="179" text-anchor="middle" fill="#1e40af" font-size="10" font-weight="500">Network Jr.</text>
+            <rect x="155" y="165" width="80" height="28" rx="4" fill="#eff6ff" stroke="#bfdbfe"/>
+            <text x="195" y="179" text-anchor="middle" fill="#1e40af" font-size="10" font-weight="500">Win/OS Jr.</text>
+            <line x1="340" y1="131" x2="340" y2="155" stroke="#0e9f6e" stroke-width="1"/>
+            <line x1="265" y1="155" x2="415" y2="155" stroke="#0e9f6e" stroke-width="1"/>
+            <line x1="265" y1="155" x2="265" y2="165" stroke="#0e9f6e" stroke-width="1"/>
+            <line x1="340" y1="155" x2="340" y2="165" stroke="#0e9f6e" stroke-width="1"/>
+            <line x1="415" y1="155" x2="415" y2="165" stroke="#0e9f6e" stroke-width="1"/>
+            <rect x="225" y="165" width="80" height="28" rx="4" fill="#ecfdf5" stroke="#6ee7b7"/>
+            <text x="265" y="179" text-anchor="middle" fill="#065f46" font-size="10" font-weight="500">Network Sr.</text>
+            <rect x="300" y="165" width="80" height="28" rx="4" fill="#ecfdf5" stroke="#6ee7b7"/>
+            <text x="340" y="179" text-anchor="middle" fill="#065f46" font-size="10" font-weight="500">Unix Sr. Eng.</text>
+            <rect x="375" y="165" width="80" height="28" rx="4" fill="#ecfdf5" stroke="#6ee7b7"/>
+            <text x="415" y="179" text-anchor="middle" fill="#065f46" font-size="10" font-weight="500">Win Sr. Eng.</text>
+            <line x1="560" y1="131" x2="560" y2="155" stroke="#0e9f6e" stroke-width="1"/>
+            <line x1="505" y1="155" x2="615" y2="155" stroke="#0e9f6e" stroke-width="1"/>
+            <line x1="505" y1="155" x2="505" y2="165" stroke="#0e9f6e" stroke-width="1"/>
+            <line x1="615" y1="155" x2="615" y2="165" stroke="#0e9f6e" stroke-width="1"/>
+            <rect x="465" y="165" width="80" height="28" rx="4" fill="#ecfdf5" stroke="#6ee7b7"/>
+            <text x="505" y="179" text-anchor="middle" fill="#065f46" font-size="10" font-weight="500">Onsite Sr.</text>
+            <rect x="575" y="165" width="80" height="28" rx="4" fill="#ecfdf5" stroke="#6ee7b7"/>
+            <text x="615" y="179" text-anchor="middle" fill="#065f46" font-size="10" font-weight="500">Onsite Jr.</text>
+            <circle cx="80" cy="260" r="36" fill="#fed7aa" stroke="#d97706" stroke-width="1.5"/>
+            <text x="80" y="256" text-anchor="middle" font-weight="600" fill="#92400e" font-size="11">Rotation</text>
+            <text x="80" y="269" text-anchor="middle" fill="#d97706" font-size="10">Juniors</text>
+            <text x="80" y="280" text-anchor="middle" fill="#d97706" font-size="10">monatlich</text>
+            <circle cx="310" cy="260" r="36" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
+            <text x="310" y="256" text-anchor="middle" font-weight="600" fill="#065f46" font-size="11">Rotation</text>
+            <text x="310" y="269" text-anchor="middle" fill="#059669" font-size="10">Seniors</text>
+            <text x="310" y="280" text-anchor="middle" fill="#059669" font-size="10">monatlich</text>
+            <circle cx="545" cy="260" r="36" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+            <text x="545" y="256" text-anchor="middle" font-weight="600" fill="#92400e" font-size="11">Rotation</text>
+            <text x="545" y="269" text-anchor="middle" fill="#d97706" font-size="10">Onsite</text>
+            <text x="545" y="280" text-anchor="middle" fill="#d97706" font-size="10">3 Tage/Mt.</text>
+            <line x1="120" y1="193" x2="100" y2="224" stroke="#d97706" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="340" y1="193" x2="325" y2="224" stroke="#059669" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="560" y1="131" x2="545" y2="224" stroke="#d97706" stroke-width="1" stroke-dasharray="3,2"/>
+            <rect x="240" y="330" width="200" height="36" rx="18" fill="#f3f4f6" stroke="#9ca3af" stroke-width="1.5"/>
+            <text x="340" y="345" text-anchor="middle" fill="#374151" font-weight="600" font-size="11">Extern beim Hersteller</text>
+            <text x="340" y="358" text-anchor="middle" fill="#6b7280" font-size="10">3rd Level Support</text>
+            <line x1="340" y1="296" x2="340" y2="330" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4,2"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLA -->
+    <div class="view" id="view-sla">
+      <div style="margin-bottom:16px">
+        <h2 style="font-size:16px;font-weight:600;margin-bottom:3px">SLA-Modelle — ICT-Consulting AG</h2>
+        <p style="font-size:13px;color:var(--g500)">Drei Servicestufen gemäss Konzeptkatalog. Basis für Gewinnung von 5 neuen Kunden im Q3/2026.</p>
+      </div>
+      <div class="sla-grid">
+        <div class="sla-card">
+          <div class="sla-hd">
+            <div class="sla-tier">SLA Silver</div>
+            <div class="sla-name">Silver</div>
+            <div class="sla-desc">Basis-Servicestufe für zuverlässige IT-Betreuung während Geschäftszeiten.</div>
+            <span class="badge b-silver" style="margin-top:8px">Einstieg</span>
+          </div>
+          <div class="sla-row"><span class="sla-k">Servicezeiten</span><span class="sla-v">Mo–Fr 08–17 Uhr</span></div>
+          <div class="sla-row"><span class="sla-k">Reaktionszeit</span><span class="sla-v mono">4h</span></div>
+          <div class="sla-row"><span class="sla-k">Lösungszeit</span><span class="sla-v mono">2 Werktage</span></div>
+          <div class="sla-row"><span class="sla-k">Verfügbarkeit</span><span class="sla-v mono">99.0%</span></div>
+          <div class="sla-row"><span class="sla-k">Pikett</span><span class="sla-v">Nein</span></div>
+          <div class="sla-row"><span class="sla-k">Reporting</span><span class="sla-v">Quartalsweise</span></div>
+        </div>
+        <div class="sla-card feat">
+          <div class="sla-hd">
+            <div class="sla-tier">SLA Gold</div>
+            <div class="sla-name">Gold</div>
+            <div class="sla-desc">Erweiterte Stufe mit Pikett-Bereitschaft und festem Ansprechpartner.</div>
+            <span class="badge b-gold" style="margin-top:8px">⭐ Empfohlen</span>
+          </div>
+          <div class="sla-row"><span class="sla-k">Servicezeiten</span><span class="sla-v">Mo–Fr 07–20 Uhr</span></div>
+          <div class="sla-row"><span class="sla-k">Reaktionszeit</span><span class="sla-v mono">2h</span></div>
+          <div class="sla-row"><span class="sla-k">Lösungszeit</span><span class="sla-v mono">8h</span></div>
+          <div class="sla-row"><span class="sla-k">Verfügbarkeit</span><span class="sla-v mono">99.5%</span></div>
+          <div class="sla-row"><span class="sla-k">Pikett</span><span class="sla-v">Wochenende (kritisch)</span></div>
+          <div class="sla-row"><span class="sla-k">Reporting</span><span class="sla-v">Monatlich</span></div>
+        </div>
+        <div class="sla-card">
+          <div class="sla-hd">
+            <div class="sla-tier">SLA Platinum</div>
+            <div class="sla-name">Platinum</div>
+            <div class="sla-desc">Premium 24/7-Service mit Senior TAM und höchsten Garantien.</div>
+            <span class="badge b-platinum" style="margin-top:8px">Premium</span>
+          </div>
+          <div class="sla-row"><span class="sla-k">Servicezeiten</span><span class="sla-v">24/7 · 365 Tage</span></div>
+          <div class="sla-row"><span class="sla-k">Reaktionszeit</span><span class="sla-v mono">30 Min.</span></div>
+          <div class="sla-row"><span class="sla-k">Lösungszeit</span><span class="sla-v mono">4h</span></div>
+          <div class="sla-row"><span class="sla-k">Verfügbarkeit</span><span class="sla-v mono">99.9%</span></div>
+          <div class="sla-row"><span class="sla-k">Pikett</span><span class="sla-v">24/7 vollständig</span></div>
+          <div class="sla-row"><span class="sla-k">Reporting</span><span class="sla-v">Monatlich + Trendanalyse</span></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <div class="card-hd"><h3>Vertragsbedingungen</h3></div>
+        <div style="padding:14px;font-size:13px;color:var(--g600);line-height:1.7">
+          Mindestlaufzeit 12 Monate. Kündigung schriftlich 3 Monate vor Ablauf.
+          Ohne Kündigung automatische Verlängerung um 12 Monate.
+          Wechsel in höhere Stufe jederzeit möglich; in tiefere Stufe mit 4 Wochen Vorankündigung.
+          Preisanpassungen 1× jährlich mit 2 Monaten Ankündigung.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL: Neues Ticket -->
+<div class="modal-bg" id="m-new">
+  <div class="modal">
+    <div class="modal-hd"><h3>Neues Ticket erstellen</h3><button class="modal-close" onclick="closeModal('m-new')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="fg"><label>Melder / Kunde *</label><input type="text" id="n-reporter" placeholder="Name des Melders"></div>
+        <div class="fg"><label>SLA-Stufe</label><select id="n-sla"><option>Silver</option><option>Gold</option><option>Platinum</option></select></div>
+      </div>
+      <div class="fg"><label>Titel *</label><input type="text" id="n-title" placeholder="z.B. Drucker offline im 2. OG"></div>
+      <div class="fg"><label>Beschreibung</label><textarea id="n-desc" placeholder="Detaillierte Beschreibung…"></textarea></div>
+      <div class="form-row">
+        <div class="fg"><label>Kategorie</label><select id="n-cat"><option>User &amp; App</option><option>Network</option><option>Windows/OS</option><option>Unix</option><option>Hardware</option><option>Security</option></select></div>
+        <div class="fg"><label>Priorität</label><select id="n-prio"><option value="Low">Low</option><option value="Medium" selected>Medium</option><option value="High">High</option><option value="Critical">Critical</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Zuweisen an</label><select id="n-assign"><option>1st Level – SPOC</option><option>Network Senior</option><option>Unix Senior</option><option>Windows Senior</option><option>User &amp; App Senior</option><option>Onsite Senior</option></select></div>
+        <div class="fg"><label>Level</label><select id="n-level"><option value="1st">1st Level</option><option value="2nd">2nd Level</option><option value="3rd">3rd Level</option></select></div>
+      </div>
+    </div>
+    <div class="modal-ft">
+      <button class="btn btn-ghost" onclick="closeModal('m-new')">Abbrechen</button>
+      <button class="btn btn-primary" onclick="submitNew()">Ticket erstellen</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Ticket Detail -->
+<div class="modal-bg" id="m-detail">
+  <div class="modal">
+    <div class="modal-hd"><h3 id="d-title">Ticket</h3><button class="modal-close" onclick="closeModal('m-detail')">✕</button></div>
+    <div class="modal-body" id="d-body"></div>
+    <div class="modal-ft" id="d-actions"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = '';
+let curId = null;
+
+function api(path, opts={}) {
+  return fetch(API + path, { headers:{'Content-Type':'application/json'}, ...opts }).then(r => r.json());
+}
+
+// BADGES
+function sb(s) {
+  const m = {Offen:'open','In Bearbeitung':'progress',Gelöst:'resolved',Geschlossen:'closed'};
+  return `<span class="badge b-${m[s]||'open'}">${s}</span>`;
+}
+function pb(p) {
+  const m = {Critical:'critical',High:'high',Medium:'medium',Low:'low'};
+  return `<span class="badge b-${m[p]||'medium'}">${p}</span>`;
+}
+function lb(l) { return `<span class="badge b-${l.toLowerCase()}">${l} Level</span>`; }
+function slab(s) { return `<span class="badge b-${(s||'').toLowerCase()}">${s}</span>`; }
+
+function fmtDate(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso);
+  return `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+}
+
+// NAV
+function nav(view, btn) {
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+view).classList.add('active');
+  const titles = {dashboard:'Dashboard',tickets:'Alle Tickets',portal:'Kundenportal',flow:'Ablaufdiagramm',org:'Organigramm',sla:'SLA-Modelle'};
+  document.getElementById('topbar-title').textContent = titles[view]||view;
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  if (view==='tickets') loadTickets();
+  if (view==='dashboard') loadDashboard();
+}
+
+// TOAST
+function toast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast ' + type + ' show';
+  setTimeout(()=>t.classList.remove('show'), 3000);
+}
+
+// DASHBOARD
+async function loadDashboard() {
+  const [stats, tickets] = await Promise.all([api('/api/stats'), api('/api/tickets')]);
+  document.getElementById('k-open').textContent = stats.open + stats.inProgress;
+  document.getElementById('k-res').textContent = stats.resolved;
+  document.getElementById('k-total').textContent = stats.total;
+  document.getElementById('k-crit').textContent = stats.critical;
+  document.getElementById('nb-open').textContent = stats.open + stats.inProgress;
+
+  const top5 = tickets.slice(0,5);
+  document.getElementById('dash-table').innerHTML = `
+    <table><thead><tr><th>ID</th><th>Titel</th><th>Prio</th><th>Status</th><th>Level</th><th>SLA</th></tr></thead>
+    <tbody>${top5.map(t=>`<tr onclick="openDetail('${t.id}')">
+      <td class="td-id">${t.id}</td>
+      <td><div class="td-title">${t.title}</div><div class="td-sub">${t.reporter} · ${fmtDate(t.created)}</div></td>
+      <td>${pb(t.priority)}</td><td>${sb(t.status)}</td><td>${lb(t.level)}</td><td>${slab(t.sla)}</td>
+    </tr>`).join('')}</tbody></table>`;
+
+  const maxL = Math.max(...Object.values(stats.byLevel), 1);
+  document.getElementById('level-bars').innerHTML = Object.entries(stats.byLevel).map(([l,n])=>`
+    <div class="bar-wrap">
+      <div class="bar-hd"><span>${l} Level</span><span style="font-weight:500">${n}</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.round(n/maxL*100)}%;background:var(--blue)"></div></div>
+    </div>`).join('');
+
+  const maxS = Math.max(...Object.values(stats.bySla), 1);
+  const sc = {Silver:'#64748b',Gold:'#d97706',Platinum:'#7e3af2'};
+  document.getElementById('sla-bars').innerHTML = Object.entries(stats.bySla).map(([s,n])=>`
+    <div class="bar-wrap">
+      <div class="bar-hd"><span>${s}</span><span style="font-weight:500">${n}</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.round(n/maxS*100)}%;background:${sc[s]}"></div></div>
+    </div>`).join('');
+}
+
+// TICKETS TABLE
+async function loadTickets() {
+  const params = new URLSearchParams();
+  const srch = document.getElementById('srch')?.value; if(srch) params.set('search',srch);
+  const fs = document.getElementById('f-status')?.value; if(fs) params.set('status',fs);
+  const fl = document.getElementById('f-level')?.value; if(fl) params.set('level',fl);
+  const fsla = document.getElementById('f-sla')?.value; if(fsla) params.set('sla',fsla);
+  const fp = document.getElementById('f-prio')?.value; if(fp) params.set('priority',fp);
+  const list = await api('/api/tickets?' + params.toString());
+  document.getElementById('ticket-count').textContent = `${list.length} Tickets`;
+  document.getElementById('ticket-count2').textContent = `${list.length} Tickets gefunden`;
+  document.getElementById('ticket-table').innerHTML = `
+    <table><thead><tr><th>ID</th><th>Titel</th><th>Kategorie</th><th>Prio</th><th>Status</th><th>Level</th><th>SLA</th><th>Zugewiesen</th><th>Erstellt</th></tr></thead>
+    <tbody>${list.map(t=>`<tr onclick="openDetail('${t.id}')">
+      <td class="td-id">${t.id}</td>
+      <td><div class="td-title">${t.title}</div><div class="td-sub">${t.reporter}</div></td>
+      <td style="font-size:12px;color:var(--g500)">${t.category}</td>
+      <td>${pb(t.priority)}</td><td>${sb(t.status)}</td><td>${lb(t.level)}</td><td>${slab(t.sla)}</td>
+      <td style="font-size:12px;color:var(--g500)">${t.assign}</td>
+      <td style="font-size:12px;color:var(--g400);white-space:nowrap">${fmtDate(t.created)}</td>
+    </tr>`).join('')}</tbody></table>`;
+}
+
+// DETAIL MODAL
+async function openDetail(id) {
+  curId = id;
+  const t = await api('/api/tickets/' + id);
+  document.getElementById('d-title').textContent = `${t.id} — ${t.title}`;
+  const tlHtml = t.log.map(l=>`
+    <div class="tl-item">
+      <div class="tl-dot ${l.type||'update'}">${{open:'○',update:'→',resolve:'✓',escalate:'↑',close:'×'}[l.type]||'→'}</div>
+      <div>
+        <div class="tl-title">${l.who}</div>
+        <div class="tl-time">${fmtDate(l.time)}</div>
+        <div class="tl-note">${l.note}</div>
+      </div>
+    </div>`).join('');
+  document.getElementById('d-body').innerHTML = `
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">${sb(t.status)} ${pb(t.priority)} ${slab(t.sla)} ${lb(t.level)}</div>
+    <p style="font-size:13px;color:var(--g600);margin-bottom:14px">${t.desc||'Keine Beschreibung.'}</p>
+    <div class="det-meta">
+      <div class="meta-box"><div class="meta-lbl">Melder</div><div class="meta-val">${t.reporter}</div></div>
+      <div class="meta-box"><div class="meta-lbl">Kategorie</div><div class="meta-val">${t.category}</div></div>
+      <div class="meta-box"><div class="meta-lbl">Zugewiesen</div><div class="meta-val">${t.assign}</div></div>
+      <div class="meta-box"><div class="meta-lbl">Erstellt</div><div class="meta-val">${fmtDate(t.created)}</div></div>
+      <div class="meta-box"><div class="meta-lbl">Level</div><div class="meta-val">${t.level} Level</div></div>
+      <div class="meta-box"><div class="meta-lbl">SLA</div><div class="meta-val">${t.sla}</div></div>
+    </div>
+    <h4 style="font-size:13px;font-weight:600;margin-bottom:10px">Verlauf</h4>
+    <div class="tl">${tlHtml}</div>
+    <div class="comment-box">
+      <label>Kommentar / Notiz hinzufügen</label>
+      <textarea id="comment-txt" placeholder="z.B. Rückruf beim Kunden, Problem eingegrenzt…"></textarea>
+      <div class="comment-actions">
+        <input type="text" id="comment-who" placeholder="Ihr Name" style="width:160px">
+        <button class="btn btn-ghost" onclick="addComment()">Kommentar senden</button>
+      </div>
+    </div>`;
+
+  const isOpen = t.status !== 'Gelöst' && t.status !== 'Geschlossen';
+  document.getElementById('d-actions').innerHTML = `
+    ${isOpen ? `<button class="btn btn-ghost" style="color:var(--amber);border-color:var(--amber)" onclick="doAction('escalate')">Weiterleiten ↑</button>` : ''}
+    ${isOpen ? `<button class="btn btn-success" onclick="doAction('resolve')">Gelöst markieren ✓</button>` : ''}
+    ${t.status==='Gelöst' ? `<button class="btn btn-ghost" onclick="doAction('close')">Ticket schliessen</button>` : ''}
+    <button class="btn btn-ghost" onclick="closeModal('m-detail')">Schliessen</button>`;
+  document.getElementById('m-detail').classList.add('open');
+}
+
+async function doAction(action) {
+  const note = document.getElementById('comment-txt')?.value.trim();
+  const who = document.getElementById('comment-who')?.value.trim() || 'System';
+  await api('/api/tickets/' + curId, { method:'PATCH', body: JSON.stringify({action, note, who}) });
+  toast(action==='resolve'?'Ticket gelöst ✓':action==='escalate'?'Weitergeleitet ↑':'Ticket geschlossen', action==='resolve'?'success':'');
+  closeModal('m-detail');
+  loadDashboard(); loadTickets();
+}
+
+async function addComment() {
+  const note = document.getElementById('comment-txt')?.value.trim();
+  const who = document.getElementById('comment-who')?.value.trim() || 'Mitarbeiter';
+  if (!note) { toast('Bitte Kommentar eingeben.','error'); return; }
+  await api('/api/tickets/' + curId, { method:'PATCH', body: JSON.stringify({note, who, action:'update'}) });
+  toast('Kommentar gespeichert ✓', 'success');
+  openDetail(curId);
+}
+
+// NEW TICKET
+function openNew() { document.getElementById('m-new').classList.add('open'); }
+
+async function submitNew() {
+  const title = document.getElementById('n-title').value.trim();
+  const reporter = document.getElementById('n-reporter').value.trim();
+  if (!title || !reporter) { toast('Bitte Titel und Name eingeben.','error'); return; }
+  const body = {
+    title, reporter,
+    desc: document.getElementById('n-desc').value,
+    category: document.getElementById('n-cat').value,
+    priority: document.getElementById('n-prio').value,
+    sla: document.getElementById('n-sla').value,
+    assign: document.getElementById('n-assign').value,
+    level: document.getElementById('n-level').value,
+  };
+  const t = await api('/api/tickets', {method:'POST', body:JSON.stringify(body)});
+  closeModal('m-new');
+  toast(`Ticket ${t.id} erstellt ✓`, 'success');
+  ['n-title','n-reporter','n-desc'].forEach(id=>document.getElementById(id).value='');
+  loadDashboard(); loadTickets();
+}
+
+// PORTAL
+async function portalSubmit() {
+  const title = document.getElementById('p-title').value.trim();
+  const name = document.getElementById('p-name').value.trim();
+  const desc = document.getElementById('p-desc').value.trim();
+  if (!title || !name || !desc) { toast('Bitte alle Felder ausfüllen.','error'); return; }
+  const body = {
+    title, reporter:name, desc,
+    category: document.getElementById('p-cat').value,
+    priority: document.getElementById('p-prio').value,
+    sla: document.getElementById('p-sla').value,
+    level:'1st', assign:'1st Level – SPOC'
+  };
+  const t = await api('/api/tickets', {method:'POST', body:JSON.stringify(body)});
+  toast(`Ticket ${t.id} eingereicht ✓`, 'success');
+  ['p-title','p-name','p-desc'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('p-result').innerHTML = `
+    <div style="background:var(--teal-l);border:1px solid #6ee7b7;border-radius:var(--r);padding:12px;font-size:13px">
+      <div style="font-weight:600;color:var(--teal);margin-bottom:4px">✓ Ticket erfolgreich eingereicht</div>
+      <div>Ihre Ticket-ID: <strong style="font-family:'JetBrains Mono',monospace">${t.id}</strong></div>
+      <div style="color:var(--g500);margin-top:4px;font-size:12px">Notieren Sie diese ID für spätere Statusabfragen.</div>
+    </div>`;
+}
+
+async function portalLookup() {
+  const id = document.getElementById('p-lookup').value.trim().toUpperCase();
+  if (!id) { toast('Bitte Ticket-ID eingeben.','error'); return; }
+  const t = await api('/api/tickets/' + id);
+  if (t.error) {
+    document.getElementById('p-result').innerHTML = `<div style="color:var(--red);font-size:13px">Ticket "${id}" nicht gefunden.</div>`;
+    return;
+  }
+  document.getElementById('p-result').innerHTML = `
+    <div style="background:var(--g50);border:1px solid var(--g200);border-radius:var(--r);padding:12px">
+      <div style="font-weight:600;margin-bottom:8px">${t.id} — ${t.title}</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">${sb(t.status)} ${pb(t.priority)} ${slab(t.sla)}</div>
+      <div style="font-size:12px;color:var(--g500)">Zugewiesen: ${t.assign} · ${lb(t.level)}</div>
+      <div style="font-size:12px;color:var(--g400);margin-top:4px">Erstellt: ${fmtDate(t.created)}</div>
+    </div>`;
+}
+
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+document.querySelectorAll('.modal-bg').forEach(m=>{
+  m.addEventListener('click',e=>{ if(e.target===m) m.classList.remove('open'); });
+});
+
+// INIT
+loadDashboard();
+</script>
+</body>
+</html>
