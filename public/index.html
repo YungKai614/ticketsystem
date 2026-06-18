@@ -9,15 +9,14 @@
 html{font-size:14px}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#1a1d23;color:#c9cdd6;line-height:1.5;min-height:100vh}
 
-/* LOGIN */
 .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
 .login-box{background:#13151a;border:1px solid #2a2d35;border-radius:8px;width:380px;overflow:hidden}
-.login-hd{padding:28px 28px 20px;border-bottom:1px solid #2a2d35}
-.login-logo{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#3a3f4d;margin-bottom:6px}
+.login-hd{padding:26px 26px 18px;border-bottom:1px solid #2a2d35}
+.login-logo{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#3a3f4d;margin-bottom:5px}
 .login-title{font-size:20px;font-weight:600;color:#e2e4e9}
-.login-sub{font-size:12px;color:#4a5060;margin-top:3px}
-.login-body{padding:24px 28px}
-.login-tabs{display:flex;gap:0;margin-bottom:20px;background:#1a1d23;border-radius:6px;padding:3px}
+.login-sub{font-size:12px;color:#4a5060;margin-top:2px}
+.login-body{padding:22px 26px}
+.login-tabs{display:flex;margin-bottom:18px;background:#1a1d23;border-radius:6px;padding:3px}
 .login-tab{flex:1;padding:7px;font-size:12px;font-weight:500;border:none;background:none;color:#5a6070;cursor:pointer;border-radius:4px;transition:all .15s}
 .login-tab.active{background:#2a2d35;color:#e2e4e9}
 .fgg{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
@@ -25,36 +24,36 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .fgg input,.fgg select,.fgg textarea{background:#1a1d23;border:1px solid #2a2d35;border-radius:5px;padding:8px 11px;font-size:13px;font-family:inherit;color:#c9cdd6;width:100%}
 .fgg input:focus,.fgg select:focus,.fgg textarea:focus{outline:none;border-color:#3a6a9e}
 select option{background:#1a1d23}
-textarea{resize:vertical;min-height:75px}
+textarea{resize:vertical;min-height:70px}
 .login-hint{font-size:11px;color:#3a3f4d;margin-bottom:14px;padding:8px 10px;background:#1e2128;border-radius:4px;line-height:1.7}
 .login-hint span{color:#5a6070}
 .btn-login{width:100%;padding:9px;background:#2d5a8e;color:#c5d8f0;border:1px solid #3a6a9e;border-radius:5px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit}
 .btn-login:hover{background:#345f94}
 .login-err{color:#c07070;font-size:12px;margin-top:8px;display:none}
 
-/* APP */
 .app{display:none;min-height:100vh}.app.show{display:flex}
 
 /* SIDEBAR */
 .sb{width:215px;background:#13151a;border-right:1px solid #2a2d35;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100}
-.sb-brand{padding:14px;border-bottom:1px solid #2a2d35}
+.sb-brand{padding:13px 14px;border-bottom:1px solid #2a2d35}
 .sb-lbl{font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:#3a3f4d}
 .sb-name{font-size:13px;font-weight:600;color:#e2e4e9;margin-top:2px}
-.nav-sec{padding:12px 12px 4px;font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#2a3040}
+.nav-sec{padding:11px 12px 4px;font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#2a3040}
 .ni{display:flex;align-items:center;gap:8px;padding:7px 12px;font-size:12px;color:#6a7080;cursor:pointer;border-radius:5px;margin:1px 6px;transition:background .1s,color .1s;border:none;background:none;width:calc(100% - 12px);text-align:left}
 .ni:hover{background:#1e2128;color:#c9cdd6}
 .ni.active{background:#1e2128;color:#e2e4e9;font-weight:500}
-.ni-badge{margin-left:auto;background:#2d4a6e;color:#8ab0d0;font-size:10px;font-weight:600;border-radius:10px;padding:1px 6px}
-.ni-badge.red{background:#4a2020;color:#c07070}
+.ni-badge{margin-left:auto;font-size:10px;font-weight:700;border-radius:10px;padding:1px 6px}
+.ni-badge.blue{background:#1a2d45;color:#5a8ab0}
+.ni-badge.red{background:#3a1a1a;color:#b06060}
+.ni-badge.green{background:#1a3a2a;color:#5aa870}
 .sb-footer{margin-top:auto;padding:11px 13px;border-top:1px solid #2a2d35}
 .u-row{display:flex;align-items:center;gap:8px}
-.u-av{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;flex-shrink:0}
+.u-av{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;flex-shrink:0;color:#c9cdd6}
 .u-name{font-size:12px;color:#8a90a0;font-weight:500}
 .u-role{font-size:10px;color:#3a3f4d}
 .btn-logout{background:none;border:none;color:#3a3f4d;cursor:pointer;font-size:11px;padding:3px 0;display:block;margin-top:3px}
 .btn-logout:hover{color:#c07070}
 
-/* MAIN */
 .main{margin-left:215px;flex:1;display:flex;flex-direction:column}
 .topbar{background:#13151a;border-bottom:1px solid #2a2d35;padding:0 20px;height:46px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:50}
 .topbar-title{font-size:14px;font-weight:600;flex:1;color:#e2e4e9}
@@ -64,15 +63,17 @@ textarea{resize:vertical;min-height:75px}
 .btn-secondary{background:#1e2128;color:#7a8090;border:1px solid #2a2d35}
 .btn-secondary:hover{background:#252830}
 .btn-success{background:#1d3d2a;color:#6ab87a;border:1px solid #2a5038}
+.btn-success:hover{background:#1f4a30}
 .btn-warn{background:#3a2d1a;color:#c8a060;border:1px solid #4a3820}
+.btn-warn:hover{background:#42321c}
+.btn-danger{background:#3a1a1a;color:#c07070;border:1px solid #4a2828}
 .btn-sm{padding:4px 9px;font-size:11px}
 
-/* CONTENT */
 .content{padding:18px 22px;flex:1}
 .view{display:none}.view.active{display:block}
 
-/* TABS inside view */
-.view-tabs{display:flex;gap:0;border-bottom:1px solid #2a2d35;margin-bottom:16px}
+/* TABS */
+.view-tabs{display:flex;border-bottom:1px solid #2a2d35;margin-bottom:16px;gap:0}
 .vt{padding:8px 16px;font-size:12px;font-weight:500;color:#5a6070;cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;font-family:inherit}
 .vt.active{color:#c9cdd6;border-bottom-color:#4a7aaa}
 .vt:hover{color:#c9cdd6}
@@ -80,19 +81,23 @@ textarea{resize:vertical;min-height:75px}
 /* KPI */
 .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
 .kpi-card{background:#13151a;border:1px solid #2a2d35;border-radius:6px;padding:12px 14px}
+.kpi-card.blue{border-left:2px solid #3a5a80}
+.kpi-card.green{border-left:2px solid #3a6a4a}
+.kpi-card.amber{border-left:2px solid #7a6040}
+.kpi-card.red{border-left:2px solid #7a4040}
+.kpi-card.purple{border-left:2px solid #5a4a80}
 .kpi-lbl{font-size:10px;color:#4a5060;text-transform:uppercase;letter-spacing:.05em;font-weight:500}
 .kpi-val{font-size:22px;font-weight:600;margin-top:3px;color:#e2e4e9}
 .kpi-sub{font-size:11px;color:#3a3f4d;margin-top:2px}
-.kpi-card.green{border-left:2px solid #3a6a4a}
-.kpi-card.blue{border-left:2px solid #3a5a80}
-.kpi-card.amber{border-left:2px solid #7a6040}
-.kpi-card.red{border-left:2px solid #7a4040}
-.kpi-card.purple{border-left:2px solid #6a5090}
 
-/* CARD */
 .card{background:#13151a;border:1px solid #2a2d35;border-radius:6px;margin-bottom:14px;overflow:hidden}
-.card-hd{padding:11px 14px;border-bottom:1px solid #2a2d35;display:flex;align-items:center;gap:10px;background:#161820}
-.card-hd h3{font-size:12px;font-weight:600;flex:1;color:#c9cdd6;text-transform:uppercase;letter-spacing:.04em}
+.card-hd{padding:10px 14px;border-bottom:1px solid #2a2d35;display:flex;align-items:center;gap:10px;background:#161820}
+.card-hd h3{font-size:11px;font-weight:600;flex:1;color:#c9cdd6;text-transform:uppercase;letter-spacing:.05em}
+
+/* FILTER */
+.filter-bar{display:flex;gap:7px;align-items:center;flex-wrap:wrap;padding:8px 14px;border-bottom:1px solid #2a2d35}
+input[type=text],select{background:#1a1d23;border:1px solid #2a2d35;border-radius:4px;padding:5px 8px;font-size:12px;font-family:inherit;color:#c9cdd6}
+input[type=text]:focus,select:focus{outline:none;border-color:#3a6a9e}
 
 /* TABLE */
 table{width:100%;border-collapse:collapse;font-size:12px}
@@ -102,18 +107,14 @@ tbody tr:last-child{border-bottom:none}
 tbody tr:hover{background:#1e2128}
 td{padding:8px 12px;vertical-align:middle}
 .td-id{font-family:'Courier New',monospace;font-size:11px;color:#5a7a9a;white-space:nowrap;font-weight:500}
-.td-title{font-weight:500;color:#c9cdd6;font-size:13px}
+.td-title{font-weight:500;color:#c9cdd6;font-size:12px}
 .td-sub{font-size:11px;color:#4a5060;margin-top:1px}
 
-/* FILTER */
-.filter-bar{display:flex;gap:7px;align-items:center;flex-wrap:wrap;padding:8px 14px;border-bottom:1px solid #2a2d35}
-input[type=text],select{background:#1a1d23;border:1px solid #2a2d35;border-radius:4px;padding:5px 8px;font-size:12px;font-family:inherit;color:#c9cdd6}
-input[type=text]:focus,select:focus{outline:none;border-color:#3a6a9e}
-
 /* BADGES */
-.badge{display:inline-flex;align-items:center;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:600;white-space:nowrap;letter-spacing:.03em;text-transform:uppercase}
+.badge{display:inline-flex;align-items:center;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:600;white-space:nowrap;letter-spacing:.02em;text-transform:uppercase}
 .b-open{background:#1a2535;color:#5a8ab0;border:1px solid #2a3545}
 .b-progress{background:#2a2010;color:#b89050;border:1px solid #3a3020}
+.b-warten{background:#2a1a35;color:#9a70c0;border:1px solid #3a2a45}
 .b-resolved{background:#1a2d20;color:#5aa870;border:1px solid #2a3d2a}
 .b-closed{background:#1e2128;color:#5a6070;border:1px solid #2a2d35}
 .b-critical{background:#2d1818;color:#b06060;border:1px solid #3d2828}
@@ -126,19 +127,48 @@ input[type=text]:focus,select:focus{outline:none;border-color:#3a6a9e}
 .b-1st{background:#1a2535;color:#5a8ab0;border:1px solid #2a3545}
 .b-2nd{background:#2a2010;color:#b89050;border:1px solid #3a3020}
 .b-3rd{background:#2d1818;color:#b06060;border:1px solid #3d2828}
-.b-new{background:#1a2d20;color:#5aa870;border:1px solid #2a3d2a}
-.b-unread{background:#2d2010;color:#c8a060}
+
+/* INBOX */
+.inbox-item{display:flex;gap:0;align-items:stretch;border-bottom:1px solid #1e2128;cursor:pointer;transition:background .1s;position:relative}
+.inbox-item:last-child{border-bottom:none}
+.inbox-item:hover{background:#1e2128}
+.inbox-glow{width:4px;flex-shrink:0;background:transparent;transition:background .3s}
+.inbox-glow.needs-reply{background:#3a6aee;box-shadow:0 0 8px #3a6aee88;animation:glow 2s ease-in-out infinite}
+@keyframes glow{0%,100%{opacity:1}50%{opacity:.5}}
+.inbox-inner{display:flex;gap:11px;align-items:flex-start;padding:11px 14px;flex:1;min-width:0}
+.inbox-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;flex-shrink:0;margin-top:1px;color:#c9cdd6}
+.inbox-content{flex:1;min-width:0}
+.inbox-title{font-size:13px;font-weight:500;color:#c9cdd6;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.inbox-preview{font-size:11px;color:#4a5060;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.inbox-badges{margin-top:5px;display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+.inbox-meta{flex-shrink:0;text-align:right;font-size:10px;color:#3a3f4d;line-height:1.6}
+.inbox-new-dot{width:7px;height:7px;border-radius:50%;background:#3a6aee;box-shadow:0 0 6px #3a6aee;flex-shrink:0}
+.assignee-badge{display:inline-flex;align-items:center;gap:4px;background:#1a2535;border:1px solid #2a3545;border-radius:3px;padding:1px 6px;font-size:10px;color:#5a8ab0;font-weight:600}
+
+/* STATS BARS */
+.bar-h{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.bar-h-lbl{font-size:11px;color:#7a8090;width:110px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-h-track{flex:1;background:#1e2128;border-radius:2px;height:7px}
+.bar-h-fill{height:7px;border-radius:2px;transition:width .5s}
+.bar-h-val{font-size:11px;color:#5a6070;width:28px;text-align:right;flex-shrink:0}
+.bar-wrap{margin-bottom:7px}
+.bar-hd{display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px;color:#4a5060}
+.bar-track{background:#1e2128;border-radius:2px;height:5px}
+.bar-fill{height:5px;border-radius:2px;transition:width .4s}
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.chart-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
 
 /* MODAL */
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;align-items:flex-start;justify-content:center;padding:50px 20px;overflow-y:auto}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:200;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto}
 .modal-bg.open{display:flex}
-.modal{background:#13151a;border-radius:8px;width:620px;max-width:100%;border:1px solid #2a2d35}
+.modal{background:#13151a;border-radius:8px;width:640px;max-width:100%;border:1px solid #2a2d35}
+.modal-lg{width:720px}
 .modal-hd{padding:14px 18px;border-bottom:1px solid #2a2d35;display:flex;align-items:center;gap:10px}
 .modal-hd h3{font-size:14px;font-weight:600;flex:1;color:#e2e4e9}
 .modal-close{background:none;border:none;font-size:18px;color:#4a5060;cursor:pointer;padding:0 4px;border-radius:4px}
 .modal-close:hover{background:#1e2128;color:#c9cdd6}
 .modal-body{padding:18px}
-.modal-ft{padding:12px 18px;border-top:1px solid #2a2d35;display:flex;gap:8px;justify-content:flex-end;background:#161820;border-radius:0 0 8px 8px}
+.modal-ft{padding:11px 18px;border-top:1px solid #2a2d35;display:flex;gap:8px;justify-content:flex-end;background:#161820;border-radius:0 0 8px 8px;flex-wrap:wrap}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
 
 /* DETAIL */
@@ -146,7 +176,7 @@ input[type=text]:focus,select:focus{outline:none;border-color:#3a6a9e}
 .meta-box{background:#1a1d23;border:1px solid #2a2d35;border-radius:5px;padding:8px 10px}
 .meta-lbl{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:#4a5060;margin-bottom:2px}
 .meta-val{font-size:12px;font-weight:500;color:#c9cdd6}
-.tl{margin-top:12px}
+.tl{margin-top:12px;max-height:260px;overflow-y:auto;padding-right:4px}
 .tl-item{display:flex;gap:9px;padding-bottom:10px;position:relative}
 .tl-item::before{content:'';position:absolute;left:9px;top:20px;bottom:0;width:1px;background:#2a2d35}
 .tl-item:last-child::before{display:none}
@@ -156,14 +186,18 @@ input[type=text]:focus,select:focus{outline:none;border-color:#3a6a9e}
 .tl-dot.resolve{background:#1a2d20;color:#5aa870}
 .tl-dot.escalate{background:#2d1818;color:#b06060}
 .tl-dot.close{background:#1e2128;color:#5a6070}
+.tl-dot.wait{background:#2a1a35;color:#9a70c0}
+.tl-dot.assign{background:#1a2535;color:#5a8ab0}
 .tl-who{font-size:12px;font-weight:500;color:#c9cdd6}
 .tl-time{font-size:10px;color:#4a5060}
 .tl-note{font-size:12px;color:#7a8090;margin-top:3px;background:#1a1d23;border-radius:4px;padding:5px 8px;border-left:2px solid #2a2d35}
-.comment-box{margin-top:12px;padding-top:12px;border-top:1px solid #2a2d35}
-.comment-box label{font-size:11px;font-weight:500;color:#6a7080;display:block;margin-bottom:4px}
-.comment-box textarea{width:100%;font-size:12px;padding:7px 10px;border-radius:5px;font-family:inherit;resize:vertical;min-height:55px;background:#1a1d23;border:1px solid #2a2d35;color:#c9cdd6}
-.comment-box textarea:focus{outline:none;border-color:#3a6a9e}
-.comment-actions{display:flex;gap:8px;margin-top:7px;align-items:center}
+.action-bar{margin-top:14px;padding-top:14px;border-top:1px solid #2a2d35}
+.action-bar label{font-size:11px;font-weight:500;color:#6a7080;display:block;margin-bottom:5px}
+.action-bar textarea{width:100%;font-size:12px;padding:7px 10px;border-radius:5px;font-family:inherit;resize:vertical;min-height:55px;background:#1a1d23;border:1px solid #2a2d35;color:#c9cdd6}
+.action-bar textarea:focus{outline:none;border-color:#3a6a9e}
+.action-row{display:flex;gap:7px;margin-top:8px;align-items:center;flex-wrap:wrap}
+.assign-row{display:flex;gap:7px;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid #2a2d35}
+.assign-row label{font-size:11px;color:#6a7080;flex-shrink:0}
 
 /* SLA */
 .sla-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
@@ -181,61 +215,25 @@ input[type=text]:focus,select:focus{outline:none;border-color:#3a6a9e}
 .sla-v{font-size:11px;font-weight:500;color:#c9cdd6}
 .sla-v.mono{font-family:'Courier New',monospace;font-weight:600;color:#5a9ec0}
 
-/* CHARTS */
-.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-.chart-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
-.bar-h{display:flex;align-items:center;gap:8px;margin-bottom:7px}
-.bar-h-lbl{font-size:11px;color:#7a8090;width:120px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.bar-h-track{flex:1;background:#1e2128;border-radius:2px;height:8px;position:relative}
-.bar-h-fill{height:8px;border-radius:2px;transition:width .5s}
-.bar-h-val{font-size:11px;color:#5a6070;width:30px;text-align:right;flex-shrink:0}
-.stat-num{font-size:28px;font-weight:600;color:#e2e4e9;margin-bottom:2px}
-.stat-lbl{font-size:11px;color:#4a5060}
-.stat-change{font-size:11px;margin-top:3px}
-.stat-change.up{color:#5aa870}
-.stat-change.down{color:#b06060}
-.donut-wrap{display:flex;align-items:center;justify-content:center;gap:20px;padding:10px}
-.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:#7a8090;margin-bottom:4px}
-.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-
-/* INBOX */
-.inbox-item{display:flex;gap:12px;align-items:flex-start;padding:11px 14px;border-bottom:1px solid #1e2128;cursor:pointer;transition:background .1s}
-.inbox-item:last-child{border-bottom:none}
-.inbox-item:hover{background:#1e2128}
-.inbox-item.unread{background:#1a1f28;border-left:2px solid #3a6a9e}
-.inbox-av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;margin-top:1px}
-.inbox-title{font-size:13px;font-weight:500;color:#c9cdd6;margin-bottom:2px}
-.inbox-item.unread .inbox-title{color:#e2e4e9}
-.inbox-preview{font-size:11px;color:#4a5060;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:400px}
-.inbox-meta{font-size:10px;color:#3a3f4d;margin-left:auto;white-space:nowrap;text-align:right;flex-shrink:0}
-.inbox-badge{display:inline-block;background:#2d4a6e;color:#8ab0d0;font-size:9px;font-weight:700;border-radius:3px;padding:1px 5px;margin-top:3px}
-
 /* PORTAL */
-.portal-hd{background:#161820;border:1px solid #2a2d35;border-radius:6px;padding:18px 18px;margin-bottom:14px}
+.portal-hd{background:#161820;border:1px solid #2a2d35;border-radius:6px;padding:16px 18px;margin-bottom:13px}
 .portal-hd h2{font-size:15px;font-weight:600;color:#e2e4e9;margin-bottom:3px}
 .portal-hd p{font-size:12px;color:#4a5060}
 
-/* BARS */
-.bar-wrap{margin-bottom:8px}
-.bar-hd{display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px;color:#4a5060}
-.bar-track{background:#1e2128;border-radius:2px;height:5px}
-.bar-fill{height:5px;border-radius:2px;transition:width .4s}
-
 /* USER CARDS */
-.user-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:9px}
-.user-card{background:#161820;border:1px solid #2a2d35;border-radius:6px;padding:11px;display:flex;gap:9px;align-items:center}
-.u-card-av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
+.user-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px}
+.user-card{background:#161820;border:1px solid #2a2d35;border-radius:6px;padding:10px;display:flex;gap:9px;align-items:center}
+.u-card-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;flex-shrink:0;color:#c9cdd6}
 .u-card-name{font-size:12px;font-weight:500;color:#c9cdd6}
 .u-card-role{font-size:10px;color:#4a5060;margin-top:1px}
 
-/* TOAST */
 .toast{position:fixed;bottom:16px;right:16px;background:#1e2128;color:#c9cdd6;border:1px solid #2a2d35;padding:8px 14px;border-radius:5px;font-size:12px;z-index:999;transform:translateY(50px);opacity:0;transition:all .2s}
 .toast.show{transform:translateY(0);opacity:1}
 .toast.success{background:#1a2d20;color:#6ab87a;border-color:#2a3d2a}
 .toast.error{background:#2d1818;color:#c07070;border-color:#3d2828}
 .loading{text-align:center;padding:30px;color:#3a3f4d;font-size:12px}
+.empty{text-align:center;padding:28px;color:#3a3f4d;font-size:12px;line-height:1.8}
 .pagi{display:flex;align-items:center;padding:8px 14px;border-top:1px solid #2a2d35;font-size:11px;color:#4a5060}
-.empty{text-align:center;padding:30px;color:#3a3f4d;font-size:12px;line-height:1.8}
 
 @media(max-width:700px){.sb{display:none}.main{margin-left:0}.kpi-row,.chart-grid,.chart-grid-3,.sla-grid{grid-template-columns:1fr}.det-meta,.form-row{grid-template-columns:1fr}}
 </style>
@@ -297,8 +295,8 @@ input[type=text]:focus,select:focus{outline:none;border-color:#3a6a9e}
         <div class="kpi-row">
           <div class="kpi-card blue"><div class="kpi-lbl">Offene Tickets</div><div class="kpi-val" id="k-open">…</div><div class="kpi-sub">Offen + In Bearbeitung</div></div>
           <div class="kpi-card green"><div class="kpi-lbl">Gelöst gesamt</div><div class="kpi-val" id="k-res">…</div><div class="kpi-sub">Erstlösungsquote: Ziel 40%</div></div>
-          <div class="kpi-card amber"><div class="kpi-lbl">Total Tickets</div><div class="kpi-val" id="k-total">…</div><div class="kpi-sub">Alle erfasst</div></div>
-          <div class="kpi-card red"><div class="kpi-lbl">Kritisch offen</div><div class="kpi-val" id="k-crit">…</div><div class="kpi-sub">Sofortiger Handlungsbedarf</div></div>
+          <div class="kpi-card amber"><div class="kpi-lbl">Diese Woche</div><div class="kpi-val" id="k-week">…</div><div class="kpi-sub">Neue Tickets</div></div>
+          <div class="kpi-card red"><div class="kpi-lbl">Antwort ausstehend</div><div class="kpi-val" id="k-wait">…</div><div class="kpi-sub">Warten auf Supporter</div></div>
         </div>
         <div class="chart-grid">
           <div class="card">
@@ -306,11 +304,11 @@ input[type=text]:focus,select:focus{outline:none;border-color:#3a6a9e}
             <div id="dash-table"><div class="loading">Lade...</div></div>
           </div>
           <div>
-            <div class="kpi-row" style="grid-template-columns:1fr 1fr;margin-bottom:14px">
-              <div class="kpi-card purple"><div class="kpi-lbl">Diese Woche</div><div class="kpi-val" id="k-week">…</div><div class="kpi-sub">Tickets erstellt</div></div>
-              <div class="kpi-card green"><div class="kpi-lbl">Diesen Monat</div><div class="kpi-val" id="k-month">…</div><div class="kpi-sub">Tickets gelöst</div></div>
+            <div class="kpi-row" style="grid-template-columns:1fr 1fr;margin-bottom:13px">
+              <div class="kpi-card purple"><div class="kpi-lbl">Diesen Monat</div><div class="kpi-val" id="k-month">…</div><div class="kpi-sub">Gelöst</div></div>
+              <div class="kpi-card red"><div class="kpi-lbl">Kritisch offen</div><div class="kpi-val" id="k-crit">…</div><div class="kpi-sub">Sofortiger Bedarf</div></div>
             </div>
-            <div class="card" style="margin-bottom:14px">
+            <div class="card" style="margin-bottom:13px">
               <div class="card-hd"><h3>Tickets nach Level</h3></div>
               <div style="padding:12px" id="level-bars"></div>
             </div>
@@ -325,47 +323,44 @@ input[type=text]:focus,select:focus{outline:none;border-color:#3a6a9e}
       <!-- STATISTIKEN -->
       <div class="view" id="view-stats">
         <div class="chart-grid-3">
-          <div class="kpi-card blue"><div class="kpi-lbl">Tickets diese Woche</div><div class="stat-num" id="s-week">…</div><div class="stat-change up" id="s-week-c">↑ gegenüber Vorwoche</div></div>
-          <div class="kpi-card green"><div class="kpi-lbl">Diesen Monat gelöst</div><div class="stat-num" id="s-month">…</div><div class="stat-change up">✓ inkl. Erstlösung</div></div>
-          <div class="kpi-card amber"><div class="kpi-lbl">Ø Bearbeitungszeit</div><div class="stat-num" id="s-avg">…h</div><div class="stat-change" style="color:#4a5060">Ziel: &lt; 4h (Silver SLA)</div></div>
+          <div class="kpi-card blue"><div class="kpi-lbl">Tickets diese Woche</div><div class="kpi-val" id="s-week">…</div><div class="kpi-sub">Neue Anfragen</div></div>
+          <div class="kpi-card green"><div class="kpi-lbl">Diesen Monat gelöst</div><div class="kpi-val" id="s-month">…</div><div class="kpi-sub">Abgeschlossen</div></div>
+          <div class="kpi-card amber"><div class="kpi-lbl">Ø Bearbeitungszeit</div><div class="kpi-val" id="s-avg">…h</div><div class="kpi-sub">Ziel: &lt; 4h (Silver SLA)</div></div>
         </div>
         <div class="chart-grid">
-          <div class="card">
-            <div class="card-hd"><h3>Tickets nach Kategorie</h3></div>
-            <div style="padding:14px" id="cat-bars"></div>
-          </div>
-          <div class="card">
-            <div class="card-hd"><h3>Tickets nach Priorität</h3></div>
-            <div style="padding:14px" id="prio-bars"></div>
-          </div>
+          <div class="card"><div class="card-hd"><h3>Tickets nach Kategorie</h3></div><div style="padding:13px" id="cat-bars"></div></div>
+          <div class="card"><div class="card-hd"><h3>Tickets nach Priorität</h3></div><div style="padding:13px" id="prio-bars"></div></div>
         </div>
         <div class="chart-grid">
-          <div class="card">
-            <div class="card-hd"><h3>Abgeschlossen nach Mitarbeiter</h3></div>
-            <div style="padding:14px" id="user-bars"></div>
-          </div>
-          <div class="card">
-            <div class="card-hd"><h3>Status-Übersicht</h3></div>
-            <div style="padding:14px" id="status-bars"></div>
-          </div>
+          <div class="card"><div class="card-hd"><h3>Abgeschlossen nach Mitarbeiter</h3></div><div style="padding:13px" id="user-bars"></div></div>
+          <div class="card"><div class="card-hd"><h3>Status-Übersicht</h3></div><div style="padding:13px" id="status-bars"></div></div>
         </div>
         <div class="chart-grid">
-          <div class="card">
-            <div class="card-hd"><h3>SLA-Einhaltung</h3></div>
-            <div style="padding:14px" id="sla-compliance"></div>
-          </div>
-          <div class="card">
-            <div class="card-hd"><h3>Tickets pro Wochentag</h3></div>
-            <div style="padding:14px" id="weekday-bars"></div>
-          </div>
+          <div class="card"><div class="card-hd"><h3>SLA-Einhaltung</h3></div><div style="padding:13px" id="sla-compliance"></div></div>
+          <div class="card"><div class="card-hd"><h3>Tickets nach Wochentag</h3></div><div style="padding:13px" id="weekday-bars"></div></div>
         </div>
       </div>
 
       <!-- INBOX -->
       <div class="view" id="view-inbox">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <div style="font-size:13px;color:#7a8090">Meine Inbox als:</div>
+          <select id="inbox-agent" onchange="loadInbox()" style="width:200px">
+            <option value="">Alle Tickets anzeigen</option>
+            <option value="Nils Müller">Nils Müller</option>
+            <option value="Calisto Marcello">Calisto Marcello</option>
+            <option value="Levi Frischknecht">Levi Frischknecht</option>
+            <option value="1st Level – SPOC">1st Level – SPOC</option>
+            <option value="Network Senior">Network Senior</option>
+            <option value="Unix Senior">Unix Senior</option>
+            <option value="Windows Senior">Windows Senior</option>
+            <option value="User & App Senior">User & App Senior</option>
+            <option value="Onsite Senior">Onsite Senior</option>
+          </select>
+        </div>
         <div class="view-tabs">
-          <button class="vt active" onclick="switchInbox('open',this)">Offene Anfragen</button>
-          <button class="vt" onclick="switchInbox('closed',this)">Abgeschlossene Anfragen</button>
+          <button class="vt active" onclick="switchInbox('open',this)">Offene Anfragen <span id="inbox-open-cnt" style="font-size:10px;color:#5a6070"></span></button>
+          <button class="vt" onclick="switchInbox('closed',this)">Abgeschlossene Anfragen <span id="inbox-closed-cnt" style="font-size:10px;color:#5a6070"></span></button>
         </div>
         <div class="card">
           <div class="card-hd"><h3 id="inbox-title">Offene Anfragen</h3><span id="inbox-count" style="font-size:11px;color:#4a5060"></span></div>
@@ -373,13 +368,13 @@ input[type=text]:focus,select:focus{outline:none;border-color:#3a6a9e}
         </div>
       </div>
 
-      <!-- TICKETS -->
+      <!-- ALLE TICKETS -->
       <div class="view" id="view-tickets">
         <div class="card">
           <div class="card-hd"><h3>Alle Tickets</h3><span id="ticket-count" style="font-size:11px;color:#4a5060"></span></div>
           <div class="filter-bar">
             <input type="text" id="srch" placeholder="Suchen..." oninput="loadTickets()" style="width:140px">
-            <select id="f-status" onchange="loadTickets()"><option value="">Alle Status</option><option>Offen</option><option>In Bearbeitung</option><option>Gelöst</option><option>Geschlossen</option></select>
+            <select id="f-status" onchange="loadTickets()"><option value="">Alle Status</option><option>Offen</option><option>In Bearbeitung</option><option>Warten auf Kunde</option><option>Gelöst</option><option>Geschlossen</option></select>
             <select id="f-level" onchange="loadTickets()"><option value="">Alle Level</option><option value="1st">1st</option><option value="2nd">2nd</option><option value="3rd">3rd</option></select>
             <select id="f-sla" onchange="loadTickets()"><option value="">Alle SLA</option><option>Silver</option><option>Gold</option><option>Platinum</option></select>
             <select id="f-prio" onchange="loadTickets()"><option value="">Alle Prio</option><option>Critical</option><option>High</option><option>Medium</option><option>Low</option></select>
@@ -390,11 +385,11 @@ input[type=text]:focus,select:focus{outline:none;border-color:#3a6a9e}
         </div>
       </div>
 
-      <!-- PORTAL (Kunde - Meine Tickets) -->
+      <!-- PORTAL (Kunde) -->
       <div class="view" id="view-portal">
         <div class="portal-hd">
           <h2>Meine Tickets</h2>
-          <p>Übersicht Ihrer eingereichten Support-Anfragen. Klicken Sie auf ein Ticket für Details.</p>
+          <p>Übersicht Ihrer eingereichten Support-Anfragen.</p>
         </div>
         <div class="card">
           <div class="card-hd"><h3>Meine Tickets</h3><span id="my-ticket-count" style="font-size:11px;color:#4a5060"></span></div>
@@ -404,10 +399,7 @@ input[type=text]:focus,select:focus{outline:none;border-color:#3a6a9e}
 
       <!-- TICKET ERSTELLEN (Kunde) -->
       <div class="view" id="view-new-ticket">
-        <div class="portal-hd">
-          <h2>Ticket erstellen</h2>
-          <p>Beschreiben Sie Ihr Problem — wir melden uns gemäss Ihrem SLA-Vertrag.</p>
-        </div>
+        <div class="portal-hd"><h2>Ticket erstellen</h2><p>Beschreiben Sie Ihr Problem — wir melden uns gemäss Ihrem SLA-Vertrag.</p></div>
         <div class="card" style="max-width:500px">
           <div class="card-hd"><h3>Neue Anfrage</h3></div>
           <div style="padding:16px">
@@ -417,7 +409,7 @@ input[type=text]:focus,select:focus{outline:none;border-color:#3a6a9e}
               <div class="fgg" style="margin-bottom:0"><label>Kategorie</label><select id="nt-cat"><option>User & App</option><option>Network</option><option>Windows/OS</option><option>Unix</option><option>Hardware</option><option>Security</option></select></div>
               <div class="fgg" style="margin-bottom:0"><label>Dringlichkeit</label><select id="nt-prio"><option value="Low">Niedrig</option><option value="Medium" selected>Normal</option><option value="High">Hoch</option><option value="Critical">Kritisch</option></select></div>
             </div>
-            <div style="background:#1a1d23;border:1px solid #2a2d35;border-radius:5px;padding:8px 11px;font-size:11px;color:#5a6070;margin-top:10px">SLA-Vertrag: <strong id="nt-sla-display" style="color:#c9cdd6">Silver</strong> · Reaktionszeit wird eingehalten.</div>
+            <div style="background:#1a1d23;border:1px solid #2a2d35;border-radius:5px;padding:8px 11px;font-size:11px;color:#5a6070;margin-top:10px">SLA-Vertrag: <strong id="nt-sla-display" style="color:#c9cdd6">Silver</strong></div>
             <button class="btn btn-primary" style="width:100%;margin-top:12px;justify-content:center" onclick="submitNewTicket()">Ticket einreichen</button>
           </div>
         </div>
@@ -425,47 +417,37 @@ input[type=text]:focus,select:focus{outline:none;border-color:#3a6a9e}
 
       <!-- BENUTZER -->
       <div class="view" id="view-users">
-        <div class="card">
-          <div class="card-hd"><h3>Support-Team</h3></div>
-          <div style="padding:13px" id="user-grid-wrap"></div>
-        </div>
+        <div class="card"><div class="card-hd"><h3>Support-Team</h3></div><div style="padding:12px" id="user-grid-wrap"></div></div>
       </div>
 
       <!-- SLA -->
       <div class="view" id="view-sla">
         <div style="margin-bottom:13px"><h2 style="font-size:15px;font-weight:600;color:#e2e4e9;margin-bottom:3px">SLA-Modelle</h2><p style="font-size:12px;color:#4a5060">Drei verbindliche Servicestufen gemäss SLA-Dokument Mai 2026.</p></div>
         <div class="sla-grid">
-          <div class="sla-card">
-            <div class="sla-hd"><div class="sla-tier">Silver</div><div class="sla-name">Silver</div><div class="sla-desc">Basis-Betreuung während Geschäftszeiten.</div></div>
+          <div class="sla-card"><div class="sla-hd"><div class="sla-tier">Silver</div><div class="sla-name">Silver</div><div class="sla-desc">Basis-Betreuung während Geschäftszeiten.</div></div>
             <div class="sla-row"><span class="sla-k">Servicezeiten</span><span class="sla-v">Mo–Fr 08–17</span></div>
             <div class="sla-row"><span class="sla-k">Reaktionszeit</span><span class="sla-v mono">4 Stunden</span></div>
             <div class="sla-row"><span class="sla-k">Verfügbarkeit</span><span class="sla-v mono">95 %</span></div>
             <div class="sla-row"><span class="sla-k">Pikett</span><span class="sla-v">Nein</span></div>
-            <div class="sla-row"><span class="sla-k">Ansprechpartner</span><span class="sla-v">Nein</span></div>
             <div class="sla-row"><span class="sla-k">Gutschrift/Vorfall</span><span class="sla-v mono">CHF 50</span></div>
           </div>
-          <div class="sla-card feat">
-            <div class="sla-hd"><div class="sla-tier">Gold — Empfohlen</div><div class="sla-name">Gold</div><div class="sla-desc">Erweitert mit Pikett und festem Ansprechpartner.</div></div>
+          <div class="sla-card feat"><div class="sla-hd"><div class="sla-tier">Gold — Empfohlen</div><div class="sla-name">Gold</div><div class="sla-desc">Erweitert mit Pikett und festem Ansprechpartner.</div></div>
             <div class="sla-row"><span class="sla-k">Servicezeiten</span><span class="sla-v">Mo–Fr 07–20</span></div>
             <div class="sla-row"><span class="sla-k">Reaktionszeit</span><span class="sla-v mono">1 Stunde</span></div>
             <div class="sla-row"><span class="sla-k">Verfügbarkeit</span><span class="sla-v mono">99 %</span></div>
             <div class="sla-row"><span class="sla-k">Pikett</span><span class="sla-v">Teilweise</span></div>
-            <div class="sla-row"><span class="sla-k">Ansprechpartner</span><span class="sla-v">Ja</span></div>
             <div class="sla-row"><span class="sla-k">Gutschrift/Vorfall</span><span class="sla-v mono">CHF 50</span></div>
           </div>
-          <div class="sla-card">
-            <div class="sla-hd"><div class="sla-tier">Platinum</div><div class="sla-name">Platinum</div><div class="sla-desc">24/7 mit Senior TAM und höchster Verfügbarkeit.</div></div>
+          <div class="sla-card"><div class="sla-hd"><div class="sla-tier">Platinum</div><div class="sla-name">Platinum</div><div class="sla-desc">24/7 mit Senior TAM und höchster Verfügbarkeit.</div></div>
             <div class="sla-row"><span class="sla-k">Servicezeiten</span><span class="sla-v">24/7 · 365 Tage</span></div>
             <div class="sla-row"><span class="sla-k">Reaktionszeit</span><span class="sla-v mono">30 Minuten</span></div>
             <div class="sla-row"><span class="sla-k">Verfügbarkeit</span><span class="sla-v mono">99.9 %</span></div>
             <div class="sla-row"><span class="sla-k">Pikett</span><span class="sla-v">Ja, 24/7</span></div>
-            <div class="sla-row"><span class="sla-k">Ansprechpartner</span><span class="sla-v">Senior TAM</span></div>
             <div class="sla-row"><span class="sla-k">Gutschrift/Vorfall</span><span class="sla-v mono">CHF 50</span></div>
           </div>
         </div>
-        <div class="card" style="margin-top:12px">
-          <div class="card-hd"><h3>Vertragsbedingungen</h3></div>
-          <div style="padding:13px;font-size:12px;color:#4a5060;line-height:1.7">Mindestlaufzeit 12 Monate. Kündigung schriftlich 3 Monate vor Ablauf. Automatische Verlängerung ohne Kündigung. Wechsel in höhere Stufe jederzeit. Wechsel tiefer: 4 Wochen Vorankündigung. Preisanpassungen 1× jährlich. Preise auf Anfrage.</div>
+        <div class="card" style="margin-top:12px"><div class="card-hd"><h3>Vertragsbedingungen</h3></div>
+          <div style="padding:13px;font-size:12px;color:#4a5060;line-height:1.7">Mindestlaufzeit 12 Monate. Kündigung schriftlich 3 Monate vor Ablauf. Automatische Verlängerung. Wechsel in höhere Stufe jederzeit. Wechsel tiefer: 4 Wochen Vorankündigung. Preisanpassungen 1× jährlich.</div>
         </div>
       </div>
 
@@ -479,7 +461,7 @@ input[type=text]:focus,select:focus{outline:none;border-color:#3a6a9e}
     <div class="modal-hd"><h3>Neues Ticket erstellen</h3><button class="modal-close" onclick="closeModal('m-new')">×</button></div>
     <div class="modal-body">
       <div class="form-row">
-        <div class="fgg"><label>Melder *</label><input type="text" id="n-reporter" placeholder="Name"></div>
+        <div class="fgg"><label>Melder *</label><input type="text" id="n-reporter" placeholder="Name des Melders"></div>
         <div class="fgg"><label>SLA</label><select id="n-sla"><option>Silver</option><option>Gold</option><option>Platinum</option></select></div>
       </div>
       <div class="fgg"><label>Titel *</label><input type="text" id="n-title" placeholder="Kurze Beschreibung"></div>
@@ -489,7 +471,7 @@ input[type=text]:focus,select:focus{outline:none;border-color:#3a6a9e}
         <div class="fgg"><label>Priorität</label><select id="n-prio"><option value="Low">Low</option><option value="Medium" selected>Medium</option><option value="High">High</option><option value="Critical">Critical</option></select></div>
       </div>
       <div class="form-row">
-        <div class="fgg"><label>Zuweisen an</label><select id="n-assign"><option>1st Level – SPOC</option><option>Network Senior</option><option>Unix Senior</option><option>Windows Senior</option><option>User & App Senior</option><option>Onsite Senior</option></select></div>
+        <div class="fgg"><label>Zuweisen an</label><select id="n-assign"><option>1st Level – SPOC</option><option>Nils Müller</option><option>Calisto Marcello</option><option>Levi Frischknecht</option><option>Network Senior</option><option>Unix Senior</option><option>Windows Senior</option><option>User & App Senior</option><option>Onsite Senior</option></select></div>
         <div class="fgg"><label>Level</label><select id="n-level"><option value="1st">1st Level</option><option value="2nd">2nd Level</option><option value="3rd">3rd Level</option></select></div>
       </div>
     </div>
@@ -500,9 +482,9 @@ input[type=text]:focus,select:focus{outline:none;border-color:#3a6a9e}
   </div>
 </div>
 
-<!-- MODAL: Detail -->
+<!-- MODAL: Ticket Detail -->
 <div class="modal-bg" id="m-detail">
-  <div class="modal">
+  <div class="modal modal-lg">
     <div class="modal-hd"><h3 id="d-title">Ticket</h3><button class="modal-close" onclick="closeModal('m-detail')">×</button></div>
     <div class="modal-body" id="d-body"></div>
     <div class="modal-ft" id="d-actions"></div>
@@ -512,14 +494,15 @@ input[type=text]:focus,select:focus{outline:none;border-color:#3a6a9e}
 <div class="toast" id="toast"></div>
 
 <script>
-const USERS = {
-  'nils.mueller':      {pass:'admin123',role:'admin',name:'Nils Müller',dept:'CIO · Administrator',color:'#3a4a7a'},
-  'calisto.marcello':  {pass:'admin123',role:'admin',name:'Calisto Marcello',dept:'CBO · Administrator',color:'#3a6a4a'},
-  'levi.frischknecht': {pass:'admin123',role:'admin',name:'Levi Frischknecht',dept:'Stv. · Administrator',color:'#4a5a7a'},
-  'kunde1':            {pass:'kunde123',role:'customer',name:'Kunde 1',dept:'Silver-Kunde',sla:'Silver',color:'#4a5060'},
-  'kunde2':            {pass:'kunde123',role:'customer',name:'Kunde 2',dept:'Gold-Kunde',sla:'Gold',color:'#6a5030'},
-  'kunde3':            {pass:'kunde123',role:'customer',name:'Kunde 3',dept:'Platinum-Kunde',sla:'Platinum',color:'#4a4070'},
+const USERS={
+  'nils.mueller':{pass:'admin123',role:'admin',name:'Nils Müller',dept:'CIO · Administrator',color:'#3a4a7a'},
+  'calisto.marcello':{pass:'admin123',role:'admin',name:'Calisto Marcello',dept:'CBO · Administrator',color:'#3a6a4a'},
+  'levi.frischknecht':{pass:'admin123',role:'admin',name:'Levi Frischknecht',dept:'Stv. · Administrator',color:'#4a5a7a'},
+  'kunde1':{pass:'kunde123',role:'customer',name:'Kunde 1',dept:'Silver-Kunde',sla:'Silver',color:'#4a5060'},
+  'kunde2':{pass:'kunde123',role:'customer',name:'Kunde 2',dept:'Gold-Kunde',sla:'Gold',color:'#6a5030'},
+  'kunde3':{pass:'kunde123',role:'customer',name:'Kunde 3',dept:'Platinum-Kunde',sla:'Platinum',color:'#4a4070'},
 };
+const AGENTS=['Nils Müller','Calisto Marcello','Levi Frischknecht','1st Level – SPOC','Network Senior','Unix Senior','Windows Senior','User & App Senior','Onsite Senior'];
 const STAFF=[
   {name:'Hans Meier',role:'User & App Junior',group:'1st Level SPOC',color:'#3a5a80'},
   {name:'Sandra Keller',role:'Network Junior Engineer',group:'1st Level SPOC',color:'#3a5a80'},
@@ -528,13 +511,13 @@ const STAFF=[
   {name:'Yuki Tanaka',role:'Unix Senior Engineer',group:'2nd Level',color:'#3a6a4a'},
   {name:'Marco Schäfer',role:'Windows Senior Engineer',group:'2nd Level',color:'#3a6a4a'},
   {name:'Lisa Wagner',role:'User & App Senior',group:'2nd Level',color:'#3a6a4a'},
-  {name:'Reto Huber',role:'Onsite Senior Engineer',group:'Onsite Support',color:'#6a5a30'},
-  {name:'Daniela Frei',role:'Onsite Junior Engineer',group:'Onsite Support',color:'#6a5a30'},
+  {name:'Reto Huber',role:'Onsite Senior Engineer',group:'Onsite',color:'#6a5a30'},
+  {name:'Daniela Frei',role:'Onsite Junior Engineer',group:'Onsite',color:'#6a5a30'},
   {name:'Nils Müller',role:'CIO / Administrator',group:'Management',color:'#3a4a7a'},
   {name:'Calisto Marcello',role:'CBO / Entscheider',group:'Management',color:'#3a6a4a'},
 ];
 
-let currentUser=null, curId=null, loginTab='admin', inboxTab='open';
+let currentUser=null,curId=null,loginTab='admin',inboxTab='open';
 
 function switchTab(t,btn){
   loginTab=t;
@@ -570,12 +553,18 @@ function startApp(){
   document.getElementById('app').classList.add('show');
   const ini=currentUser.name.split(' ').map(x=>x[0]).join('').slice(0,2);
   const av=document.getElementById('sb-av');
-  av.textContent=ini; av.style.background=currentUser.color; av.style.color='#c9cdd6';
+  av.textContent=ini;av.style.background=currentUser.color;av.style.color='#c9cdd6';
   document.getElementById('sb-name').textContent=currentUser.name;
   document.getElementById('sb-role').textContent=currentUser.role==='admin'?'Administrator':'Kunde · SLA '+(currentUser.sla||'Silver');
   buildNav();
-  if(currentUser.role==='admin'){nav('dashboard',null);loadDashboard();}
-  else{nav('portal',null);loadMyTickets();}
+  if(currentUser.role==='admin'){
+    // Pre-select current user in inbox agent dropdown
+    const sel=document.getElementById('inbox-agent');
+    if(sel)sel.value=currentUser.name;
+    nav('dashboard',null);loadDashboard();
+  } else {
+    nav('portal',null);loadMyTickets();
+  }
 }
 
 function buildNav(){
@@ -587,8 +576,8 @@ function buildNav(){
       <button class="ni active" onclick="nav('dashboard',this)">📊 Dashboard</button>
       <button class="ni" onclick="nav('stats',this)">📈 Statistiken</button>
       <div class="nav-sec">Support</div>
-      <button class="ni" onclick="nav('inbox',this)">📥 Anfragen <span class="ni-badge red" id="nb-inbox">…</span></button>
-      <button class="ni" onclick="nav('tickets',this)">🎫 Alle Tickets <span class="ni-badge" id="nb-open">…</span></button>
+      <button class="ni" onclick="nav('inbox',this)">📥 Meine Inbox <span class="ni-badge red" id="nb-inbox">…</span></button>
+      <button class="ni" onclick="nav('tickets',this)">🎫 Alle Tickets <span class="ni-badge blue" id="nb-open">…</span></button>
       <button class="ni" onclick="openNew()">＋ Neues Ticket</button>
       <div class="nav-sec">Verwaltung</div>
       <button class="ni" onclick="nav('users',this)">👥 Benutzer</button>
@@ -605,23 +594,36 @@ function buildNav(){
 
 const API='';
 function api(p,o={}){return fetch(API+p,{headers:{'Content-Type':'application/json'},...o}).then(r=>r.json());}
-function sb(s){const m={Offen:'open','In Bearbeitung':'progress',Gelöst:'resolved',Geschlossen:'closed'};return`<span class="badge b-${m[s]||'open'}">${s}</span>`;}
+
+function sbadge(s){
+  const m={Offen:'open','In Bearbeitung':'progress','Warten auf Kunde':'warten',Gelöst:'resolved',Geschlossen:'closed'};
+  return`<span class="badge b-${m[s]||'open'}">${s}</span>`;
+}
 function pb(p){const m={Critical:'critical',High:'high',Medium:'medium',Low:'low'};return`<span class="badge b-${m[p]||'medium'}">${p}</span>`;}
 function lb(l){return`<span class="badge b-${l.toLowerCase()}">${l} Level</span>`;}
 function slab(s){return`<span class="badge b-${(s||'').toLowerCase()}">${s}</span>`;}
 function fmtDate(iso){if(!iso)return'—';const d=new Date(iso);return`${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;}
+function needsReply(t){
+  // Needs reply if last log entry was NOT from an agent (= customer wrote last, or status is open with no response)
+  if(t.status==='Gelöst'||t.status==='Geschlossen'||t.status==='Warten auf Kunde')return false;
+  const logs=t.log||[];
+  if(!logs.length)return true;
+  const last=logs[logs.length-1];
+  // Needs reply if last action was open (new ticket) or if customer was last to respond
+  return last.type==='open'||t.status==='Offen';
+}
 
 function nav(view,btn){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.getElementById('view-'+view).classList.add('active');
-  const t={dashboard:'Dashboard',stats:'Statistiken',inbox:'Anfragen / Inbox',tickets:'Alle Tickets',portal:'Meine Tickets','new-ticket':'Ticket erstellen',users:'Benutzerverwaltung',sla:'SLA-Modelle'};
+  document.getElementById('view-'+view)?.classList.add('active');
+  const t={dashboard:'Dashboard',stats:'Statistiken',inbox:'Meine Inbox',tickets:'Alle Tickets',portal:'Meine Tickets','new-ticket':'Ticket erstellen',users:'Benutzerverwaltung',sla:'SLA-Modelle'};
   document.getElementById('topbar-title').textContent=t[view]||view;
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
   if(btn)btn.classList.add('active');
   if(view==='tickets')loadTickets();
   if(view==='dashboard')loadDashboard();
   if(view==='stats')loadStats();
-  if(view==='inbox')loadInbox(inboxTab);
+  if(view==='inbox'){const sel=document.getElementById('inbox-agent');if(sel&&!sel.value)sel.value=currentUser?.name||'';loadInbox();}
   if(view==='users')loadUsers();
   if(view==='portal')loadMyTickets();
   if(view==='new-ticket'){const d=document.getElementById('nt-sla-display');if(d&&currentUser)d.textContent=currentUser.sla||'Silver';}
@@ -632,25 +634,22 @@ function toast(msg,type=''){const t=document.getElementById('toast');t.textConte
 // ---- DASHBOARD ----
 async function loadDashboard(){
   const[stats,tickets]=await Promise.all([api('/api/stats'),api('/api/tickets')]);
+  const now=new Date(),weekAgo=new Date(now-7*86400000),monthStart=new Date(now.getFullYear(),now.getMonth(),1);
+  const weekNew=tickets.filter(t=>new Date(t.created)>=weekAgo).length;
+  const monthRes=tickets.filter(t=>(t.status==='Gelöst'||t.status==='Geschlossen')&&new Date(t.created)>=monthStart).length;
+  const waitCount=tickets.filter(t=>needsReply(t)).length;
+
   document.getElementById('k-open').textContent=stats.open+stats.inProgress;
   document.getElementById('k-res').textContent=stats.resolved;
-  document.getElementById('k-total').textContent=stats.total;
+  document.getElementById('k-week').textContent=weekNew;
+  document.getElementById('k-wait').textContent=waitCount;
+  document.getElementById('k-month').textContent=monthRes;
   document.getElementById('k-crit').textContent=stats.critical;
+
   const nb=document.getElementById('nb-open');if(nb)nb.textContent=stats.open+stats.inProgress;
-  const nbi=document.getElementById('nb-inbox');
-  const openCount=tickets.filter(t=>t.status==='Offen').length;
-  if(nbi)nbi.textContent=openCount;
+  const nbi=document.getElementById('nb-inbox');if(nbi)nbi.textContent=waitCount;
 
-  // Week/Month stats
-  const now=new Date();
-  const weekAgo=new Date(now-7*86400000);
-  const monthAgo=new Date(now.getFullYear(),now.getMonth(),1);
-  const weekTickets=tickets.filter(t=>new Date(t.created)>=weekAgo).length;
-  const monthResolved=tickets.filter(t=>(t.status==='Gelöst'||t.status==='Geschlossen')&&new Date(t.created)>=monthAgo).length;
-  document.getElementById('k-week').textContent=weekTickets;
-  document.getElementById('k-month').textContent=monthResolved;
-
-  document.getElementById('dash-table').innerHTML=`<table><thead><tr><th>ID</th><th>Titel</th><th>Prio</th><th>Status</th><th>Level</th></tr></thead><tbody>${tickets.slice(0,6).map(t=>`<tr onclick="openDetail('${t.id}')"><td class="td-id">${t.id}</td><td><div class="td-title">${t.title}</div><div class="td-sub">${t.reporter}</div></td><td>${pb(t.priority)}</td><td>${sb(t.status)}</td><td>${lb(t.level)}</td></tr>`).join('')}</tbody></table>`;
+  document.getElementById('dash-table').innerHTML=`<table><thead><tr><th>ID</th><th>Titel</th><th>Prio</th><th>Status</th><th>Zugewiesen</th></tr></thead><tbody>${tickets.slice(0,6).map(t=>`<tr onclick="openDetail('${t.id}')"><td class="td-id">${t.id}</td><td><div class="td-title">${t.title}</div><div class="td-sub">${t.reporter}</div></td><td>${pb(t.priority)}</td><td>${sbadge(t.status)}</td><td style="font-size:11px;color:#5a6070">${t.assign}</td></tr>`).join('')}</tbody></table>`;
 
   const maxL=Math.max(...Object.values(stats.byLevel),1);
   const lc={'1st':'#4a7aaa','2nd':'#8a7040','3rd':'#8a4040'};
@@ -660,141 +659,70 @@ async function loadDashboard(){
   document.getElementById('sla-bars').innerHTML=Object.entries(stats.bySla).map(([s,n])=>`<div class="bar-wrap"><div class="bar-hd"><span>${s}</span><span>${n}</span></div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(n/maxS*100)}%;background:${sc[s]}"></div></div></div>`).join('');
 }
 
-// ---- STATISTIKEN ----
-async function loadStats(){
-  const tickets=await api('/api/tickets');
-  const now=new Date();
-  const weekAgo=new Date(now-7*86400000);
-  const monthStart=new Date(now.getFullYear(),now.getMonth(),1);
-
-  document.getElementById('s-week').textContent=tickets.filter(t=>new Date(t.created)>=weekAgo).length;
-  document.getElementById('s-month').textContent=tickets.filter(t=>(t.status==='Gelöst'||t.status==='Geschlossen')&&new Date(t.created)>=monthStart).length;
-
-  // Avg time (mock reasonable value)
-  const resolved=tickets.filter(t=>t.status==='Gelöst'||t.status==='Geschlossen');
-  const avgH=resolved.length?Math.round(resolved.reduce((a,t)=>{
-    const logs=t.log||[];const r=logs.find(l=>l.type==='resolve');
-    if(!r)return a+3;
-    return a+(new Date(r.time)-new Date(t.created))/3600000;
-  },0)/resolved.length):2;
-  document.getElementById('s-avg').textContent=Math.max(1,Math.min(avgH,24))+'h';
-
-  // Category bars
-  const cats={};
-  tickets.forEach(t=>{cats[t.category]=(cats[t.category]||0)+1;});
-  const maxC=Math.max(...Object.values(cats),1);
-  const catColors={'User & App':'#4a7aaa','Network':'#3a6a4a','Windows/OS':'#6a5090','Unix':'#8a7040','Hardware':'#5a6070','Security':'#8a4040'};
-  document.getElementById('cat-bars').innerHTML=Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([c,n])=>`
-    <div class="bar-h">
-      <div class="bar-h-lbl">${c}</div>
-      <div class="bar-h-track"><div class="bar-h-fill" style="width:${Math.round(n/maxC*100)}%;background:${catColors[c]||'#5a6070'}"></div></div>
-      <div class="bar-h-val">${n}</div>
-    </div>`).join('');
-
-  // Priority bars
-  const prios={Critical:0,High:0,Medium:0,Low:0};
-  tickets.forEach(t=>{if(prios[t.priority]!==undefined)prios[t.priority]++;});
-  const maxP=Math.max(...Object.values(prios),1);
-  const pc={Critical:'#8a4040',High:'#8a7040',Medium:'#4a7aaa',Low:'#5a6070'};
-  document.getElementById('prio-bars').innerHTML=Object.entries(prios).map(([p,n])=>`
-    <div class="bar-h">
-      <div class="bar-h-lbl">${p}</div>
-      <div class="bar-h-track"><div class="bar-h-fill" style="width:${Math.round(n/maxP*100)}%;background:${pc[p]}"></div></div>
-      <div class="bar-h-val">${n}</div>
-    </div>`).join('');
-
-  // Resolved by assignee
-  const byUser={};
-  tickets.filter(t=>t.status==='Gelöst'||t.status==='Geschlossen').forEach(t=>{byUser[t.assign]=(byUser[t.assign]||0)+1;});
-  const maxU=Math.max(...Object.values(byUser),1);
-  document.getElementById('user-bars').innerHTML=Object.entries(byUser).sort((a,b)=>b[1]-a[1]).slice(0,6).map(([u,n])=>`
-    <div class="bar-h">
-      <div class="bar-h-lbl">${u.replace('1st Level – ','').replace(' Senior','')}</div>
-      <div class="bar-h-track"><div class="bar-h-fill" style="width:${Math.round(n/maxU*100)}%;background:#3a6a4a"></div></div>
-      <div class="bar-h-val">${n}</div>
-    </div>`).join('')||'<div class="empty">Noch keine abgeschlossenen Tickets.</div>';
-
-  // Status bars
-  const statuses={Offen:0,'In Bearbeitung':0,Gelöst:0,Geschlossen:0};
-  tickets.forEach(t=>{if(statuses[t.status]!==undefined)statuses[t.status]++;});
-  const maxSt=Math.max(...Object.values(statuses),1);
-  const stc={Offen:'#4a7aaa','In Bearbeitung':'#8a7040',Gelöst:'#3a6a4a',Geschlossen:'#5a6070'};
-  document.getElementById('status-bars').innerHTML=Object.entries(statuses).map(([s,n])=>`
-    <div class="bar-h">
-      <div class="bar-h-lbl">${s}</div>
-      <div class="bar-h-track"><div class="bar-h-fill" style="width:${Math.round(n/maxSt*100)}%;background:${stc[s]}"></div></div>
-      <div class="bar-h-val">${n}</div>
-    </div>`).join('');
-
-  // SLA compliance
-  const slaData={Silver:{total:0,ok:0},Gold:{total:0,ok:0},Platinum:{total:0,ok:0}};
-  const slaH={Silver:4,Gold:1,Platinum:0.5};
-  tickets.forEach(t=>{
-    if(!slaData[t.sla])return;
-    slaData[t.sla].total++;
-    const logs=t.log||[];const first=logs.find(l=>l.type==='update'||l.type==='resolve');
-    if(!first){slaData[t.sla].ok++;return;}
-    const h=(new Date(first.time)-new Date(t.created))/3600000;
-    if(h<=slaH[t.sla])slaData[t.sla].ok++;
-  });
-  const slaCol={Silver:'#5a6070',Gold:'#8a7040',Platinum:'#6a5090'};
-  document.getElementById('sla-compliance').innerHTML=Object.entries(slaData).map(([s,d])=>{
-    const pct=d.total?Math.round(d.ok/d.total*100):100;
-    return`<div class="bar-h">
-      <div class="bar-h-lbl">${s}</div>
-      <div class="bar-h-track"><div class="bar-h-fill" style="width:${pct}%;background:${slaCol[s]}"></div></div>
-      <div class="bar-h-val">${pct}%</div>
-    </div>`;}).join('');
-
-  // Weekday distribution
-  const days=['Mo','Di','Mi','Do','Fr','Sa','So'];
-  const dayCount=[0,0,0,0,0,0,0];
-  tickets.forEach(t=>{const d=new Date(t.created).getDay();dayCount[d===0?6:d-1]++;});
-  const maxD=Math.max(...dayCount,1);
-  document.getElementById('weekday-bars').innerHTML=days.map((d,i)=>`
-    <div class="bar-h">
-      <div class="bar-h-lbl">${d}</div>
-      <div class="bar-h-track"><div class="bar-h-fill" style="width:${Math.round(dayCount[i]/maxD*100)}%;background:#4a5a8a"></div></div>
-      <div class="bar-h-val">${dayCount[i]}</div>
-    </div>`).join('');
-}
-
 // ---- INBOX ----
 function switchInbox(tab,btn){
   inboxTab=tab;
   document.querySelectorAll('.vt').forEach(b=>b.classList.remove('active'));
   if(btn)btn.classList.add('active');
-  loadInbox(tab);
+  loadInbox();
 }
 
-async function loadInbox(tab){
+async function loadInbox(){
+  const agent=document.getElementById('inbox-agent')?.value||'';
   const tickets=await api('/api/tickets');
-  const isOpen=tab==='open';
-  document.getElementById('inbox-title').textContent=isOpen?'Offene Anfragen':'Abgeschlossene Anfragen';
-  const list=isOpen
-    ?tickets.filter(t=>t.status==='Offen'||t.status==='In Bearbeitung')
-    :tickets.filter(t=>t.status==='Gelöst'||t.status==='Geschlossen');
-  document.getElementById('inbox-count').textContent=`${list.length} Einträge`;
-  if(!list.length){document.getElementById('inbox-list').innerHTML=`<div class="empty">${isOpen?'Keine offenen Anfragen — alles erledigt ✓':'Noch keine abgeschlossenen Tickets.'}</div>`;return;}
 
-  const colors={'User & App':'#3a5a80','Network':'#3a6a4a','Windows/OS':'#5a4a80','Unix':'#7a6040','Hardware':'#5a6070','Security':'#7a4040'};
+  // Filter by assigned agent
+  let filtered=agent?tickets.filter(t=>t.assign===agent||t.assignedTo===agent):tickets;
+
+  const openList=filtered.filter(t=>t.status!=='Gelöst'&&t.status!=='Geschlossen');
+  const closedList=filtered.filter(t=>t.status==='Gelöst'||t.status==='Geschlossen');
+
+  const oc=document.getElementById('inbox-open-cnt');
+  const cc=document.getElementById('inbox-closed-cnt');
+  if(oc)oc.textContent=`(${openList.length})`;
+  if(cc)cc.textContent=`(${closedList.length})`;
+
+  const nbi=document.getElementById('nb-inbox');
+  if(nbi)nbi.textContent=openList.filter(t=>needsReply(t)).length;
+
+  const list=inboxTab==='open'?openList:closedList;
+  document.getElementById('inbox-title').textContent=inboxTab==='open'?'Offene Anfragen':'Abgeschlossene Anfragen';
+  document.getElementById('inbox-count').textContent=`${list.length} Einträge`;
+
+  if(!list.length){
+    document.getElementById('inbox-list').innerHTML=`<div class="empty">${inboxTab==='open'?'Keine offenen Anfragen — alles erledigt ✓':'Noch keine abgeschlossenen Tickets.'}</div>`;
+    return;
+  }
+
+  const catColors={'User & App':'#3a5a80','Network':'#3a6a4a','Windows/OS':'#5a4a80','Unix':'#7a6040','Hardware':'#5a6070','Security':'#7a4040'};
   document.getElementById('inbox-list').innerHTML=list.map(t=>{
+    const nr=needsReply(t);
     const lastLog=t.log?.[t.log.length-1];
-    const ini=t.reporter.split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase();
-    const col=colors[t.category]||'#4a5060';
-    return`<div class="inbox-item ${isOpen&&t.status==='Offen'?'unread':''}" onclick="openDetail('${t.id}')">
-      <div class="inbox-av" style="background:${col};color:#c9cdd6">${ini}</div>
-      <div style="flex:1;min-width:0">
-        <div class="inbox-title">${t.title} <span class="td-id" style="font-size:10px;margin-left:4px">${t.id}</span></div>
-        <div class="inbox-preview">${lastLog?.note||'Kein Kommentar'}</div>
-        <div style="margin-top:4px;display:flex;gap:5px;align-items:center">${sb(t.status)} ${pb(t.priority)} ${lb(t.level)} ${slab(t.sla)}</div>
+    const ini=t.reporter.split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase()||'?';
+    const col=catColors[t.category]||'#4a5060';
+    return`<div class="inbox-item" onclick="openDetail('${t.id}')">
+      <div class="inbox-glow ${nr?'needs-reply':''}"></div>
+      <div class="inbox-inner">
+        <div class="inbox-av" style="background:${col}">${ini}</div>
+        <div class="inbox-content">
+          <div class="inbox-title">
+            ${nr?'<div class="inbox-new-dot"></div>':''}
+            <span>${t.title}</span>
+            <span class="td-id" style="font-size:10px">${t.id}</span>
+          </div>
+          <div class="inbox-preview">${lastLog?.note||'Kein Kommentar'}</div>
+          <div class="inbox-badges">${sbadge(t.status)} ${pb(t.priority)} ${lb(t.level)} ${slab(t.sla)}
+            <span class="assignee-badge">👤 ${t.assign}</span>
+          </div>
+        </div>
+        <div class="inbox-meta">
+          <div>${fmtDate(t.created)}</div>
+          <div style="color:#4a5060">${t.reporter}</div>
+          ${nr?'<div style="color:#5a8ab0;font-size:10px;margin-top:2px">● Antwort nötig</div>':''}
+        </div>
       </div>
-      <div class="inbox-meta">
-        <div>${fmtDate(t.created)}</div>
-        <div style="color:#4a5060;font-size:10px">${t.assign}</div>
-        ${isOpen&&t.status==='Offen'?'<div class="inbox-badge">NEU</div>':''}
-      </div>
-    </div>`;}).join('');
+    </div>`;
+  }).join('');
 }
 
 // ---- TICKETS ----
@@ -808,7 +736,7 @@ async function loadTickets(){
   const list=await api('/api/tickets?'+params.toString());
   document.getElementById('ticket-count').textContent=`${list.length} Tickets`;
   document.getElementById('ticket-count2').textContent=`${list.length} Tickets`;
-  document.getElementById('ticket-table').innerHTML=`<table><thead><tr><th>ID</th><th>Titel</th><th>Kat.</th><th>Prio</th><th>Status</th><th>Level</th><th>SLA</th><th>Zugewiesen</th><th>Erstellt</th></tr></thead><tbody>${list.map(t=>`<tr onclick="openDetail('${t.id}')"><td class="td-id">${t.id}</td><td><div class="td-title">${t.title}</div><div class="td-sub">${t.reporter}</div></td><td style="font-size:11px;color:#5a6070">${t.category}</td><td>${pb(t.priority)}</td><td>${sb(t.status)}</td><td>${lb(t.level)}</td><td>${slab(t.sla)}</td><td style="font-size:11px;color:#5a6070;white-space:nowrap">${t.assign}</td><td style="font-size:11px;color:#4a5060;white-space:nowrap">${fmtDate(t.created)}</td></tr>`).join('')}</tbody></table>`;
+  document.getElementById('ticket-table').innerHTML=`<table><thead><tr><th></th><th>ID</th><th>Titel</th><th>Kat.</th><th>Prio</th><th>Status</th><th>Level</th><th>SLA</th><th>Zugewiesen</th><th>Erstellt</th></tr></thead><tbody>${list.map(t=>{const nr=needsReply(t);return`<tr onclick="openDetail('${t.id}')"><td style="width:6px;padding:0"><div style="width:4px;height:100%;min-height:36px;background:${nr?'#3a6aee':'transparent'};border-radius:0"></div></td><td class="td-id">${t.id}</td><td><div class="td-title">${nr?'<span style="color:#3a6aee;margin-right:4px">●</span>':''}${t.title}</div><div class="td-sub">${t.reporter}</div></td><td style="font-size:11px;color:#5a6070">${t.category}</td><td>${pb(t.priority)}</td><td>${sbadge(t.status)}</td><td>${lb(t.level)}</td><td>${slab(t.sla)}</td><td style="font-size:11px;color:#5a6070;white-space:nowrap">${t.assign}</td><td style="font-size:11px;color:#4a5060;white-space:nowrap">${fmtDate(t.created)}</td></tr>`;}).join('')}</tbody></table>`;
 }
 
 // ---- MY TICKETS (Kunde) ----
@@ -817,66 +745,95 @@ async function loadMyTickets(){
   const mine=list.filter(t=>t.reporter===currentUser.name||t.reporter===currentUser.username);
   const cnt=document.getElementById('my-ticket-count');
   if(cnt)cnt.textContent=mine.length+' Tickets';
-  if(!mine.length){document.getElementById('my-tickets').innerHTML=`<div class="empty">Sie haben noch keine Tickets eingereicht.<br><br><button class="btn btn-primary" onclick="nav('new-ticket',null)" style="margin-top:6px">Erstes Ticket erstellen</button></div>`;return;}
-  document.getElementById('my-tickets').innerHTML=`<table><thead><tr><th>ID</th><th>Titel</th><th>Kategorie</th><th>Status</th><th>Erstellt</th></tr></thead><tbody>${mine.map(t=>`<tr onclick="openDetail('${t.id}')"><td class="td-id">${t.id}</td><td><div class="td-title">${t.title}</div></td><td style="font-size:11px;color:#5a6070">${t.category}</td><td>${sb(t.status)}</td><td style="font-size:11px;color:#4a5060;white-space:nowrap">${fmtDate(t.created)}</td></tr>`).join('')}</tbody></table>`;
+  if(!mine.length){document.getElementById('my-tickets').innerHTML=`<div class="empty">Sie haben noch keine Tickets.<br><br><button class="btn btn-primary" onclick="nav('new-ticket',null)">Erstes Ticket erstellen</button></div>`;return;}
+  document.getElementById('my-tickets').innerHTML=`<table><thead><tr><th>ID</th><th>Titel</th><th>Status</th><th>Kategorie</th><th>Erstellt</th></tr></thead><tbody>${mine.map(t=>`<tr onclick="openDetail('${t.id}')"><td class="td-id">${t.id}</td><td><div class="td-title">${t.title}</div></td><td>${sbadge(t.status)}</td><td style="font-size:11px;color:#5a6070">${t.category}</td><td style="font-size:11px;color:#4a5060;white-space:nowrap">${fmtDate(t.created)}</td></tr>`).join('')}</tbody></table>`;
 }
 
 // ---- USERS ----
 function loadUsers(){
-  document.getElementById('user-grid-wrap').innerHTML=`<div class="user-grid">${STAFF.map(u=>`<div class="user-card"><div class="u-card-av" style="background:${u.color};color:#c9cdd6">${u.name.split(' ').map(x=>x[0]).join('').slice(0,2)}</div><div><div class="u-card-name">${u.name}</div><div class="u-card-role">${u.role}</div><div style="margin-top:3px">${u.group==='1st Level SPOC'?'<span class="badge b-1st">1st</span>':u.group==='2nd Level'?'<span class="badge b-2nd">2nd</span>':u.group==='Onsite Support'?'<span class="badge b-silver">Onsite</span>':'<span class="badge b-platinum">Mgmt</span>'}</div></div></div>`).join('')}</div>`;
+  document.getElementById('user-grid-wrap').innerHTML=`<div class="user-grid">${STAFF.map(u=>`<div class="user-card"><div class="u-card-av" style="background:${u.color}">${u.name.split(' ').map(x=>x[0]).join('').slice(0,2)}</div><div><div class="u-card-name">${u.name}</div><div class="u-card-role">${u.role}</div><div style="margin-top:3px">${u.group==='1st Level SPOC'?'<span class="badge b-1st">1st</span>':u.group==='2nd Level'?'<span class="badge b-2nd">2nd</span>':u.group==='Onsite'?'<span class="badge b-silver">Onsite</span>':'<span class="badge b-platinum">Mgmt</span>'}</div></div></div>`).join('')}</div>`;
 }
 
 // ---- DETAIL ----
 async function openDetail(id){
   curId=id;const t=await api('/api/tickets/'+id);
   document.getElementById('d-title').textContent=`${t.id} — ${t.title}`;
-  const tl=t.log.map(l=>`<div class="tl-item"><div class="tl-dot ${l.type||'update'}">${{open:'N',update:'→',resolve:'✓',escalate:'↑',close:'×'}[l.type]||'→'}</div><div><div class="tl-who">${l.who}</div><div class="tl-time">${fmtDate(l.time)}</div><div class="tl-note">${l.note}</div></div></div>`).join('');
+  const nr=needsReply(t);
   const isAdmin=currentUser.role==='admin';
+  const isOpen=t.status!=='Gelöst'&&t.status!=='Geschlossen';
+  const tl=t.log.map(l=>`<div class="tl-item"><div class="tl-dot ${l.type||'update'}">${{open:'N',update:'→',resolve:'✓',escalate:'↑',close:'×',wait:'⏸',assign:'→'}[l.type]||'→'}</div><div><div class="tl-who">${l.who}</div><div class="tl-time">${fmtDate(l.time)}</div><div class="tl-note">${l.note}</div></div></div>`).join('');
+
   document.getElementById('d-body').innerHTML=`
-    <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:11px">${sb(t.status)} ${pb(t.priority)} ${slab(t.sla)} ${lb(t.level)}</div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:11px;align-items:center">
+      ${nr?'<span style="color:#3a6aee;font-size:12px;font-weight:600">● Antwort ausstehend</span>':''}
+      ${sbadge(t.status)} ${pb(t.priority)} ${slab(t.sla)} ${lb(t.level)}
+    </div>
     <p style="font-size:12px;color:#7a8090;margin-bottom:12px">${t.desc||'Keine Beschreibung.'}</p>
     <div class="det-meta">
       <div class="meta-box"><div class="meta-lbl">Melder</div><div class="meta-val">${t.reporter}</div></div>
       <div class="meta-box"><div class="meta-lbl">Kategorie</div><div class="meta-val">${t.category}</div></div>
-      <div class="meta-box"><div class="meta-lbl">Zugewiesen</div><div class="meta-val">${t.assign}</div></div>
+      <div class="meta-box"><div class="meta-lbl">Zugewiesen an</div><div class="meta-val">${t.assign}</div></div>
       <div class="meta-box"><div class="meta-lbl">Erstellt</div><div class="meta-val">${fmtDate(t.created)}</div></div>
       <div class="meta-box"><div class="meta-lbl">Level</div><div class="meta-val">${t.level} Level</div></div>
       <div class="meta-box"><div class="meta-lbl">SLA</div><div class="meta-val">${t.sla}</div></div>
     </div>
-    <h4 style="font-size:11px;font-weight:600;margin-bottom:8px;color:#c9cdd6;text-transform:uppercase;letter-spacing:.04em">Verlauf</h4>
+    <h4 style="font-size:10px;font-weight:600;margin-bottom:8px;color:#c9cdd6;text-transform:uppercase;letter-spacing:.05em">Verlauf</h4>
     <div class="tl">${tl}</div>
-    ${isAdmin?`<div class="comment-box"><label>Kommentar hinzufügen</label><textarea id="comment-txt" placeholder="Notiz, Massnahme..."></textarea><div class="comment-actions"><input type="text" id="comment-who" placeholder="Ihr Name" style="width:130px;background:#1a1d23;border:1px solid #2a2d35;border-radius:4px;padding:5px 8px;font-size:12px;font-family:inherit;color:#c9cdd6"><button class="btn btn-secondary btn-sm" onclick="addComment()">Senden</button></div></div>`:''}`;
-  const isOpen=t.status!=='Gelöst'&&t.status!=='Geschlossen';
-  if(isAdmin){
-    document.getElementById('d-actions').innerHTML=`
-      ${isOpen?`<button class="btn btn-warn btn-sm" onclick="doAction('escalate')">Weiterleiten ↑</button>`:''}
-      ${isOpen?`<button class="btn btn-success btn-sm" onclick="doAction('resolve')">Gelöst ✓</button>`:''}
-      ${t.status==='Gelöst'?`<button class="btn btn-secondary btn-sm" onclick="doAction('close')">Schliessen</button>`:''}
-      <button class="btn btn-secondary btn-sm" onclick="closeModal('m-detail')">Schliessen</button>`;
-  } else {
-    document.getElementById('d-actions').innerHTML=`<button class="btn btn-secondary btn-sm" onclick="closeModal('m-detail')">Schliessen</button>`;
-  }
+    ${isAdmin?`
+    <div class="action-bar">
+      <label>Antwort / Kommentar</label>
+      <textarea id="comment-txt" placeholder="Antwort an Kunden, interne Notiz, Massnahme..."></textarea>
+      <div class="assign-row">
+        <label>Ticket übernehmen / zuweisen:</label>
+        <select id="reassign-select" style="flex:1">
+          <option value="">Zuweisung nicht ändern</option>
+          ${AGENTS.map(a=>`<option value="${a}" ${t.assign===a?'selected':''}>${a}</option>`).join('')}
+        </select>
+      </div>
+      <div class="action-row">
+        ${isOpen?`<button class="btn btn-primary btn-sm" onclick="doReply()">Antworten →</button>`:''}
+        ${isOpen?`<button class="btn btn-warn btn-sm" onclick="doAction('wait')">Warten auf Kunde ⏸</button>`:''}
+        ${isOpen?`<button class="btn btn-warn btn-sm" onclick="doAction('escalate')">Weiterleiten ↑</button>`:''}
+        ${isOpen?`<button class="btn btn-success btn-sm" onclick="doAction('resolve')">Gelöst ✓</button>`:''}
+        ${t.status==='Gelöst'?`<button class="btn btn-secondary btn-sm" onclick="doAction('close')">Schliessen</button>`:''}
+      </div>
+    </div>`:''}`;
+
+  document.getElementById('d-actions').innerHTML=`<button class="btn btn-secondary btn-sm" onclick="closeModal('m-detail')">Schliessen</button>`;
   document.getElementById('m-detail').classList.add('open');
+}
+
+async function doReply(){
+  const note=document.getElementById('comment-txt')?.value.trim();
+  const newAssign=document.getElementById('reassign-select')?.value;
+  if(!note){toast('Bitte Antwort eingeben.','error');return;}
+  const body={note,who:currentUser.name,action:'update'};
+  if(newAssign){body.assign=newAssign;body.action='assign';body.note=note+`\n[Zugewiesen an: ${newAssign}]`;}
+  // After reply, status goes to "In Bearbeitung" if it was "Offen"
+  const t=await api('/api/tickets/'+curId);
+  if(t.status==='Offen')body.status='In Bearbeitung';
+  await api('/api/tickets/'+curId,{method:'PATCH',body:JSON.stringify(body)});
+  toast('Antwort gesendet ✓','success');
+  closeModal('m-detail');refreshAll();
 }
 
 async function doAction(action){
   const note=document.getElementById('comment-txt')?.value.trim();
-  const who=document.getElementById('comment-who')?.value.trim()||currentUser.name;
-  await api('/api/tickets/'+curId,{method:'PATCH',body:JSON.stringify({action,note,who})});
-  toast(action==='resolve'?'Ticket gelöst ✓':action==='escalate'?'Weitergeleitet ↑':'Geschlossen',action==='resolve'?'success':'');
-  closeModal('m-detail');loadDashboard();loadTickets();loadInbox(inboxTab);
+  const newAssign=document.getElementById('reassign-select')?.value;
+  const who=currentUser.name;
+  const body={action,who,note};
+  if(newAssign&&newAssign!=='')body.assign=newAssign;
+  if(action==='wait'){body.status='Warten auf Kunde';body.action='wait';body.note=note||'Warten auf Rückmeldung vom Kunden.';}
+  await api('/api/tickets/'+curId,{method:'PATCH',body:JSON.stringify(body)});
+  const msgs={resolve:'Ticket gelöst ✓',escalate:'Weitergeleitet ↑',close:'Ticket geschlossen',wait:'Status: Warten auf Kunde ⏸'};
+  toast(msgs[action]||'Aktualisiert',action==='resolve'?'success':'');
+  closeModal('m-detail');refreshAll();
 }
 
-async function addComment(){
-  const note=document.getElementById('comment-txt')?.value.trim();
-  const who=document.getElementById('comment-who')?.value.trim()||currentUser.name;
-  if(!note){toast('Bitte Kommentar eingeben.','error');return;}
-  await api('/api/tickets/'+curId,{method:'PATCH',body:JSON.stringify({note,who,action:'update'})});
-  toast('Kommentar gespeichert ✓','success');openDetail(curId);
-}
+function refreshAll(){loadDashboard();loadTickets();loadInbox();loadMyTickets();}
 
+// ---- NEW TICKET (Admin Modal) ----
 function openNew(){document.getElementById('m-new').classList.add('open');}
-
 async function submitNew(){
   const title=document.getElementById('n-title').value.trim();
   const reporter=document.getElementById('n-reporter').value.trim();
@@ -885,9 +842,10 @@ async function submitNew(){
   const t=await api('/api/tickets',{method:'POST',body:JSON.stringify(body)});
   closeModal('m-new');toast(`Ticket ${t.id} erstellt ✓`,'success');
   ['n-title','n-reporter','n-desc'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  loadDashboard();
+  refreshAll();
 }
 
+// ---- NEW TICKET (Kunde) ----
 async function submitNewTicket(){
   const title=document.getElementById('nt-title').value.trim();
   const desc=document.getElementById('nt-desc').value.trim();
@@ -896,6 +854,45 @@ async function submitNewTicket(){
   toast(`Ticket ${t.id} eingereicht ✓`,'success');
   document.getElementById('nt-title').value='';document.getElementById('nt-desc').value='';
   nav('portal',document.querySelector('.ni'));
+}
+
+// ---- STATS ----
+async function loadStats(){
+  const tickets=await api('/api/tickets');
+  const now=new Date(),weekAgo=new Date(now-7*86400000),monthStart=new Date(now.getFullYear(),now.getMonth(),1);
+  document.getElementById('s-week').textContent=tickets.filter(t=>new Date(t.created)>=weekAgo).length;
+  document.getElementById('s-month').textContent=tickets.filter(t=>(t.status==='Gelöst'||t.status==='Geschlossen')&&new Date(t.created)>=monthStart).length;
+  const resolved=tickets.filter(t=>t.status==='Gelöst'||t.status==='Geschlossen');
+  const avgH=resolved.length?Math.round(resolved.reduce((a,t)=>{const logs=t.log||[];const r=logs.find(l=>l.type==='resolve');if(!r)return a+3;return a+(new Date(r.time)-new Date(t.created))/3600000;},0)/resolved.length):2;
+  document.getElementById('s-avg').textContent=Math.max(1,Math.min(avgH,24))+'h';
+  const cats={};tickets.forEach(t=>{cats[t.category]=(cats[t.category]||0)+1;});
+  const maxC=Math.max(...Object.values(cats),1);
+  const catC={'User & App':'#4a7aaa','Network':'#3a6a4a','Windows/OS':'#6a5090','Unix':'#8a7040','Hardware':'#5a6070','Security':'#8a4040'};
+  document.getElementById('cat-bars').innerHTML=Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([c,n])=>`<div class="bar-h"><div class="bar-h-lbl">${c}</div><div class="bar-h-track"><div class="bar-h-fill" style="width:${Math.round(n/maxC*100)}%;background:${catC[c]||'#5a6070'}"></div></div><div class="bar-h-val">${n}</div></div>`).join('');
+  const prios={Critical:0,High:0,Medium:0,Low:0};
+  tickets.forEach(t=>{if(prios[t.priority]!==undefined)prios[t.priority]++;});
+  const maxP=Math.max(...Object.values(prios),1);
+  const pc={Critical:'#8a4040',High:'#8a7040',Medium:'#4a7aaa',Low:'#5a6070'};
+  document.getElementById('prio-bars').innerHTML=Object.entries(prios).map(([p,n])=>`<div class="bar-h"><div class="bar-h-lbl">${p}</div><div class="bar-h-track"><div class="bar-h-fill" style="width:${Math.round(n/maxP*100)}%;background:${pc[p]}"></div></div><div class="bar-h-val">${n}</div></div>`).join('');
+  const byUser={};
+  tickets.filter(t=>t.status==='Gelöst'||t.status==='Geschlossen').forEach(t=>{byUser[t.assign]=(byUser[t.assign]||0)+1;});
+  const maxU=Math.max(...Object.values(byUser),1);
+  document.getElementById('user-bars').innerHTML=Object.entries(byUser).sort((a,b)=>b[1]-a[1]).slice(0,7).map(([u,n])=>`<div class="bar-h"><div class="bar-h-lbl">${u.replace('1st Level – ','')}</div><div class="bar-h-track"><div class="bar-h-fill" style="width:${Math.round(n/maxU*100)}%;background:#3a6a4a"></div></div><div class="bar-h-val">${n}</div></div>`).join('')||'<div class="empty">Noch keine abgeschlossenen Tickets.</div>';
+  const statuses={Offen:0,'In Bearbeitung':0,'Warten auf Kunde':0,Gelöst:0,Geschlossen:0};
+  tickets.forEach(t=>{if(statuses[t.status]!==undefined)statuses[t.status]++;});
+  const maxSt=Math.max(...Object.values(statuses),1);
+  const stc={Offen:'#4a7aaa','In Bearbeitung':'#8a7040','Warten auf Kunde':'#7a5090',Gelöst:'#3a6a4a',Geschlossen:'#5a6070'};
+  document.getElementById('status-bars').innerHTML=Object.entries(statuses).map(([s,n])=>`<div class="bar-h"><div class="bar-h-lbl">${s}</div><div class="bar-h-track"><div class="bar-h-fill" style="width:${Math.round(n/maxSt*100)}%;background:${stc[s]}"></div></div><div class="bar-h-val">${n}</div></div>`).join('');
+  const slaData={Silver:{total:0,ok:0},Gold:{total:0,ok:0},Platinum:{total:0,ok:0}};
+  const slaH={Silver:4,Gold:1,Platinum:0.5};
+  tickets.forEach(t=>{if(!slaData[t.sla])return;slaData[t.sla].total++;const logs=t.log||[];const first=logs.find(l=>l.type==='update'||l.type==='resolve');if(!first){slaData[t.sla].ok++;return;}const h=(new Date(first.time)-new Date(t.created))/3600000;if(h<=slaH[t.sla])slaData[t.sla].ok++;});
+  const slaCol={Silver:'#5a6070',Gold:'#8a7040',Platinum:'#6a5090'};
+  document.getElementById('sla-compliance').innerHTML=Object.entries(slaData).map(([s,d])=>{const pct=d.total?Math.round(d.ok/d.total*100):100;return`<div class="bar-h"><div class="bar-h-lbl">${s}</div><div class="bar-h-track"><div class="bar-h-fill" style="width:${pct}%;background:${slaCol[s]}"></div></div><div class="bar-h-val">${pct}%</div></div>`;}).join('');
+  const days=['Mo','Di','Mi','Do','Fr','Sa','So'];
+  const dayCount=[0,0,0,0,0,0,0];
+  tickets.forEach(t=>{const d=new Date(t.created).getDay();dayCount[d===0?6:d-1]++;});
+  const maxD=Math.max(...dayCount,1);
+  document.getElementById('weekday-bars').innerHTML=days.map((d,i)=>`<div class="bar-h"><div class="bar-h-lbl">${d}</div><div class="bar-h-track"><div class="bar-h-fill" style="width:${Math.round(dayCount[i]/maxD*100)}%;background:#4a5a8a"></div></div><div class="bar-h-val">${dayCount[i]}</div></div>`).join('');
 }
 
 function closeModal(id){document.getElementById(id).classList.remove('open');}
