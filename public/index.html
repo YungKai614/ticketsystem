@@ -599,8 +599,10 @@ async function loadMyTickets() {
   const list = await api('/api/tickets');
   const mine = list.filter(t => t.reporter === currentUser.name || t.reporter === currentUser.username);
   const wrap = document.getElementById('my-tickets');
-  if (!mine.length) { wrap.innerHTML=`<div style="padding:20px;text-align:center;color:#4a5060;font-size:13px">Noch keine Tickets eingereicht.</div>`; return; }
-  wrap.innerHTML=`<table><thead><tr><th>ID</th><th>Titel</th><th>Status</th><th>Erstellt</th></tr></thead><tbody>${mine.map(t=>`<tr onclick="openDetail('${t.id}')"><td class="td-id">${t.id}</td><td><div class="td-title">${t.title}</div></td><td>${sb(t.status)}</td><td style="font-size:11px;color:#4a5060;white-space:nowrap">${fmtDate(t.created)}</td></tr>`).join('')}</tbody></table>`;
+  const cnt = document.getElementById('my-ticket-count');
+  if(cnt) cnt.textContent = mine.length + ' Tickets';
+  if (!mine.length) { wrap.innerHTML=`<div style="padding:28px;text-align:center;color:#4a5060;font-size:13px">Sie haben noch keine Tickets eingereicht.<br><br><button class="btn btn-primary" onclick="nav('new-ticket',null)" style="margin-top:8px">Erstes Ticket erstellen</button></div>`; return; }
+  wrap.innerHTML=`<table><thead><tr><th>ID</th><th>Titel</th><th>Kategorie</th><th>Status</th><th>Erstellt</th></tr></thead><tbody>${mine.map(t=>`<tr onclick="openDetail('${t.id}')"><td class="td-id">${t.id}</td><td><div class="td-title">${t.title}</div></td><td style="font-size:11px;color:#5a6070">${t.category}</td><td>${sb(t.status)}</td><td style="font-size:11px;color:#4a5060;white-space:nowrap">${fmtDate(t.created)}</td></tr>`).join('')}</tbody></table>`;
 }
 
 function loadUsers() {
