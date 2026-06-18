@@ -276,6 +276,14 @@ td{padding:7px 11px;vertical-align:middle}
 .divider{height:1px;background:#2a2d35;margin:10px 0}
 .section-lbl{font-size:10px;font-weight:600;color:#4a5060;text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px;margin-top:4px}
 
+.notif-item{display:flex;gap:9px;padding:10px 13px;border-bottom:1px solid #1e2128;cursor:pointer;transition:background .1s}
+.notif-item:last-child{border-bottom:none}
+.notif-item:hover{background:#1e2128}
+.notif-item.unread{background:#1a1f2a;border-left:2px solid #3a6aee}
+.notif-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.notif-text{font-size:12px;color:#c9cdd6;line-height:1.4}
+.notif-time{font-size:10px;color:#4a5060;margin-top:2px}
+.notif-empty{text-align:center;padding:22px;color:#3a3f4d;font-size:12px}
 @media(max-width:700px){.sb{display:none}.main{margin-left:0}.kpi-row-4,.kpi-row-3,.chart-grid,.chart-grid-3,.sla-grid{grid-template-columns:1fr}.det-meta,.form-row{grid-template-columns:1fr}}
 </style>
 </head>
@@ -328,6 +336,19 @@ td{padding:7px 11px;vertical-align:middle}
     <div class="topbar">
       <div class="topbar-title" id="topbar-title">Dashboard</div>
       <div id="topbar-actions"></div>
+      <div style="position:relative;margin-left:6px">
+        <button id="notif-btn" onclick="toggleNotif()" style="background:none;border:none;cursor:pointer;padding:5px;border-radius:5px;color:#6a7080;position:relative;font-size:16px;line-height:1" title="Benachrichtigungen">
+          🔔
+          <span id="notif-dot" style="display:none;position:absolute;top:2px;right:2px;width:8px;height:8px;border-radius:50%;background:#e05050;border:1.5px solid #13151a"></span>
+        </button>
+        <div id="notif-panel" style="display:none;position:absolute;right:0;top:38px;width:320px;background:#13151a;border:1px solid #2a2d35;border-radius:7px;box-shadow:0 8px 24px rgba(0,0,0,.5);z-index:300">
+          <div style="padding:10px 13px;border-bottom:1px solid #2a2d35;display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:12px;font-weight:600;color:#c9cdd6">Benachrichtigungen</span>
+            <button onclick="clearNotifs()" style="background:none;border:none;font-size:10px;color:#4a5060;cursor:pointer">Alle löschen</button>
+          </div>
+          <div id="notif-list" style="max-height:340px;overflow-y:auto"></div>
+        </div>
+      </div>
     </div>
     <div class="content">
 
@@ -391,17 +412,8 @@ td{padding:7px 11px;vertical-align:middle}
       <div class="view" id="view-inbox">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:13px">
           <span style="font-size:12px;color:#5a6070">Inbox für:</span>
-          <select id="inbox-agent" onchange="loadInbox()" style="width:190px">
+          <select id="inbox-agent" onchange="loadInbox()" style="width:220px">
             <option value="">Alle Anfragen</option>
-            <option value="Nils Müller">Nils Müller</option>
-            <option value="Calisto Marcello">Calisto Marcello</option>
-            <option value="Levi Frischknecht">Levi Frischknecht</option>
-            <option value="1st Level – SPOC">1st Level – SPOC</option>
-            <option value="Network Senior">Network Senior</option>
-            <option value="Unix Senior">Unix Senior</option>
-            <option value="Windows Senior">Windows Senior</option>
-            <option value="User & App Senior">User & App Senior</option>
-            <option value="Onsite Senior">Onsite Senior</option>
           </select>
         </div>
         <div class="view-tabs">
@@ -532,11 +544,7 @@ td{padding:7px 11px;vertical-align:middle}
       </div>
       <div class="form-row">
         <div class="fgg"><label>Zuweisen an</label>
-          <select id="n-assign">
-            <option>1st Level – SPOC</option><option>Nils Müller</option><option>Calisto Marcello</option>
-            <option>Levi Frischknecht</option><option>Network Senior</option><option>Unix Senior</option>
-            <option>Windows Senior</option><option>User & App Senior</option><option>Onsite Senior</option>
-          </select>
+          <select id="n-assign" id="n-assign"></select>
         </div>
         <div class="fgg"><label>Level</label><select id="n-level"><option value="1st">1st Level</option><option value="2nd">2nd Level</option><option value="3rd">3rd Level</option></select></div>
       </div>
@@ -581,19 +589,45 @@ const USERS={
   'kunde3':{pass:'kunde123',role:'customer',name:'Weber Holding',dept:'Platinum-Kunde',sla:'Platinum',color:'#4a4070'},
   'extern1':{pass:'extern123',role:'customer',name:'Externe Firma AG',dept:'Extern (kein SLA)',sla:'Extern',color:'#4a2a5a'},
 };
-const AGENTS=['1st Level – SPOC','Nils Müller','Calisto Marcello','Levi Frischknecht','Network Senior','Unix Senior','Windows Senior','User & App Senior','Onsite Senior'];
+const AGENTS=[
+  {value:'Nils Müller',      label:'Nils Müller',       role:'CIO / Projektleiter',    group:'Management'},
+  {value:'Calisto Marcello', label:'Calisto Marcello',  role:'CBO / Entscheider',      group:'Management'},
+  {value:'Levi Frischknecht',label:'Levi Frischknecht', role:'Win/OS Junior Engineer', group:'1st Level (SPOC)'},
+  {value:'Hans Meier',       label:'Hans Meier',        role:'User & App Junior',      group:'1st Level (SPOC)'},
+  {value:'Sandra Keller',    label:'Sandra Keller',     role:'User & App Jr. Tech.',   group:'1st Level (SPOC)'},
+  {value:'Patrick Baumann',  label:'Patrick Baumann',   role:'Network Junior Engineer',group:'1st Level (SPOC)'},
+  {value:'Thomas Braun',     label:'Thomas Braun',      role:'Network Senior Analyst', group:'2nd Level'},
+  {value:'Yuki Tanaka',      label:'Yuki Tanaka',       role:'Unix Senior Engineer',   group:'2nd Level'},
+  {value:'Marco Schäfer',    label:'Marco Schäfer',     role:'Windows Senior Engineer',group:'2nd Level'},
+  {value:'Lisa Wagner',      label:'Lisa Wagner',       role:'User & App Senior',      group:'2nd Level'},
+  {value:'Reto Huber',       label:'Reto Huber',        role:'Onsite Senior Engineer', group:'Onsite Support'},
+  {value:'Daniela Frei',     label:'Daniela Frei',      role:'Onsite Junior Engineer', group:'Onsite Support'},
+];
+const AGENT_VALUES=AGENTS.map(a=>a.value);
+function agentOptions(selected=''){
+  const groups={};
+  AGENTS.forEach(a=>{if(!groups[a.group])groups[a.group]=[];groups[a.group].push(a);});
+  return Object.entries(groups).map(([g,agents])=>
+    `<optgroup label="${g}">${agents.map(a=>`<option value="${a.value}" ${a.value===selected?'selected':''}>${a.label} — ${a.role}</option>`).join('')}</optgroup>`
+  ).join('');
+}
 const STAFF=[
-  {name:'Hans Meier',role:'User & App Junior',group:'1st',color:'#3a5a80'},
-  {name:'Sandra Keller',role:'Network Junior Engineer',group:'1st',color:'#3a5a80'},
-  {name:'Patrick Baumann',role:'Win/OS Junior Engineer',group:'1st',color:'#3a5a80'},
-  {name:'Thomas Braun',role:'Network Senior Analyst',group:'2nd',color:'#3a6a4a'},
-  {name:'Yuki Tanaka',role:'Unix Senior Engineer',group:'2nd',color:'#3a6a4a'},
-  {name:'Marco Schäfer',role:'Windows Senior Engineer',group:'2nd',color:'#3a6a4a'},
-  {name:'Lisa Wagner',role:'User & App Senior',group:'2nd',color:'#3a6a4a'},
-  {name:'Reto Huber',role:'Onsite Senior Engineer',group:'onsite',color:'#6a5a30'},
-  {name:'Daniela Frei',role:'Onsite Junior Engineer',group:'onsite',color:'#6a5a30'},
-  {name:'Nils Müller',role:'CIO / Administrator',group:'mgmt',color:'#3a4a7a'},
-  {name:'Calisto Marcello',role:'CBO / Entscheider',group:'mgmt',color:'#3a6a4a'},
+  // 1st Level SPOC
+  {name:'Hans Meier',       role:'User & App Junior',        dept:'1st Level (SPOC)',  group:'1st', color:'#2a4a6a', initials:'HM', status:'active'},
+  {name:'Sandra Keller',    role:'User & App Jr. Technician',dept:'1st Level (SPOC)',  group:'1st', color:'#2a4a6a', initials:'SK', status:'active'},
+  {name:'Patrick Baumann',  role:'Network Junior Engineer',  dept:'1st Level (SPOC)',  group:'1st', color:'#2a4a6a', initials:'PB', status:'active'},
+  {name:'Levi Frischknecht',role:'Win/OS Junior Engineer',   dept:'1st Level (SPOC)',  group:'1st', color:'#3a4a7a', initials:'LF', status:'active'},
+  // 2nd Level
+  {name:'Thomas Braun',     role:'Network Senior Analyst',   dept:'2nd Level',         group:'2nd', color:'#2a5a3a', initials:'TB', status:'active'},
+  {name:'Yuki Tanaka',      role:'Unix Senior Engineer',     dept:'2nd Level',         group:'2nd', color:'#2a5a3a', initials:'YT', status:'active'},
+  {name:'Marco Schäfer',    role:'Windows Senior Engineer',  dept:'2nd Level',         group:'2nd', color:'#2a5a3a', initials:'MS', status:'active'},
+  {name:'Lisa Wagner',      role:'User & App Senior Analyst',dept:'2nd Level',         group:'2nd', color:'#2a5a3a', initials:'LW', status:'active'},
+  // Onsite Support
+  {name:'Reto Huber',       role:'Onsite Senior Engineer',   dept:'Onsite Support',    group:'onsite', color:'#5a4a20', initials:'RH', status:'active'},
+  {name:'Daniela Frei',     role:'Onsite Junior Engineer',   dept:'Onsite Support',    group:'onsite', color:'#5a4a20', initials:'DF', status:'active'},
+  // Management
+  {name:'Nils Müller',      role:'CIO / Projektleiter',      dept:'Management',        group:'mgmt', color:'#3a4a7a', initials:'NM', status:'active'},
+  {name:'Calisto Marcello', role:'CBO / Entscheider',        dept:'Management',        group:'mgmt', color:'#2a5a3a', initials:'CM', status:'active'},
 ];
 
 let currentUser=null,curTicket=null,curId=null,loginTab='admin',inboxTab='open',editMode=false;
@@ -637,10 +671,19 @@ function startApp(){
   document.getElementById('sb-name').textContent=currentUser.name;
   document.getElementById('sb-role').textContent=currentUser.role==='admin'?'Administrator':'Kunde · SLA '+(currentUser.sla||'Silver');
   buildNav();
+  // Populate agent dropdowns
+  const inboxSel=document.getElementById('inbox-agent');
+  if(inboxSel){
+    inboxSel.innerHTML=`<option value="">Alle Anfragen</option>${agentOptions('')}`;
+  }
+  const nassign=document.getElementById('n-assign');
+  if(nassign) nassign.innerHTML=agentOptions('Hans Meier');
+
   if(currentUser.role==='admin'){
     const sel=document.getElementById('inbox-agent');
     if(sel)sel.value=currentUser.name;
     nav('dashboard',null);loadDashboard();
+    startNotifPoll();
   } else {
     const info=document.getElementById('nt-sla-info');
     if(info)info.innerHTML=`SLA: <strong style="color:#c9cdd6">${currentUser.sla||'Silver'}</strong>`;
@@ -911,7 +954,7 @@ function renderDetail(t,editing){
         ${editing?`<div class="meta-val"><select id="e-prio">${['Low','Medium','High','Critical'].map(p=>`<option ${t.priority===p?'selected':''}>${p}</option>`).join('')}</select></div>`:`<div class="meta-val">${pb(t.priority)}</div>`}
       </div>
       <div class="meta-box"><div class="meta-lbl">Zugewiesen an</div>
-        ${editing?`<div class="meta-val"><select id="e-assign">${AGENTS.map(a=>`<option ${t.assign===a?'selected':''}>${a}</option>`).join('')}</select></div>`:`<div class="meta-val">${t.assign}</div>`}
+        ${editing?`<div class="meta-val"><select id="e-assign">${agentOptions(t.assign)}</select></div>`:`<div class="meta-val">${t.assign}</div>`}
       </div>
       <div class="meta-box"><div class="meta-lbl">Status</div>
         ${editing?`<div class="meta-val"><select id="e-status">${['Offen','In Bearbeitung','Warten auf Kunde','Gelöst','Geschlossen'].map(s=>`<option ${t.status===s?'selected':''}>${s}</option>`).join('')}</select></div>`:`<div class="meta-val">${badge(t.status)}</div>`}
@@ -1088,12 +1131,31 @@ async function submitNewTicket(){
 // USERS
 // ============================================================
 function loadUsers(){
-  const groupLabels={'1st':'1st Level SPOC','2nd':'2nd Level','onsite':'Onsite','mgmt':'Management'};
+  const groupLabels={'1st':'1st Level (SPOC)','2nd':'2nd Level','onsite':'Onsite Support','mgmt':'Management'};
+  const groupColors={'1st':'#2a4a6a','2nd':'#2a5a3a','onsite':'#5a4a20','mgmt':'#3a4060'};
   const groups={};
   STAFF.forEach(u=>{if(!groups[u.group])groups[u.group]=[];groups[u.group].push(u);});
   document.getElementById('user-grid-wrap').innerHTML=Object.entries(groups).map(([g,users])=>`
-    <div class="section-lbl">${groupLabels[g]||g}</div>
-    <div class="user-grid" style="margin-bottom:14px">${users.map(u=>`<div class="user-card"><div class="u-card-av" style="background:${u.color}">${u.name.split(' ').map(x=>x[0]).join('').slice(0,2)}</div><div><div style="font-size:12px;font-weight:500;color:#c9cdd6">${u.name}</div><div style="font-size:10px;color:#4a5060;margin-top:1px">${u.role}</div></div></div>`).join('')}</div>`).join('');
+    <div class="section-lbl" style="margin-top:${g==='1st'?'0':'14px'}">${groupLabels[g]||g}</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px">
+      ${users.map(u=>`
+        <div style="background:#161820;border:1px solid #2a2d35;border-radius:7px;overflow:hidden">
+          <div style="background:${u.color}22;border-bottom:1px solid #2a2d35;padding:14px;display:flex;align-items:center;gap:10px">
+            <div style="width:42px;height:42px;border-radius:50%;background:${u.color};display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0">${u.initials}</div>
+            <div>
+              <div style="font-size:13px;font-weight:600;color:#e2e4e9">${u.name}</div>
+              <div style="font-size:10px;color:#5a6070;margin-top:1px">${u.dept}</div>
+            </div>
+          </div>
+          <div style="padding:10px 12px">
+            <div style="font-size:11px;color:#7a8090;margin-bottom:6px">${u.role}</div>
+            <div style="display:flex;align-items:center;gap:5px">
+              <div style="width:6px;height:6px;border-radius:50%;background:#3a6a4a"></div>
+              <span style="font-size:10px;color:#4a6a4a">Aktiv</span>
+            </div>
+          </div>
+        </div>`).join('')}
+    </div>`).join('');
 }
 
 // ============================================================
@@ -1141,6 +1203,117 @@ async function refreshBadges(){
   const nb=document.getElementById('nb-open');if(nb)nb.textContent=stats.open+stats.inProgress;
   const nbi=document.getElementById('nb-inbox');if(nbi)nbi.textContent=tickets.filter(t=>needsReply(t)).length;
 }
+// ============================================================
+// NOTIFICATIONS
+// ============================================================
+let notifications=[];
+let lastTicketCount=0;
+let lastTicketIds={};
+let notifOpen=false;
+
+function startNotifPoll(){
+  checkNotifs();
+  setInterval(checkNotifs,15000);
+}
+
+async function checkNotifs(){
+  try{
+    const tickets=await api('/api/tickets');
+    const now=Date.now();
+    if(lastTicketCount>0){
+      tickets.forEach(t=>{
+        const prev=lastTicketIds[t.id];
+        // New ticket
+        if(!prev){
+          addNotif({icon:'🎫',text:`Neues Ticket: ${t.title}`,sub:`Von ${t.reporter} · ${t.id}`,ticketId:t.id,time:now,type:'new'});
+        } else {
+          // New log entry
+          const newLogs=(t.log||[]).slice(prev.logCount||0);
+          newLogs.forEach(l=>{
+            if(l.who!==currentUser?.name){
+              // Reply on closed ticket
+              if(prev.status==='Geschlossen'||prev.status==='Gelöst'){
+                addNotif({icon:'⚠️',text:`Antwort auf abgeschlossenes Ticket: ${t.title}`,sub:`Von ${l.who} · ${t.id}`,ticketId:t.id,time:now,type:'closed-reply'});
+              } else {
+                addNotif({icon:'💬',text:`Neue Antwort: ${t.title}`,sub:`${l.who}: ${l.note?.slice(0,60)||''}`,ticketId:t.id,time:now,type:'reply'});
+              }
+            }
+          });
+        }
+        lastTicketIds[t.id]={status:t.status,logCount:(t.log||[]).length};
+      });
+    } else {
+      tickets.forEach(t=>{lastTicketIds[t.id]={status:t.status,logCount:(t.log||[]).length};});
+    }
+    lastTicketCount=tickets.length;
+    renderNotifs();
+  }catch(e){}
+}
+
+function addNotif(n){
+  n.id=Date.now()+Math.random();
+  n.read=false;
+  notifications.unshift(n);
+  if(notifications.length>50)notifications=notifications.slice(0,50);
+  renderNotifs();
+}
+
+function renderNotifs(){
+  const unread=notifications.filter(n=>!n.read).length;
+  const dot=document.getElementById('notif-dot');
+  if(dot)dot.style.display=unread>0?'block':'none';
+  const btn=document.getElementById('notif-btn');
+  if(btn)btn.title=`Benachrichtigungen (${unread} ungelesen)`;
+  if(!notifOpen)return;
+  const list=document.getElementById('notif-list');
+  if(!list)return;
+  if(!notifications.length){list.innerHTML='<div class="notif-empty">Keine Benachrichtigungen</div>';return;}
+  list.innerHTML=notifications.map(n=>`
+    <div class="notif-item ${n.read?'':'unread'}" onclick="openNotif('${n.id}','${n.ticketId||''}')">
+      <div class="notif-icon">${n.icon||'🔔'}</div>
+      <div>
+        <div class="notif-text" style="${n.type==='closed-reply'?'color:#e09050':''}">${n.text}</div>
+        <div class="notif-time">${n.sub||''} · ${fmtTime(n.time)}</div>
+      </div>
+    </div>`).join('');
+}
+
+function fmtTime(ts){
+  const diff=Date.now()-ts;
+  if(diff<60000)return'gerade eben';
+  if(diff<3600000)return Math.round(diff/60000)+'min';
+  if(diff<86400000)return Math.round(diff/3600000)+'h';
+  return new Date(ts).toLocaleDateString('de-CH');
+}
+
+function toggleNotif(){
+  notifOpen=!notifOpen;
+  const panel=document.getElementById('notif-panel');
+  if(panel)panel.style.display=notifOpen?'block':'none';
+  if(notifOpen){
+    renderNotifs();
+    // Mark all as read after viewing
+    setTimeout(()=>{notifications.forEach(n=>n.read=true);renderNotifs();},2000);
+  }
+}
+
+function openNotif(nid,ticketId){
+  notifications.find(n=>String(n.id)===String(nid))&&(notifications.find(n=>String(n.id)===String(nid)).read=true);
+  if(ticketId)openDetail(ticketId);
+  toggleNotif();
+}
+
+function clearNotifs(){notifications=[];renderNotifs();}
+
+// Close notif panel when clicking outside
+document.addEventListener('click',e=>{
+  if(notifOpen&&!document.getElementById('notif-btn')?.contains(e.target)&&!document.getElementById('notif-panel')?.contains(e.target)){
+    notifOpen=false;
+    const panel=document.getElementById('notif-panel');
+    if(panel)panel.style.display='none';
+  }
+});
+
 function closeModal(id){document.getElementById(id).classList.remove('open');editMode=false;}
 document.querySelectorAll('.modal-bg').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id);});});
 </script>
