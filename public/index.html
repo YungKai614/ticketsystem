@@ -263,7 +263,7 @@ textarea{resize:vertical;min-height:75px}
   <div class="main">
     <div class="topbar">
       <div class="topbar-title" id="topbar-title">Dashboard</div>
-      <button class="btn btn-primary" onclick="openNew()" id="btn-new-ticket">+ Neues Ticket</button>
+      <button class="btn btn-primary" onclick="openNew()" id="btn-new-ticket" style="display:none">+ Neues Ticket</button>
     </div>
     <div class="content">
 
@@ -326,13 +326,34 @@ textarea{resize:vertical;min-height:75px}
                 <div class="fgg" style="margin-bottom:0"><label>Kategorie</label><select id="p-cat"><option>User & App</option><option>Network</option><option>Windows/OS</option><option>Unix</option><option>Hardware</option><option>Security</option></select></div>
                 <div class="fgg" style="margin-bottom:0"><label>Dringlichkeit</label><select id="p-prio"><option value="Low">Niedrig</option><option value="Medium" selected>Normal</option><option value="High">Hoch</option><option value="Critical">Kritisch</option></select></div>
               </div>
-              <div class="fgg" style="margin-top:10px"><label>SLA-Vertrag</label><select id="p-sla"><option>Silver</option><option>Gold</option><option>Platinum</option></select></div>
+              <div style="background:#1a1d23;border:1px solid #2a2d35;border-radius:5px;padding:9px 12px;font-size:12px;color:#6a7080;margin-top:10px">Ihr SLA-Vertrag: <strong id="customer-sla-display" style="color:#c9cdd6">Silver</strong></div>
               <button class="btn btn-primary" style="width:100%;margin-top:10px;justify-content:center" onclick="portalSubmit()">Ticket einreichen</button>
             </div>
           </div>
           <div class="card">
             <div class="card-hd"><h3>Meine letzten Tickets</h3></div>
             <div id="my-tickets"><div class="loading">Lade...</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TICKET ERSTELLEN (Customer) -->
+      <div class="view" id="view-new-ticket">
+        <div class="portal-hd">
+          <h2>Ticket erstellen</h2>
+          <p>Beschreiben Sie Ihr Problem — wir melden uns gemäss Ihrem SLA-Vertrag.</p>
+        </div>
+        <div class="card" style="max-width:520px">
+          <div class="card-hd"><h3>Neue Anfrage</h3></div>
+          <div style="padding:16px">
+            <div class="fgg"><label>Betreff *</label><input type="text" id="nt-title" placeholder="Kurze Beschreibung des Problems"></div>
+            <div class="fgg"><label>Beschreibung *</label><textarea id="nt-desc" placeholder="Bitte beschreiben Sie das Problem möglichst genau..."></textarea></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <div class="fgg" style="margin-bottom:0"><label>Kategorie</label><select id="nt-cat"><option>User &amp; App</option><option>Network</option><option>Windows/OS</option><option>Unix</option><option>Hardware</option><option>Security</option></select></div>
+              <div class="fgg" style="margin-bottom:0"><label>Dringlichkeit</label><select id="nt-prio"><option value="Low">Niedrig</option><option value="Medium" selected>Normal</option><option value="High">Hoch</option><option value="Critical">Kritisch — Ausfall</option></select></div>
+            </div>
+            <div style="background:#1a1d23;border:1px solid #2a2d35;border-radius:5px;padding:9px 12px;font-size:12px;color:#6a7080;margin-top:10px">Ihr SLA-Vertrag: <strong id="nt-sla-display" style="color:#c9cdd6">Silver</strong> — Reaktionszeit wird gemäss Vertrag eingehalten.</div>
+            <button class="btn btn-primary" style="width:100%;margin-top:14px;justify-content:center" onclick="submitNewTicket()">Ticket einreichen</button>
           </div>
         </div>
       </div>
@@ -431,9 +452,9 @@ const USERS = {
   'nils.mueller':      { pass:'admin123', role:'admin', name:'Nils Müller',         dept:'CIO · Administrator', color:'#5a5090' },
   'calisto.marcello':  { pass:'admin123', role:'admin', name:'Calisto Marcello',    dept:'CBO · Administrator', color:'#4a7a5a' },
   'levi.frischknecht': { pass:'admin123', role:'admin', name:'Levi Frischknecht',   dept:'Stv. · Administrator', color:'#5a7090' },
-  'kunde1':            { pass:'kunde123', role:'customer', name:'Kunde 1',          dept:'Silver-Kunde', color:'#5a6070' },
-  'kunde2':            { pass:'kunde123', role:'customer', name:'Kunde 2',          dept:'Gold-Kunde', color:'#7a6040' },
-  'kunde3':            { pass:'kunde123', role:'customer', name:'Kunde 3',          dept:'Platinum-Kunde', color:'#6a5090' },
+  'kunde1':            { pass:'kunde123', role:'customer', name:'Kunde 1',          dept:'Silver-Kunde', sla:'Silver', color:'#5a6070' },
+  'kunde2':            { pass:'kunde123', role:'customer', name:'Kunde 2',          dept:'Gold-Kunde', sla:'Gold', color:'#7a6040' },
+  'kunde3':            { pass:'kunde123', role:'customer', name:'Kunde 3',          dept:'Platinum-Kunde', sla:'Platinum', color:'#6a5090' },
 };
 
 const STAFF = [
@@ -490,7 +511,7 @@ function startApp() {
   document.getElementById('sb-av').textContent = initials;
   document.getElementById('sb-av').style.background = currentUser.color;
   document.getElementById('sb-name').textContent = currentUser.name;
-  document.getElementById('sb-role').textContent = currentUser.role==='admin' ? 'Administrator' : 'Kunde';
+  document.getElementById('sb-role').textContent = currentUser.role==='admin' ? 'Administrator' : 'Kunde · SLA ' + (currentUser.sla||'Silver');
   buildNav();
   if (currentUser.role === 'admin') { nav('dashboard', null); loadDashboard(); }
   else { nav('portal', null); loadMyTickets(); }
@@ -498,7 +519,7 @@ function startApp() {
 
 function buildNav() {
   const isAdmin = currentUser.role === 'admin';
-  document.getElementById('btn-new-ticket').style.display = 'flex';
+  document.getElementById('btn-new-ticket').style.display = isAdmin ? 'flex' : 'none';
   if (isAdmin) {
     document.getElementById('sidebar-nav').innerHTML = `
       <div class="nav-sec">Übersicht</div>
@@ -511,9 +532,9 @@ function buildNav() {
       <button class="ni" onclick="nav('sla',this)">📋 SLA-Modelle</button>`;
   } else {
     document.getElementById('sidebar-nav').innerHTML = `
-      <div class="nav-sec">Support</div>
+      <div class="nav-sec">Mein Support</div>
       <button class="ni active" onclick="nav('portal',this)">🎫 Meine Tickets</button>
-      <button class="ni" onclick="openNew()">＋ Neues Ticket</button>
+      <button class="ni" onclick="nav('new-ticket',this)">＋ Ticket erstellen</button>
       <div class="nav-sec">Info</div>
       <button class="ni" onclick="nav('sla',this)">📋 SLA-Modelle</button>`;
   }
@@ -531,7 +552,7 @@ function fmtDate(iso){if(!iso)return'—';const d=new Date(iso);return`${String(
 function nav(view, btn) {
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+view).classList.add('active');
-  const t={dashboard:'Dashboard',tickets:'Alle Tickets',portal:'Meine Tickets',users:'Benutzerverwaltung',sla:'SLA-Modelle'};
+  const t={dashboard:'Dashboard',tickets:'Alle Tickets',portal:'Meine Tickets','new-ticket':'Ticket erstellen',users:'Benutzerverwaltung',sla:'SLA-Modelle'};
   document.getElementById('topbar-title').textContent=t[view]||view;
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
   if(btn) btn.classList.add('active');
@@ -539,6 +560,7 @@ function nav(view, btn) {
   if(view==='dashboard') loadDashboard();
   if(view==='users') loadUsers();
   if(view==='portal') loadMyTickets();
+  if(view==='new-ticket') { const d=document.getElementById('nt-sla-display'); if(d && currentUser) d.textContent=currentUser.sla||'Silver'; }
 }
 
 function toast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+type+' show';setTimeout(()=>t.classList.remove('show'),3000);}
@@ -668,12 +690,29 @@ async function portalSubmit() {
     title, reporter:currentUser.name, desc,
     category:document.getElementById('p-cat').value,
     priority:document.getElementById('p-prio').value,
-    sla:document.getElementById('p-sla').value,
+    sla:currentUser.sla || 'Silver',
     level:'1st', assign:'1st Level – SPOC'
   })});
   toast(`Ticket ${t.id} eingereicht ✓`,'success');
   ['p-title','p-desc'].forEach(id=>document.getElementById(id).value='');
   loadMyTickets();
+}
+
+async function submitNewTicket() {
+  const title=document.getElementById('nt-title').value.trim();
+  const desc=document.getElementById('nt-desc').value.trim();
+  if(!title||!desc){toast('Bitte Betreff und Beschreibung ausfüllen.','error');return;}
+  const t=await api('/api/tickets',{method:'POST',body:JSON.stringify({
+    title, reporter:currentUser.name, desc,
+    category:document.getElementById('nt-cat').value,
+    priority:document.getElementById('nt-prio').value,
+    sla:currentUser.sla||'Silver',
+    level:'1st', assign:'1st Level – SPOC'
+  })});
+  toast('Ticket '+t.id+' eingereicht ✓','success');
+  document.getElementById('nt-title').value='';
+  document.getElementById('nt-desc').value='';
+  nav('portal', document.querySelector('.ni.active'));
 }
 
 function closeModal(id){document.getElementById(id).classList.remove('open');}
