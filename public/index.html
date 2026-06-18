@@ -308,6 +308,79 @@ td{padding:7px 11px;vertical-align:middle}
       <div class="fgg"><label>Passwort</label><input type="password" id="l-pass" placeholder="Passwort" onkeydown="if(event.key==='Enter')doLogin()"></div>
       <button class="btn-login" onclick="doLogin()">Anmelden</button>
       <div class="login-err" id="login-err"></div>
+      <div style="margin-top:16px;padding-top:14px;border-top:1px solid #2a2d35;text-align:center">
+        <div style="font-size:11px;color:#3a3f4d;margin-bottom:8px">Kein Konto? Ticket ohne Login einreichen:</div>
+        <button onclick="showGuestForm()" style="width:100%;padding:8px;background:transparent;color:#7a8090;border:1px solid #2a2d35;border-radius:4px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;transition:all .15s" onmouseover="this.style.borderColor='#4a6a9e';this.style.color='#c9cdd6'" onmouseout="this.style.borderColor='#2a2d35';this.style.color='#7a8090'">
+          📧 Ticket als Gast einreichen
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GUEST TICKET MODAL -->
+<div id="guest-screen" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:500;align-items:center;justify-content:center;padding:20px">
+  <div style="background:#13151a;border:1px solid #2a2d35;border-radius:8px;width:480px;max-width:100%;overflow:hidden">
+    <div style="padding:20px 22px 16px;border-bottom:1px solid #2a2d35;display:flex;align-items:center;gap:10px">
+      <div style="flex:1">
+        <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#3a3f4d">ICT-Consulting AG</div>
+        <div style="font-size:16px;font-weight:600;color:#e2e4e9;margin-top:2px">Ticket einreichen</div>
+        <div style="font-size:11px;color:#4a5060;margin-top:1px">Ohne Login — Gast-Anfrage</div>
+      </div>
+      <button onclick="hideGuestForm()" style="background:none;border:none;font-size:18px;color:#4a5060;cursor:pointer;padding:2px 5px;border-radius:4px">×</button>
+    </div>
+    <div style="padding:18px 22px" id="guest-body">
+      <!-- Step 1: Contact info -->
+      <div id="guest-step1">
+        <div style="font-size:12px;color:#7a8090;margin-bottom:14px">Bitte geben Sie Ihre Kontaktdaten ein. Sie erhalten eine Bestätigung per E-Mail.</div>
+        <div class="fgg"><label>Vorname & Nachname *</label><input type="text" id="g-name" placeholder="Max Mustermann"></div>
+        <div class="fgg"><label>E-Mail-Adresse *</label><input type="email" id="g-email" placeholder="max.mustermann@firma.ch"></div>
+        <div class="fgg"><label>Telefonnummer *</label><input type="text" id="g-phone" placeholder="+41 79 123 45 67"></div>
+        <div class="fgg"><label>Firma / Organisation</label><input type="text" id="g-company" placeholder="Musterfirma AG (optional)"></div>
+        <div style="margin-top:4px;padding:8px 10px;background:#1e2128;border-radius:4px;font-size:11px;color:#3a3f4d">
+          Nach dem Absenden erhalten Sie eine Ticket-ID per E-Mail zum Nachverfolgen Ihrer Anfrage.
+        </div>
+        <button onclick="guestStep2()" style="width:100%;margin-top:14px;padding:8px;background:#2d5a8e;color:#c5d8f0;border:1px solid #3a6a9e;border-radius:4px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">
+          Weiter →
+        </button>
+      </div>
+      <!-- Step 2: Ticket details -->
+      <div id="guest-step2" style="display:none">
+        <div id="guest-contact-summary" style="background:#1e2128;border-radius:4px;padding:8px 10px;font-size:11px;color:#7a8090;margin-bottom:14px;display:flex;align-items:center;gap:8px">
+          <span>📧</span><span id="g-contact-display"></span>
+          <button onclick="document.getElementById('guest-step1').style.display='block';document.getElementById('guest-step2').style.display='none'" style="background:none;border:none;color:#5a8ab0;font-size:10px;cursor:pointer;margin-left:auto">Ändern</button>
+        </div>
+        <div class="fgg"><label>Betreff *</label><input type="text" id="g-title" placeholder="Kurze Beschreibung des Problems"></div>
+        <div class="fgg"><label>Beschreibung *</label><textarea id="g-desc" placeholder="Bitte beschreiben Sie das Problem möglichst genau..."></textarea></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div class="fgg" style="margin-bottom:0"><label>Kategorie</label>
+            <select id="g-cat"><option>Netzwerk</option><option>Hardware</option><option>Software / App</option><option>E-Mail</option><option>Drucker</option><option>Server</option><option>Sicherheit</option><option>Sonstiges</option></select>
+          </div>
+          <div class="fgg" style="margin-bottom:0"><label>Dringlichkeit</label>
+            <select id="g-prio"><option value="Low">Niedrig</option><option value="Medium" selected>Normal</option><option value="High">Hoch</option><option value="Critical">Kritisch — Ausfall</option></select>
+          </div>
+        </div>
+        <div style="margin-top:10px;padding:8px 10px;background:#1a1a2a;border:1px solid #3a2a45;border-radius:4px;font-size:11px;color:#7a6090">
+          💰 Externe Anfrage ohne SLA-Vertrag — wird nach Aufwand verrechnet.
+        </div>
+        <button onclick="submitGuestTicket()" style="width:100%;margin-top:12px;padding:8px;background:#2d5a8e;color:#c5d8f0;border:1px solid #3a6a9e;border-radius:4px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">
+          Ticket einreichen ✓
+        </button>
+        <button onclick="document.getElementById('guest-step1').style.display='block';document.getElementById('guest-step2').style.display='none'" style="width:100%;margin-top:6px;padding:7px;background:transparent;color:#5a6070;border:1px solid #2a2d35;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit">
+          ← Zurück
+        </button>
+      </div>
+      <!-- Step 3: Success -->
+      <div id="guest-step3" style="display:none;text-align:center;padding:10px 0">
+        <div style="font-size:32px;margin-bottom:12px">✅</div>
+        <div style="font-size:15px;font-weight:600;color:#e2e4e9;margin-bottom:6px">Ticket eingereicht!</div>
+        <div style="font-size:12px;color:#7a8090;margin-bottom:14px">Ihre Ticket-ID: <strong id="g-ticket-id" style="font-family:'Courier New',monospace;color:#5a8ab0"></strong></div>
+        <div style="font-size:11px;color:#4a5060;background:#1e2128;border-radius:4px;padding:10px;margin-bottom:14px;line-height:1.6">
+          Eine Bestätigung wurde an <strong id="g-confirm-email" style="color:#c9cdd6"></strong> gesendet.<br>
+          Notieren Sie Ihre Ticket-ID für spätere Rückfragen.
+        </div>
+        <button onclick="hideGuestForm()" style="padding:8px 20px;background:#2d5a8e;color:#c5d8f0;border:1px solid #3a6a9e;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit">Schliessen</button>
+      </div>
     </div>
   </div>
 </div>
@@ -417,9 +490,11 @@ td{padding:7px 11px;vertical-align:middle}
           </select>
         </div>
         <div class="view-tabs">
-          <button class="vt active" onclick="switchInbox('open',this)">Offene Anfragen <span id="inbox-open-cnt" style="font-size:10px;color:#5a6070"></span></button>
+          <button class="vt active" onclick="switchInbox('open',this)">Offen <span id="inbox-open-cnt" style="font-size:10px;color:#5a6070"></span></button>
+          <button class="vt" onclick="switchInbox('progress',this)">In Bearbeitung <span id="inbox-prog-cnt" style="font-size:10px;color:#5a6070"></span></button>
+          <button class="vt" onclick="switchInbox('waiting',this)">Warten auf Kunde <span id="inbox-wait-cnt" style="font-size:10px;color:#9a70c0"></span></button>
           <button class="vt" onclick="switchInbox('closed',this)">Abgeschlossen <span id="inbox-closed-cnt" style="font-size:10px;color:#5a6070"></span></button>
-          <button class="vt" onclick="switchInbox('extern',this)">Extern / Verrechnung <span id="inbox-extern-cnt" style="font-size:10px;color:#9a70c0"></span></button>
+          <button class="vt" onclick="switchInbox('extern',this)">Extern <span id="inbox-extern-cnt" style="font-size:10px;color:#9a70c0"></span></button>
         </div>
         <div class="card">
           <div class="card-hd"><h3 id="inbox-title">Offene Anfragen</h3><span id="inbox-count" style="font-size:11px;color:#4a5060"></span></div>
@@ -482,6 +557,22 @@ td{padding:7px 11px;vertical-align:middle}
       <!-- BENUTZER -->
       <div class="view" id="view-users">
         <div class="card"><div class="card-hd"><h3>Support-Team</h3></div><div style="padding:11px" id="user-grid-wrap"></div></div>
+      </div>
+
+      <!-- EXTERNE TICKETS -->
+      <div class="view" id="view-extern-tickets">
+        <div style="margin-bottom:12px">
+          <h2 style="font-size:14px;font-weight:600;color:#e2e4e9;margin-bottom:3px">Externe Ticket-Anfragen</h2>
+          <p style="font-size:12px;color:#4a5060">Anfragen ohne SLA-Vertrag — Gast-Einreichungen und externe Kunden.</p>
+        </div>
+        <div class="view-tabs">
+          <button class="vt active" onclick="switchExtern('open',this)">Offen <span id="ext-open-cnt" style="font-size:10px;color:#5a6070"></span></button>
+          <button class="vt" onclick="switchExtern('closed',this)">Abgeschlossen <span id="ext-closed-cnt" style="font-size:10px;color:#5a6070"></span></button>
+        </div>
+        <div class="card">
+          <div class="card-hd"><h3 id="ext-title">Offene externe Anfragen</h3><span id="ext-count" style="font-size:11px;color:#4a5060"></span></div>
+          <div id="ext-list"><div class="loading">Lade...</div></div>
+        </div>
       </div>
 
       <!-- SLA -->
@@ -703,6 +794,7 @@ function buildNav(){
       <button class="ni" onclick="nav('inbox',this)">📥 Inbox <span class="ni-badge red" id="nb-inbox">…</span></button>
       <button class="ni" onclick="nav('tickets',this)">🎫 Alle Tickets <span class="ni-badge blue" id="nb-open">…</span></button>
       <button class="ni" onclick="openNew()">＋ Neues Ticket</button>
+      <button class="ni" onclick="nav('extern-tickets',this)">🌐 Externe Tickets <span class="ni-badge amber" id="nb-extern">…</span></button>
       <div class="nav-sec">Verwaltung</div>
       <button class="ni" onclick="nav('users',this)">👥 Benutzer</button>
       <button class="ni" onclick="nav('sla',this)">📋 SLA-Modelle</button>`;
@@ -741,7 +833,7 @@ function toast(msg,type=''){const t=document.getElementById('toast');t.textConte
 function nav(view,btn){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+view)?.classList.add('active');
-  const titles={dashboard:'Dashboard',stats:'Statistiken',inbox:'Inbox — Anfragen',tickets:'Alle Tickets',portal:'Meine Tickets','new-ticket':'Ticket erstellen',users:'Benutzerverwaltung',sla:'SLA-Modelle'};
+  const titles={dashboard:'Dashboard',stats:'Statistiken',inbox:'Inbox — Anfragen',tickets:'Alle Tickets','extern-tickets':'Externe Tickets',portal:'Meine Tickets','new-ticket':'Ticket erstellen',users:'Benutzerverwaltung',sla:'SLA-Modelle'};
   document.getElementById('topbar-title').textContent=titles[view]||view;
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
   if(btn)btn.classList.add('active');
@@ -749,6 +841,7 @@ function nav(view,btn){
   if(view==='stats')loadStats();
   if(view==='inbox'){const sel=document.getElementById('inbox-agent');if(sel&&!sel.value)sel.value=currentUser?.name||'';loadInbox();}
   if(view==='tickets')loadTickets();
+  if(view==='extern-tickets')loadExternTickets('open');
   if(view==='users')loadUsers();
   if(view==='portal')loadMyTickets();
 }
@@ -815,18 +908,22 @@ async function loadInbox(){
   const agent=document.getElementById('inbox-agent')?.value||'';
   const tickets=await api('/api/tickets');
   let filtered=agent?tickets.filter(t=>t.assign===agent):tickets;
-  const openList=filtered.filter(t=>t.status!=='Gelöst'&&t.status!=='Geschlossen');
+  const openList=filtered.filter(t=>t.status==='Offen');
+  const progList=filtered.filter(t=>t.status==='In Bearbeitung');
+  const waitList=filtered.filter(t=>t.status==='Warten auf Kunde');
   const closedList=filtered.filter(t=>t.status==='Gelöst'||t.status==='Geschlossen');
   const externList=filtered.filter(t=>isExtern(t));
 
   document.getElementById('inbox-open-cnt').textContent=`(${openList.length})`;
+  const pc=document.getElementById('inbox-prog-cnt');if(pc)pc.textContent=`(${progList.length})`;
+  const wc=document.getElementById('inbox-wait-cnt');if(wc)wc.textContent=`(${waitList.length})`;
   document.getElementById('inbox-closed-cnt').textContent=`(${closedList.length})`;
   document.getElementById('inbox-extern-cnt').textContent=`(${externList.length})`;
   const nbi=document.getElementById('nb-inbox');
   if(nbi)nbi.textContent=openList.filter(t=>needsReply(t)).length;
 
-  let list=inboxTab==='open'?openList:inboxTab==='closed'?closedList:externList;
-  const titles={open:'Offene Anfragen',closed:'Abgeschlossene Anfragen',extern:'Externe Anfragen / Verrechnung'};
+  let list=inboxTab==='open'?openList:inboxTab==='progress'?progList:inboxTab==='waiting'?waitList:inboxTab==='closed'?closedList:externList;
+  const titles={open:'Offene Anfragen',progress:'In Bearbeitung',waiting:'Warten auf Kunde',closed:'Abgeschlossene Anfragen',extern:'Externe Anfragen / Verrechnung'};
   document.getElementById('inbox-title').textContent=titles[inboxTab];
   document.getElementById('inbox-count').textContent=`${list.length} Einträge`;
 
@@ -943,6 +1040,10 @@ function renderDetail(t,editing){
       ${isExt?'<span class="badge b-extern">EXTERN</span>':''}
     </div>
     <div class="det-desc">${t.desc||'Keine Beschreibung.'}</div>
+    ${t.guestEmail?`<div style="background:#1a1a2a;border:1px solid #2a2d35;border-radius:4px;padding:8px 11px;font-size:12px;margin-bottom:12px;display:flex;gap:16px">
+      <span style="color:#5a6070">📧 <strong style="color:#c9cdd6">${t.guestEmail}</strong></span>
+      ${t.guestPhone?`<span style="color:#5a6070">📞 <strong style="color:#c9cdd6">${t.guestPhone}</strong></span>`:''}
+    </div>`:''}
     <div class="det-meta">
       <div class="meta-box"><div class="meta-lbl">Melder / Firma</div>
         ${editing?`<div class="meta-val"><input id="e-reporter" value="${t.reporter}"></div>`:`<div class="meta-val">${t.reporter}</div>`}
@@ -1203,6 +1304,99 @@ async function refreshBadges(){
   const nb=document.getElementById('nb-open');if(nb)nb.textContent=stats.open+stats.inProgress;
   const nbi=document.getElementById('nb-inbox');if(nbi)nbi.textContent=tickets.filter(t=>needsReply(t)).length;
 }
+// ============================================================
+// EXTERN TICKETS VIEW
+// ============================================================
+let externTab='open';
+function switchExtern(tab,btn){
+  externTab=tab;
+  document.querySelectorAll('.vt').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  loadExternTickets(tab);
+}
+async function loadExternTickets(tab){
+  externTab=tab||externTab;
+  const tickets=await api('/api/tickets');
+  const extern=tickets.filter(t=>isExtern(t));
+  const openList=extern.filter(t=>t.status!=='Gelöst'&&t.status!=='Geschlossen');
+  const closedList=extern.filter(t=>t.status==='Gelöst'||t.status==='Geschlossen');
+  const nb=document.getElementById('nb-extern');
+  if(nb)nb.textContent=openList.length;
+  const oc=document.getElementById('ext-open-cnt');if(oc)oc.textContent=`(${openList.length})`;
+  const cc=document.getElementById('ext-closed-cnt');if(cc)cc.textContent=`(${closedList.length})`;
+  const list=externTab==='open'?openList:closedList;
+  document.getElementById('ext-title').textContent=externTab==='open'?'Offene externe Anfragen':'Abgeschlossene externe Anfragen';
+  document.getElementById('ext-count').textContent=`${list.length} Einträge`;
+  if(!list.length){document.getElementById('ext-list').innerHTML=`<div class="empty">${externTab==='open'?'Keine offenen externen Anfragen.':'Keine abgeschlossenen externen Tickets.'}</div>`;return;}
+  document.getElementById('ext-list').innerHTML=`<table><thead><tr><th style="width:4px;padding:0"></th><th>ID</th><th>Kontakt</th><th>Titel</th><th>Prio</th><th>Status</th><th>Zugewiesen</th><th>Verrechnung</th><th>Erstellt</th></tr></thead><tbody>${list.map(t=>{
+    const nr=needsReply(t);
+    const inv=t.invoice;
+    return`<tr onclick="openDetail('${t.id}')">
+      <td style="padding:0;width:4px"><div style="width:4px;height:100%;min-height:34px;background:${nr?'#3a6aee':'transparent'}"></div></td>
+      <td class="td-id">${t.id}</td>
+      <td><div class="td-title">${t.reporter}</div><div class="td-sub">${t.guestEmail||''} ${t.guestPhone?'· '+t.guestPhone:''}</div></td>
+      <td><div class="td-title">${t.title}</div></td>
+      <td>${pb(t.priority)}</td>
+      <td>${badge(t.status)}</td>
+      <td style="font-size:11px;color:#5a6070">${t.assign}</td>
+      <td style="font-size:11px">${inv?`<span style="color:#9a70c0;font-weight:600">CHF ${inv.total?.toFixed(2)||'0.00'}</span>`:`<span style="color:#3a3f4d">—</span>`}</td>
+      <td style="font-size:11px;color:#4a5060;white-space:nowrap">${fmtDate(t.created)}</td>
+    </tr>`;}).join('')}</tbody></table>`;
+}
+
+// ============================================================
+// GUEST TICKET
+// ============================================================
+function showGuestForm(){
+  document.getElementById('guest-screen').style.display='flex';
+  document.getElementById('guest-step1').style.display='block';
+  document.getElementById('guest-step2').style.display='none';
+  document.getElementById('guest-step3').style.display='none';
+}
+function hideGuestForm(){
+  document.getElementById('guest-screen').style.display='none';
+  ['g-name','g-email','g-phone','g-company','g-title','g-desc'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+}
+function guestStep2(){
+  const name=document.getElementById('g-name').value.trim();
+  const email=document.getElementById('g-email').value.trim();
+  const phone=document.getElementById('g-phone').value.trim();
+  if(!name||!email||!phone){
+    alert('Bitte Name, E-Mail und Telefonnummer ausfüllen.');return;
+  }
+  if(!email.includes('@')){alert('Bitte eine gültige E-Mail-Adresse eingeben.');return;}
+  document.getElementById('g-contact-display').textContent=`${name} · ${email} · ${phone}`;
+  document.getElementById('guest-step1').style.display='none';
+  document.getElementById('guest-step2').style.display='block';
+}
+async function submitGuestTicket(){
+  const name=document.getElementById('g-name').value.trim();
+  const email=document.getElementById('g-email').value.trim();
+  const phone=document.getElementById('g-phone').value.trim();
+  const company=document.getElementById('g-company').value.trim();
+  const title=document.getElementById('g-title').value.trim();
+  const desc=document.getElementById('g-desc').value.trim();
+  if(!title||!desc){alert('Bitte Betreff und Beschreibung ausfüllen.');return;}
+  const reporter=company?`${name} (${company})`:name;
+  const body={
+    title,reporter,desc,
+    category:document.getElementById('g-cat').value,
+    priority:document.getElementById('g-prio').value,
+    sla:'Extern',level:'1st',assign:'1st Level – SPOC',
+    guestEmail:email,guestPhone:phone,guestName:name,
+    note:`Gast-Ticket · E-Mail: ${email} · Tel: ${phone}`
+  };
+  const t=await api('/api/tickets',{method:'POST',body:JSON.stringify(body)});
+  document.getElementById('g-ticket-id').textContent=t.id;
+  document.getElementById('g-confirm-email').textContent=email;
+  document.getElementById('guest-step2').style.display='none';
+  document.getElementById('guest-step3').style.display='block';
+  // Refresh extern badge
+  const tickets=await api('/api/tickets');
+  const nb=document.getElementById('nb-extern');
+  if(nb)nb.textContent=tickets.filter(t=>isExtern(t)&&t.status!=='Gelöst'&&t.status!=='Geschlossen').length;
+}
+
 // ============================================================
 // NOTIFICATIONS
 // ============================================================
