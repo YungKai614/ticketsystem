@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ICT Helpdesk — Ticketsystem</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:14px}
@@ -300,6 +301,16 @@ td{padding:7px 11px;vertical-align:middle}
 .pie-segment{transition:opacity .2s}
 .pie-segment:hover{opacity:.8}
 
+/* SAVED FILTERS */
+.filter-chip{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #2a2d35;background:#161820;color:#7a8090;transition:all .15s}
+.filter-chip:hover{border-color:#3a3f4d;color:#c9cdd6}
+.filter-chip.active{background:#1a2535;border-color:#3a6a9e;color:#5a8ab0}
+.filter-chip-count{background:#2a2d35;color:#9a9fad;font-size:10px;font-weight:600;border-radius:8px;padding:1px 6px}
+.filter-chip.active .filter-chip-count{background:#2a4a6e;color:#8ab0d0}
+.filter-chip-del{font-size:13px;color:#4a5060;margin-left:2px;line-height:1}
+.filter-chip-del:hover{color:#c07070}
+.filter-chip-all{background:transparent}
+
 /* STATS SCROLL SECTIONS */
 .stats-scroll{max-height:calc(100vh - 100px);overflow-y:auto;padding-right:6px;scroll-behavior:smooth}
 .stats-scroll::-webkit-scrollbar{width:6px}
@@ -327,37 +338,372 @@ td{padding:7px 11px;vertical-align:middle}
 /* TIMELINE CHART */
 .timeline-svg-wrap{width:100%;overflow-x:auto}
 @media(max-width:700px){.sb{display:none}.main{margin-left:0}.kpi-row-4,.kpi-row-3,.chart-grid,.chart-grid-3,.sla-grid{grid-template-columns:1fr}.det-meta,.form-row{grid-template-columns:1fr}}
+
+/* ============================================================
+   LANDING PAGE (login screen replacement)
+   ============================================================ */
+:root{
+  --lp-paper:#0e1015;
+  --lp-panel:#15171e;
+  --lp-line:#262a33;
+  --lp-ink:#e7e5de;
+  --lp-ink-dim:#8b8d96;
+  --lp-ink-faint:#52545e;
+  --lp-signal:#d97757;
+  --lp-wire:#2a5a4a;
+  --lp-display:'Fraunces',serif;
+  --lp-mono:'IBM Plex Mono',monospace;
+}
+#login-screen{font-family:'Inter',sans-serif;background:var(--lp-paper);color:var(--lp-ink);line-height:1.6;min-height:100vh}
+#login-screen *{box-sizing:border-box}
+#login-screen a{color:inherit;text-decoration:none}
+.lp-wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+
+.lp-ticker{background:var(--lp-panel);border-bottom:1px solid var(--lp-line);overflow:hidden;white-space:nowrap;padding:7px 0}
+.lp-ticker-track{display:inline-block;animation:lp-tick 32s linear infinite;font-family:var(--lp-mono);font-size:11px;color:var(--lp-ink-faint);letter-spacing:.02em}
+.lp-ticker-track span{margin-right:48px}
+@keyframes lp-tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+.lp-nav{position:sticky;top:0;z-index:100;background:rgba(14,16,21,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--lp-line)}
+.lp-nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+.lp-brand{display:flex;align-items:center;gap:10px;font-family:var(--lp-display);font-size:18px;font-weight:600;letter-spacing:-.01em}
+.lp-brand-mark{width:9px;height:9px;border-radius:50%;background:var(--lp-signal);box-shadow:0 0 10px var(--lp-signal)}
+.lp-nav-links{display:flex;gap:28px;align-items:center}
+.lp-nav-links a{font-size:13px;color:var(--lp-ink-dim);transition:color .15s}
+.lp-nav-links a:hover{color:var(--lp-ink)}
+.lp-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:3px;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid transparent}
+.lp-btn-primary{background:var(--lp-signal);color:#1a1410;border-color:var(--lp-signal)}
+.lp-btn-primary:hover{background:#e08763;transform:translateY(-1px)}
+.lp-btn-ghost{border-color:var(--lp-line);color:var(--lp-ink-dim)}
+.lp-btn-ghost:hover{border-color:var(--lp-ink-faint);color:var(--lp-ink)}
+
+.lp-hero{padding:80px 0 60px}
+.lp-eyebrow{font-family:var(--lp-mono);font-size:11px;color:var(--lp-signal);letter-spacing:.14em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.lp-eyebrow::before{content:'';width:24px;height:1px;background:var(--lp-signal)}
+.lp-h1{font-family:var(--lp-display);font-size:clamp(36px,5vw,64px);font-weight:600;line-height:1.05;letter-spacing:-.025em;max-width:820px}
+.lp-h1 em{font-style:italic;color:var(--lp-signal);font-weight:500}
+.lp-hero-sub{font-size:16px;color:var(--lp-ink-dim);max-width:540px;margin-top:24px;line-height:1.65}
+.lp-hero-actions{display:flex;gap:14px;margin-top:32px}
+
+.lp-demo-frame{margin-top:56px;border:1px solid var(--lp-line);border-radius:8px;background:var(--lp-panel);overflow:hidden;box-shadow:0 40px 100px -30px rgba(0,0,0,.6)}
+.lp-demo-bar{display:flex;align-items:center;gap:8px;padding:11px 16px;border-bottom:1px solid var(--lp-line);background:#101216}
+.lp-demo-dot{width:9px;height:9px;border-radius:50%;background:var(--lp-line)}
+.lp-demo-url{margin-left:14px;font-family:var(--lp-mono);font-size:11px;color:var(--lp-ink-faint)}
+.lp-demo-body{display:grid;grid-template-columns:190px 1fr}
+.lp-demo-side{border-right:1px solid var(--lp-line);padding:18px 0;background:#101216}
+.lp-demo-side-item{padding:8px 18px;font-size:12px;color:var(--lp-ink-faint)}
+.lp-demo-side-item.active{color:var(--lp-ink);background:#181b22;border-left:2px solid var(--lp-signal);padding-left:16px}
+.lp-demo-main{padding:20px 22px}
+.lp-demo-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--lp-line);font-size:12px}
+.lp-demo-row:last-child{border:none}
+.lp-demo-id{font-family:var(--lp-mono);color:var(--lp-signal);width:55px;flex-shrink:0}
+.lp-demo-title{flex:1;color:var(--lp-ink)}
+.lp-demo-badge{font-family:var(--lp-mono);font-size:10px;padding:2px 8px;border-radius:2px}
+.lp-b-open{background:#1a2a3d;color:#7aa8d0}
+.lp-b-prog{background:#3a2d1a;color:#d4a868}
+.lp-b-done{background:#1a3a2a;color:#7ad094}
+.lp-demo-pulse{width:6px;height:6px;border-radius:50%;background:var(--lp-signal);box-shadow:0 0 6px var(--lp-signal);animation:lp-pulse 2s ease-in-out infinite}
+@keyframes lp-pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+.lp-stats-strip{border-top:1px solid var(--lp-line);border-bottom:1px solid var(--lp-line);background:var(--lp-panel)}
+.lp-stats-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.lp-stat-cell{padding:26px 28px;border-right:1px solid var(--lp-line)}
+.lp-stat-cell:last-child{border-right:none}
+.lp-stat-num{font-family:var(--lp-display);font-size:30px;font-weight:600;color:var(--lp-ink)}
+.lp-stat-lbl{font-size:11px;color:var(--lp-ink-faint);margin-top:6px}
+
+.lp-section{padding:90px 0}
+.lp-section-title{font-family:var(--lp-display);font-size:clamp(24px,3vw,36px);font-weight:600;letter-spacing:-.02em;max-width:600px;line-height:1.15}
+.lp-section-sub{font-size:14px;color:var(--lp-ink-dim);max-width:480px;margin-top:14px;line-height:1.7}
+
+.lp-feature-list{margin-top:54px;display:flex;flex-direction:column}
+.lp-feature-row{display:grid;grid-template-columns:80px 1fr 1fr;gap:36px;padding:32px 0;border-top:1px solid var(--lp-line);align-items:start}
+.lp-feature-row:last-child{border-bottom:1px solid var(--lp-line)}
+.lp-feature-num{font-family:var(--lp-mono);font-size:13px;color:var(--lp-ink-faint);padding-top:4px}
+.lp-feature-name{font-family:var(--lp-display);font-size:20px;font-weight:500;letter-spacing:-.01em}
+.lp-feature-desc{font-size:13px;color:var(--lp-ink-dim);line-height:1.7}
+.lp-feature-tag{display:inline-block;font-family:var(--lp-mono);font-size:10px;color:var(--lp-wire);background:#15251f;border:1px solid #1f3a2f;padding:2px 8px;border-radius:2px;margin-top:10px}
+
+.lp-persona-grid{margin-top:50px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--lp-line);border:1px solid var(--lp-line)}
+.lp-persona-card{background:var(--lp-paper);padding:28px 24px}
+.lp-persona-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:18px;background:#1a1d24;border:1px solid var(--lp-line)}
+.lp-persona-title{font-family:var(--lp-display);font-size:18px;font-weight:600;margin-bottom:9px}
+.lp-persona-desc{font-size:12px;color:var(--lp-ink-dim);line-height:1.7}
+
+.lp-sla-strip{margin-top:50px;border:1px solid var(--lp-line);border-radius:6px;overflow:hidden}
+.lp-sla-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1px solid var(--lp-line)}
+.lp-sla-row:last-child{border-bottom:none}
+.lp-sla-header{background:var(--lp-panel)}
+.lp-sla-cell{padding:14px 18px;font-size:12px;border-right:1px solid var(--lp-line)}
+.lp-sla-cell:last-child{border-right:none}
+.lp-sla-header .lp-sla-cell{font-family:var(--lp-mono);font-size:10px;color:var(--lp-ink-faint);text-transform:uppercase;letter-spacing:.05em}
+.lp-tier{font-family:var(--lp-display);font-weight:600;font-size:14px}
+.lp-tier-gold{color:var(--lp-signal)}
+
+.lp-footer{border-top:1px solid var(--lp-line);padding:40px 0 30px}
+.lp-footer-grid{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:20px}
+.lp-footer-brand{font-family:var(--lp-display);font-size:15px;font-weight:600}
+.lp-footer-meta{font-size:10px;color:var(--lp-ink-faint);margin-top:6px;font-family:var(--lp-mono)}
+.lp-footer-links{display:flex;gap:24px}
+.lp-footer-links a{font-size:11px;color:var(--lp-ink-dim)}
+
+@media(max-width:860px){
+  .lp-demo-body{grid-template-columns:1fr}
+  .lp-demo-side{display:none}
+  .lp-stats-grid{grid-template-columns:repeat(2,1fr)}
+  .lp-persona-grid{grid-template-columns:1fr}
+  .lp-feature-row{grid-template-columns:1fr;gap:8px}
+  .lp-sla-row{grid-template-columns:1fr}
+  .lp-sla-cell{border-right:none;border-bottom:1px solid var(--lp-line)}
+  .lp-nav-links{display:none}
+}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
-<div class="login-wrap" id="login-screen">
-  <div class="login-box">
-    <div class="login-hd">
-      <div class="login-logo">ICT-Consulting AG · Modul 437</div>
-      <div class="login-title">ICT Helpdesk</div>
-      <div class="login-sub">Bitte anmelden</div>
+<!-- LOGIN / LANDING -->
+<div id="login-screen" style="display:block">
+
+  <div class="lp-ticker">
+    <div class="lp-ticker-track">
+      <span>T-0312 — VPN-Verbindung wiederhergestellt — 2nd Level</span>
+      <span>T-0311 — Erstlösungsquote diese Woche: 43%</span>
+      <span>T-0310 — Neuer Gast-Ticket eingereicht via Portal</span>
+      <span>T-0309 — SLA Gold — Reaktionszeit eingehalten in 38 Min.</span>
+      <span>T-0308 — Ticket übernommen von Network Senior</span>
+      <span>T-0312 — VPN-Verbindung wiederhergestellt — 2nd Level</span>
+      <span>T-0311 — Erstlösungsquote diese Woche: 43%</span>
+      <span>T-0310 — Neuer Gast-Ticket eingereicht via Portal</span>
+      <span>T-0309 — SLA Gold — Reaktionszeit eingehalten in 38 Min.</span>
+      <span>T-0308 — Ticket übernommen von Network Senior</span>
     </div>
-    <div class="login-body">
-      <div class="login-tabs">
-        <button class="login-tab active" onclick="switchTab('admin',this)">Administrator</button>
-        <button class="login-tab" onclick="switchTab('customer',this)">Kunde</button>
+  </div>
+
+  <nav class="lp-nav">
+    <div class="lp-wrap lp-nav-inner">
+      <div class="lp-brand"><span class="lp-brand-mark"></span>ICT-Consulting AG</div>
+      <div class="lp-nav-links">
+        <a href="#lp-produkt">Produkt</a>
+        <a href="#lp-rollen">Für wen</a>
+        <a href="#lp-sla">SLA-Modelle</a>
+        <a href="#lp-login">Anmelden</a>
       </div>
-      <div id="hint-admin" class="login-hint"><span>Admin:</span> nils.mueller / admin123 &nbsp;·&nbsp; calisto.marcello / admin123 &nbsp;·&nbsp; levi.frischknecht / admin123</div>
-      <div id="hint-customer" class="login-hint" style="display:none"><span>Kunden:</span> kunde1 / kunde123 (Silver) &nbsp;·&nbsp; kunde2 / kunde123 (Gold) &nbsp;·&nbsp; kunde3 / kunde123 (Platinum) &nbsp;·&nbsp; extern1 / extern123</div>
-      <div class="fgg"><label>Benutzername</label><input type="text" id="l-user" placeholder="Benutzername" onkeydown="if(event.key==='Enter')doLogin()"></div>
-      <div class="fgg"><label>Passwort</label><input type="password" id="l-pass" placeholder="Passwort" onkeydown="if(event.key==='Enter')doLogin()"></div>
-      <button class="btn-login" onclick="doLogin()">Anmelden</button>
-      <div class="login-err" id="login-err"></div>
-      <div style="margin-top:16px;padding-top:14px;border-top:1px solid #2a2d35;text-align:center">
-        <div style="font-size:11px;color:#3a3f4d;margin-bottom:8px">Kein Konto? Ticket ohne Login einreichen:</div>
-        <button onclick="showGuestForm()" style="width:100%;padding:8px;background:transparent;color:#7a8090;border:1px solid #2a2d35;border-radius:4px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;transition:all .15s" onmouseover="this.style.borderColor='#4a6a9e';this.style.color='#c9cdd6'" onmouseout="this.style.borderColor='#2a2d35';this.style.color='#7a8090'">
-          📧 Ticket als Gast einreichen
-        </button>
+      <a href="#lp-login" class="lp-btn lp-btn-primary">Anmelden →</a>
+    </div>
+  </nav>
+
+  <header class="lp-hero">
+    <div class="lp-wrap">
+      <div class="lp-eyebrow">Gebaut für ICT-Consulting AG · Modul 437</div>
+      <h1 class="lp-h1">Ein Helpdesk, der<br>weiss, <em>wer gerade<br>antworten muss.</em></h1>
+      <p class="lp-hero-sub">Tickets landen in der richtigen Inbox, nicht in einer gemeinsamen Liste, die niemand prüft. 1st-, 2nd- und 3rd-Level-Eskalation, SLA-Verträge und Verrechnung für externe Anfragen — in einem System.</p>
+      <div class="lp-hero-actions">
+        <a href="#lp-login" class="lp-btn lp-btn-primary">Jetzt anmelden →</a>
+        <a href="#lp-produkt" class="lp-btn lp-btn-ghost">Wie es funktioniert</a>
+      </div>
+
+      <div class="lp-demo-frame">
+        <div class="lp-demo-bar">
+          <span class="lp-demo-dot"></span><span class="lp-demo-dot"></span><span class="lp-demo-dot"></span>
+          <span class="lp-demo-url">helpdesk.ict-consulting.ch</span>
+        </div>
+        <div class="lp-demo-body">
+          <div class="lp-demo-side">
+            <div class="lp-demo-side-item active">📥 Inbox</div>
+            <div class="lp-demo-side-item">🎫 Alle Tickets</div>
+            <div class="lp-demo-side-item">🌐 Externe Tickets</div>
+            <div class="lp-demo-side-item">📈 Statistiken</div>
+            <div class="lp-demo-side-item">👥 Benutzer</div>
+          </div>
+          <div class="lp-demo-main">
+            <div class="lp-demo-row">
+              <span class="lp-demo-pulse"></span>
+              <span class="lp-demo-id">T-0312</span>
+              <span class="lp-demo-title">VPN-Verbindung bricht ab</span>
+              <span class="lp-demo-badge lp-b-open">offen</span>
+            </div>
+            <div class="lp-demo-row">
+              <span style="width:6px"></span>
+              <span class="lp-demo-id">T-0311</span>
+              <span class="lp-demo-title">Drucker 2. OG reagiert nicht</span>
+              <span class="lp-demo-badge lp-b-prog">bearbeitung</span>
+            </div>
+            <div class="lp-demo-row">
+              <span style="width:6px"></span>
+              <span class="lp-demo-id">T-0309</span>
+              <span class="lp-demo-title">E-Mail-Postfach voll</span>
+              <span class="lp-demo-badge lp-b-done">gelöst</span>
+            </div>
+            <div class="lp-demo-row">
+              <span style="width:6px"></span>
+              <span class="lp-demo-id">T-0307</span>
+              <span class="lp-demo-title">Server-Wartung angefragt</span>
+              <span class="lp-demo-badge lp-b-prog">bearbeitung</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="lp-stats-strip">
+    <div class="lp-wrap">
+      <div class="lp-stats-grid">
+        <div class="lp-stat-cell"><div class="lp-stat-num">3</div><div class="lp-stat-lbl">Support-Level · 1st bis 3rd</div></div>
+        <div class="lp-stat-cell"><div class="lp-stat-num">3</div><div class="lp-stat-lbl">SLA-Stufen · Silver bis Platinum</div></div>
+        <div class="lp-stat-cell"><div class="lp-stat-num">24/7</div><div class="lp-stat-lbl">Platinum-Reaktionszeit · 30 Min.</div></div>
+        <div class="lp-stat-cell"><div class="lp-stat-num">0</div><div class="lp-stat-lbl">Tickets ohne Verantwortlichen</div></div>
       </div>
     </div>
   </div>
+
+  <section id="lp-produkt" class="lp-section">
+    <div class="lp-wrap">
+      <div class="lp-eyebrow">Wie es funktioniert</div>
+      <h2 class="lp-section-title">Vier Prinzipien, die jeder Helpdesk braucht und die meisten vergessen.</h2>
+      <p class="lp-section-sub">Kein generisches Ticket-Board. Jede Funktion entstand aus einem konkreten Problem im Support-Alltag.</p>
+
+      <div class="lp-feature-list">
+        <div class="lp-feature-row">
+          <div class="lp-feature-num">01</div>
+          <div class="lp-feature-name">Persönliche Inbox</div>
+          <div>
+            <div class="lp-feature-desc">Jeder Supporter sieht nur, was ihm zugewiesen ist. Ein blau leuchtender Rand markiert Tickets, die auf Antwort warten.</div>
+            <div class="lp-feature-tag">Echtzeit-Indikator</div>
+          </div>
+        </div>
+        <div class="lp-feature-row">
+          <div class="lp-feature-num">02</div>
+          <div class="lp-feature-name">Eskalation mit Gedächtnis</div>
+          <div>
+            <div class="lp-feature-desc">1st Level → 2nd Level → 3rd Level extern. Jede Weiterleitung wird protokolliert, mit Zeitstempel und Begründung.</div>
+            <div class="lp-feature-tag">Vollständiger Verlauf</div>
+          </div>
+        </div>
+        <div class="lp-feature-row">
+          <div class="lp-feature-num">03</div>
+          <div class="lp-feature-name">Gäste ohne Account</div>
+          <div>
+            <div class="lp-feature-desc">Externe Anfragen ohne SLA-Vertrag laufen über ein eigenes Formular — landet automatisch im Bereich "Externe Tickets".</div>
+            <div class="lp-feature-tag">Kein Login nötig</div>
+          </div>
+        </div>
+        <div class="lp-feature-row">
+          <div class="lp-feature-num">04</div>
+          <div class="lp-feature-name">Bearbeiten mit Absicht</div>
+          <div>
+            <div class="lp-feature-desc">Felder sind gesperrt, bis "Bearbeiten" aktiv geklickt wird. Änderungen erst nach explizitem Speichern.</div>
+            <div class="lp-feature-tag">Kein versehentliches Ändern</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="lp-rollen" class="lp-section" style="background:var(--lp-panel);border-top:1px solid var(--lp-line);border-bottom:1px solid var(--lp-line)">
+    <div class="lp-wrap">
+      <div class="lp-eyebrow">Drei Blickwinkel</div>
+      <h2 class="lp-section-title">Ein System, drei vollständig unterschiedliche Ansichten.</h2>
+
+      <div class="lp-persona-grid">
+        <div class="lp-persona-card">
+          <div class="lp-persona-icon">⚙️</div>
+          <div class="lp-persona-title">Administrator</div>
+          <div class="lp-persona-desc">Vollständige Kontrolle über Inbox, Statistiken, Benutzerverwaltung und System-Logs.</div>
+        </div>
+        <div class="lp-persona-card">
+          <div class="lp-persona-icon">🏢</div>
+          <div class="lp-persona-title">SLA-Kunde</div>
+          <div class="lp-persona-desc">Eigener Account, eigener Vertrag. Sieht nur die eigenen Tickets, kein Zugriff auf Verwaltung.</div>
+        </div>
+        <div class="lp-persona-card">
+          <div class="lp-persona-icon">👤</div>
+          <div class="lp-persona-title">Gast / Extern</div>
+          <div class="lp-persona-desc">Kein Account nötig. Kontaktdaten reichen, Ticket-ID kommt sofort, Verrechnung nach Aufwand.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="lp-sla" class="lp-section">
+    <div class="lp-wrap">
+      <div class="lp-eyebrow">Servicequalität</div>
+      <h2 class="lp-section-title">Drei SLA-Stufen, exakt nach Vertrag konfiguriert.</h2>
+
+      <div class="lp-sla-strip">
+        <div class="lp-sla-row lp-sla-header">
+          <div class="lp-sla-cell">Stufe</div>
+          <div class="lp-sla-cell">Servicezeiten</div>
+          <div class="lp-sla-cell">Reaktionszeit</div>
+          <div class="lp-sla-cell">Verfügbarkeit</div>
+        </div>
+        <div class="lp-sla-row">
+          <div class="lp-sla-cell lp-tier">Silver</div>
+          <div class="lp-sla-cell">Mo–Fr, 08–17 Uhr</div>
+          <div class="lp-sla-cell">4 Stunden</div>
+          <div class="lp-sla-cell">95 %</div>
+        </div>
+        <div class="lp-sla-row">
+          <div class="lp-sla-cell lp-tier lp-tier-gold">Gold</div>
+          <div class="lp-sla-cell">Mo–Fr, 07–20 Uhr</div>
+          <div class="lp-sla-cell">1 Stunde</div>
+          <div class="lp-sla-cell">99 %</div>
+        </div>
+        <div class="lp-sla-row">
+          <div class="lp-sla-cell lp-tier">Platinum</div>
+          <div class="lp-sla-cell">24/7, 365 Tage</div>
+          <div class="lp-sla-cell">30 Minuten</div>
+          <div class="lp-sla-cell">99.9 %</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGIN SECTION -->
+  <section id="lp-login" class="lp-section" style="padding-top:90px;padding-bottom:110px">
+    <div class="lp-wrap" style="display:flex;justify-content:center">
+      <div class="login-box">
+        <div class="login-hd">
+          <div class="login-logo">ICT-Consulting AG · Modul 437</div>
+          <div class="login-title">ICT Helpdesk</div>
+          <div class="login-sub">Bitte anmelden</div>
+        </div>
+        <div class="login-body">
+          <div class="login-tabs">
+            <button class="login-tab active" onclick="switchTab('admin',this)">Administrator</button>
+            <button class="login-tab" onclick="switchTab('customer',this)">Kunde</button>
+          </div>
+          <div id="hint-admin" class="login-hint"><span>Admin:</span> nils.mueller / admin123 &nbsp;·&nbsp; calisto.marcello / admin123 &nbsp;·&nbsp; levi.frischknecht / admin123</div>
+          <div id="hint-customer" class="login-hint" style="display:none"><span>Kunden:</span> kunde1 / kunde123 (Silver) &nbsp;·&nbsp; kunde2 / kunde123 (Gold) &nbsp;·&nbsp; kunde3 / kunde123 (Platinum) &nbsp;·&nbsp; extern1 / extern123</div>
+          <div class="fgg"><label>Benutzername</label><input type="text" id="l-user" placeholder="Benutzername" onkeydown="if(event.key==='Enter')doLogin()"></div>
+          <div class="fgg"><label>Passwort</label><input type="password" id="l-pass" placeholder="Passwort" onkeydown="if(event.key==='Enter')doLogin()"></div>
+          <button class="btn-login" onclick="doLogin()">Anmelden</button>
+          <div class="login-err" id="login-err"></div>
+          <div style="margin-top:16px;padding-top:14px;border-top:1px solid #2a2d35;text-align:center">
+            <div style="font-size:11px;color:#3a3f4d;margin-bottom:8px">Kein Konto? Ticket ohne Login einreichen:</div>
+            <button onclick="showGuestForm()" style="width:100%;padding:8px;background:transparent;color:#7a8090;border:1px solid #2a2d35;border-radius:4px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;transition:all .15s" onmouseover="this.style.borderColor='#4a6a9e';this.style.color='#c9cdd6'" onmouseout="this.style.borderColor='#2a2d35';this.style.color='#7a8090'">
+              📧 Ticket als Gast einreichen
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="lp-footer">
+    <div class="lp-wrap lp-footer-grid">
+      <div>
+        <div class="lp-footer-brand">ICT-Consulting AG</div>
+        <div class="lp-footer-meta">Helpdesk Ticketsystem · Modul 437 · TBZ Zürich</div>
+      </div>
+      <div class="lp-footer-links">
+        <a href="#lp-produkt">Produkt</a>
+        <a href="#lp-sla">SLA-Modelle</a>
+        <a href="#lp-login">Anmelden</a>
+      </div>
+    </div>
+  </footer>
+
 </div>
 
 <!-- GUEST TICKET MODAL -->
@@ -628,6 +974,7 @@ td{padding:7px 11px;vertical-align:middle}
 
       <!-- ALLE TICKETS -->
       <div class="view" id="view-tickets">
+        <div id="saved-filters-row" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:10px"></div>
         <div class="card">
           <div class="card-hd"><h3>Alle Tickets</h3><span id="ticket-count" style="font-size:11px;color:#4a5060"></span></div>
           <div class="filter-bar">
@@ -636,7 +983,7 @@ td{padding:7px 11px;vertical-align:middle}
             <select id="f-level" onchange="loadTickets()"><option value="">Alle Level</option><option value="1st">1st</option><option value="2nd">2nd</option><option value="3rd">3rd</option></select>
             <select id="f-sla" onchange="loadTickets()"><option value="">Alle SLA</option><option>Silver</option><option>Gold</option><option>Platinum</option><option>Extern</option></select>
             <select id="f-prio" onchange="loadTickets()"><option value="">Alle Prio</option><option>Critical</option><option>High</option><option>Medium</option><option>Low</option></select>
-            <button class="btn btn-primary btn-sm" onclick="openNew()">+ Neu</button>
+            <button class="btn btn-secondary btn-sm" onclick="openSaveFilter()">＋ Filter speichern</button>
           </div>
           <div id="ticket-table"><div class="loading">Lade...</div></div>
           <div class="pagi"><span id="ticket-count2"></span></div>
@@ -877,6 +1224,22 @@ td{padding:7px 11px;vertical-align:middle}
   </div>
 </div>
 
+<!-- MODAL: Save Filter -->
+<div class="modal-bg" id="m-save-filter">
+  <div class="modal" style="width:400px">
+    <div class="modal-hd"><h3>Filter speichern</h3><button class="modal-close" onclick="closeModal('m-save-filter')">×</button></div>
+    <div class="modal-body">
+      <div style="font-size:11px;color:#5a6070;margin-bottom:12px;line-height:1.6">Speichert die aktuell gewählten Filter (Status, Level, SLA, Priorität, Suche) als schnellen Auswahl-Button. Nur für Ihr Konto sichtbar.</div>
+      <div class="fgg"><label>Name des Filters *</label><input type="text" id="filter-name" placeholder="z.B. Offene Tickets, Kritisch, Meine Warteschlange"></div>
+      <div style="background:#1a1d23;border:1px solid #2a2d35;border-radius:4px;padding:9px 11px;font-size:11px;color:#7a8090" id="filter-preview"></div>
+    </div>
+    <div class="modal-ft" style="justify-content:flex-end">
+      <button class="btn btn-secondary" onclick="closeModal('m-save-filter')">Abbrechen</button>
+      <button class="btn btn-primary" onclick="saveCurrentFilter()">Speichern</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL: Ticket Detail -->
 <div class="modal-bg" id="m-detail">
   <div class="modal" style="width:720px">
@@ -989,9 +1352,10 @@ function doLogin(){
 function doLogout(){
   currentUser=null;
   document.getElementById('app').classList.remove('show');
-  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('login-screen').style.display='block';
   document.getElementById('l-pass').value='';
   document.getElementById('l-user').value='';
+  window.scrollTo(0,0);
 }
 function startApp(){
   document.getElementById('login-screen').style.display='none';
@@ -1224,6 +1588,124 @@ async function takeTicket(id,e){
 // ============================================================
 // ALL TICKETS
 // ============================================================
+// ============================================================
+// SAVED FILTERS (per account)
+// ============================================================
+let savedFilters={}; // {username: [{id,name,status,level,sla,priority,search}]}
+let activeFilterId=null;
+
+function getMyFilters(){
+  const key=currentUser?.username;
+  if(!key)return[];
+  if(!savedFilters[key])savedFilters[key]=[];
+  return savedFilters[key];
+}
+
+function currentFilterState(){
+  return{
+    status:document.getElementById('f-status')?.value||'',
+    level:document.getElementById('f-level')?.value||'',
+    sla:document.getElementById('f-sla')?.value||'',
+    priority:document.getElementById('f-prio')?.value||'',
+    search:document.getElementById('srch')?.value||'',
+  };
+}
+
+function filterStateLabel(f){
+  const parts=[];
+  if(f.status)parts.push(f.status);
+  if(f.level)parts.push(f.level+' Level');
+  if(f.sla)parts.push(f.sla);
+  if(f.priority)parts.push(f.priority);
+  if(f.search)parts.push('"'+f.search+'"');
+  return parts.length?parts.join(' · '):'Keine Filter aktiv';
+}
+
+function openSaveFilter(){
+  const state=currentFilterState();
+  const hasAny=state.status||state.level||state.sla||state.priority||state.search;
+  if(!hasAny){toast('Bitte zuerst mindestens einen Filter auswählen.','error');return;}
+  document.getElementById('filter-name').value='';
+  document.getElementById('filter-preview').textContent='Aktuelle Auswahl: '+filterStateLabel(state);
+  document.getElementById('m-save-filter').classList.add('open');
+}
+
+function saveCurrentFilter(){
+  const name=document.getElementById('filter-name').value.trim();
+  if(!name){toast('Bitte einen Namen eingeben.','error');return;}
+  const state=currentFilterState();
+  const filters=getMyFilters();
+  filters.push({id:'f-'+Date.now(),name,...state});
+  closeModal('m-save-filter');
+  toast(`Filter "${name}" gespeichert ✓`,'success');
+  renderFilterChips();
+}
+
+async function renderFilterChips(){
+  const row=document.getElementById('saved-filters-row');
+  if(!row)return;
+  // Only for admins
+  if(currentUser?.role!=='admin'){row.innerHTML='';return;}
+  const filters=getMyFilters();
+  const tickets=await api('/api/tickets');
+
+  function countForFilter(f){
+    return tickets.filter(t=>{
+      if(f.status&&t.status!==f.status)return false;
+      if(f.level&&t.level!==f.level)return false;
+      if(f.sla&&t.sla!==f.sla)return false;
+      if(f.priority&&t.priority!==f.priority)return false;
+      if(f.search&&!(t.title.toLowerCase().includes(f.search.toLowerCase())||t.id.toLowerCase().includes(f.search.toLowerCase())||t.reporter.toLowerCase().includes(f.search.toLowerCase())))return false;
+      return true;
+    }).length;
+  }
+
+  const allChip=`<div class="filter-chip filter-chip-all ${!activeFilterId?'active':''}" onclick="clearFilterChip()">Alle <span class="filter-chip-count">${tickets.length}</span></div>`;
+  const chips=filters.map(f=>{
+    const cnt=countForFilter(f);
+    return`<div class="filter-chip ${activeFilterId===f.id?'active':''}" onclick="applyFilterChip('${f.id}')">
+      ${f.name} <span class="filter-chip-count">${cnt}</span>
+      <span class="filter-chip-del" onclick="deleteFilterChip(event,'${f.id}')">×</span>
+    </div>`;
+  }).join('');
+  row.innerHTML=allChip+chips;
+}
+
+function applyFilterChip(id){
+  const filters=getMyFilters();
+  const f=filters.find(x=>x.id===id);
+  if(!f)return;
+  activeFilterId=id;
+  document.getElementById('f-status').value=f.status||'';
+  document.getElementById('f-level').value=f.level||'';
+  document.getElementById('f-sla').value=f.sla||'';
+  document.getElementById('f-prio').value=f.priority||'';
+  document.getElementById('srch').value=f.search||'';
+  loadTickets();
+  renderFilterChips();
+}
+
+function clearFilterChip(){
+  activeFilterId=null;
+  document.getElementById('f-status').value='';
+  document.getElementById('f-level').value='';
+  document.getElementById('f-sla').value='';
+  document.getElementById('f-prio').value='';
+  document.getElementById('srch').value='';
+  loadTickets();
+  renderFilterChips();
+}
+
+function deleteFilterChip(e,id){
+  e.stopPropagation();
+  const filters=getMyFilters();
+  const idx=filters.findIndex(x=>x.id===id);
+  if(idx>-1)filters.splice(idx,1);
+  if(activeFilterId===id){activeFilterId=null;clearFilterChip();}
+  else renderFilterChips();
+  toast('Filter gelöscht','success');
+}
+
 async function loadTickets(){
   const params=new URLSearchParams();
   const srch=document.getElementById('srch')?.value;if(srch)params.set('search',srch);
@@ -1235,10 +1717,12 @@ async function loadTickets(){
   document.getElementById('ticket-count').textContent=`${list.length} Tickets`;
   document.getElementById('ticket-count2').textContent=`${list.length} Tickets`;
   document.getElementById('ticket-table').innerHTML=`<table><thead><tr><th style="width:4px;padding:0"></th><th>ID</th><th>Titel</th><th>Kat.</th><th>Prio</th><th>Status</th><th>Level</th><th>SLA</th><th>Zugewiesen</th><th>Erstellt</th></tr></thead><tbody>${list.map(t=>{const nr=needsReply(t);return`<tr onclick="openDetail('${t.id}')"><td style="padding:0;width:4px"><div style="width:4px;height:100%;min-height:34px;background:${nr?'#3a6aee':'transparent'}"></div></td><td class="td-id">${t.id}</td><td><div class="td-title">${nr?'<span style="color:#3a6aee;margin-right:3px">●</span>':''}${t.title}</div><div class="td-sub">${t.reporter}</div></td><td style="font-size:11px;color:#5a6070">${t.category}</td><td>${pb(t.priority)}</td><td>${badge(t.status)}</td><td>${lb(t.level)}</td><td>${slab(t.sla)}</td><td style="font-size:11px;color:#5a6070;white-space:nowrap">${t.assign}</td><td style="font-size:11px;color:#4a5060;white-space:nowrap">${fmtDate(t.created)}</td></tr>`;}).join('')}</tbody></table>`;
+  renderFilterChips();
 }
 
 // ============================================================
 // MY TICKETS (Kunde)
+
 // ============================================================
 async function loadMyTickets(){
   const list=await api('/api/tickets');
