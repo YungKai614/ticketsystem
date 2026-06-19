@@ -299,6 +299,33 @@ td{padding:7px 11px;vertical-align:middle}
 @keyframes typing{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
 .pie-segment{transition:opacity .2s}
 .pie-segment:hover{opacity:.8}
+
+/* STATS SCROLL SECTIONS */
+.stats-scroll{max-height:calc(100vh - 100px);overflow-y:auto;padding-right:6px;scroll-behavior:smooth}
+.stats-scroll::-webkit-scrollbar{width:6px}
+.stats-scroll::-webkit-scrollbar-track{background:transparent}
+.stats-scroll::-webkit-scrollbar-thumb{background:#2a2d35;border-radius:3px}
+.stat-section{margin-bottom:34px;scroll-margin-top:10px}
+.stat-section-hd{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid #2a2d35}
+.stat-section-num{font-size:22px;font-weight:700;color:#2a2d35;font-family:'Courier New',monospace;flex-shrink:0}
+.stat-section-title{font-size:15px;font-weight:600;color:#e2e4e9}
+.stat-section-sub{font-size:11px;color:#4a5060;margin-top:2px}
+
+/* DONUT CHART */
+.donut-wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap;justify-content:center}
+.donut-legend{display:flex;flex-direction:column;gap:8px}
+.donut-legend-item{display:flex;align-items:center;gap:8px;font-size:12px;color:#9a9fad}
+.donut-legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.donut-legend-val{font-weight:600;color:#e2e4e9;margin-left:auto;padding-left:14px}
+
+/* SLA RINGS */
+.sla-ring-row{display:flex;justify-content:space-around;flex-wrap:wrap;gap:16px}
+.sla-ring-item{text-align:center}
+.sla-ring-lbl{font-size:11px;color:#5a6070;margin-top:8px}
+.sla-ring-pct{font-size:18px;font-weight:700;color:#e2e4e9}
+
+/* TIMELINE CHART */
+.timeline-svg-wrap{width:100%;overflow-x:auto}
 @media(max-width:700px){.sb{display:none}.main{margin-left:0}.kpi-row-4,.kpi-row-3,.chart-grid,.chart-grid-3,.sla-grid{grid-template-columns:1fr}.det-meta,.form-row{grid-template-columns:1fr}}
 </style>
 </head>
@@ -424,7 +451,7 @@ td{padding:7px 11px;vertical-align:middle}
     <div class="topbar">
       <div class="topbar-title" id="topbar-title">Dashboard</div>
       <div id="topbar-actions"></div>
-      <div style="position:relative;margin-left:6px">
+      <div style="position:relative;margin-left:6px" id="notif-wrap">
         <button id="notif-btn" onclick="toggleNotif()" style="background:none;border:none;cursor:pointer;padding:5px;border-radius:5px;color:#6a7080;position:relative;font-size:16px;line-height:1" title="Benachrichtigungen">
           🔔
           <span id="notif-dot" style="display:none;position:absolute;top:2px;right:2px;width:8px;height:8px;border-radius:50%;background:#e05050;border:1.5px solid #13151a"></span>
@@ -477,22 +504,104 @@ td{padding:7px 11px;vertical-align:middle}
 
       <!-- STATISTIKEN -->
       <div class="view" id="view-stats">
-        <div class="chart-grid-3">
-          <div class="kpi-card blue"><div class="kpi-lbl">Diese Woche</div><div class="kpi-val" id="s-week">…</div><div class="kpi-sub">Neue Tickets</div></div>
-          <div class="kpi-card green"><div class="kpi-lbl">Diesen Monat</div><div class="kpi-val" id="s-month">…</div><div class="kpi-sub">Gelöst</div></div>
-          <div class="kpi-card amber"><div class="kpi-lbl">Ø Bearbeitungszeit</div><div class="kpi-val" id="s-avg">…</div><div class="kpi-sub">Ziel: &lt; 4h (Silver)</div></div>
-        </div>
-        <div class="chart-grid">
-          <div class="card"><div class="card-hd"><h3>Nach Kategorie</h3></div><div style="padding:12px" id="cat-bars"></div></div>
-          <div class="card"><div class="card-hd"><h3>Nach Priorität</h3></div><div style="padding:12px" id="prio-bars"></div></div>
-        </div>
-        <div class="chart-grid">
-          <div class="card"><div class="card-hd"><h3>Abgeschlossen nach Mitarbeiter</h3></div><div style="padding:12px" id="user-bars"></div></div>
-          <div class="card"><div class="card-hd"><h3>SLA-Einhaltung</h3></div><div style="padding:12px" id="sla-compliance"></div></div>
-        </div>
-        <div class="chart-grid">
-          <div class="card"><div class="card-hd"><h3>Status-Verteilung</h3></div><div style="padding:12px" id="status-bars"></div></div>
-          <div class="card"><div class="card-hd"><h3>Nach Wochentag</h3></div><div style="padding:12px" id="weekday-bars"></div></div>
+        <div class="stats-scroll" id="stats-scroll">
+
+          <!-- SECTION 1: OVERVIEW -->
+          <section class="stat-section">
+            <div class="stat-section-hd">
+              <div class="stat-section-num">01</div>
+              <div><div class="stat-section-title">Übersicht</div><div class="stat-section-sub">Kennzahlen der aktuellen Periode</div></div>
+            </div>
+            <div class="chart-grid-3">
+              <div class="kpi-card blue"><div class="kpi-lbl">Diese Woche</div><div class="kpi-val" id="s-week">…</div><div class="kpi-sub">Neue Tickets</div></div>
+              <div class="kpi-card green"><div class="kpi-lbl">Diesen Monat</div><div class="kpi-val" id="s-month">…</div><div class="kpi-sub">Gelöst</div></div>
+              <div class="kpi-card amber"><div class="kpi-lbl">Ø Bearbeitungszeit</div><div class="kpi-val" id="s-avg">…</div><div class="kpi-sub">Ziel: &lt; 4h (Silver)</div></div>
+            </div>
+            <div class="card">
+              <div class="card-hd"><h3>Tickets über Zeit — letzte 14 Tage</h3></div>
+              <div style="padding:16px" id="timeline-chart"></div>
+            </div>
+          </section>
+
+          <!-- SECTION 2: KATEGORIE & PRIORITÄT -->
+          <section class="stat-section">
+            <div class="stat-section-hd">
+              <div class="stat-section-num">02</div>
+              <div><div class="stat-section-title">Kategorien & Priorität</div><div class="stat-section-sub">Womit beschäftigt sich der Support am meisten</div></div>
+            </div>
+            <div class="chart-grid">
+              <div class="card">
+                <div class="card-hd"><h3>Tickets nach Kategorie</h3></div>
+                <div style="padding:18px" id="cat-donut"></div>
+              </div>
+              <div class="card">
+                <div class="card-hd"><h3>Tickets nach Priorität</h3></div>
+                <div style="padding:18px" id="prio-donut"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SECTION 3: TEAM PERFORMANCE -->
+          <section class="stat-section">
+            <div class="stat-section-hd">
+              <div class="stat-section-num">03</div>
+              <div><div class="stat-section-title">Team-Performance</div><div class="stat-section-sub">Wer hat wie viele Tickets abgeschlossen</div></div>
+            </div>
+            <div class="card">
+              <div class="card-hd"><h3>Abgeschlossen nach Mitarbeiter</h3></div>
+              <div style="padding:16px" id="user-bars"></div>
+            </div>
+          </section>
+
+          <!-- SECTION 4: SLA -->
+          <section class="stat-section">
+            <div class="stat-section-hd">
+              <div class="stat-section-num">04</div>
+              <div><div class="stat-section-title">SLA-Einhaltung</div><div class="stat-section-sub">Reaktionszeit im Vergleich zum vereinbarten SLA</div></div>
+            </div>
+            <div class="chart-grid">
+              <div class="card">
+                <div class="card-hd"><h3>SLA-Erfüllungsgrad</h3></div>
+                <div style="padding:18px" id="sla-rings"></div>
+              </div>
+              <div class="card">
+                <div class="card-hd"><h3>Tickets pro SLA-Stufe</h3></div>
+                <div style="padding:16px" id="sla-compliance"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SECTION 5: STATUS & ZEIT -->
+          <section class="stat-section">
+            <div class="stat-section-hd">
+              <div class="stat-section-num">05</div>
+              <div><div class="stat-section-title">Status & Verteilung über Zeit</div><div class="stat-section-sub">Wann kommen die meisten Anfragen rein</div></div>
+            </div>
+            <div class="chart-grid">
+              <div class="card">
+                <div class="card-hd"><h3>Status-Verteilung</h3></div>
+                <div style="padding:18px" id="status-donut"></div>
+              </div>
+              <div class="card">
+                <div class="card-hd"><h3>Tickets nach Wochentag</h3></div>
+                <div style="padding:16px" id="weekday-bars"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SECTION 6: EXTERN -->
+          <section class="stat-section" style="margin-bottom:30px">
+            <div class="stat-section-hd">
+              <div class="stat-section-num">06</div>
+              <div><div class="stat-section-title">Externe Anfragen & Verrechnung</div><div class="stat-section-sub">Tickets ohne SLA-Vertrag</div></div>
+            </div>
+            <div class="chart-grid-3">
+              <div class="kpi-card purple"><div class="kpi-lbl">Externe Tickets</div><div class="kpi-val" id="s-extern-count">…</div><div class="kpi-sub">Total ohne SLA</div></div>
+              <div class="kpi-card green"><div class="kpi-lbl">Verrechnet</div><div class="kpi-val" id="s-extern-billed">…</div><div class="kpi-sub">Mit Rechnung</div></div>
+              <div class="kpi-card amber"><div class="kpi-lbl">Verrechnungssumme</div><div class="kpi-val" id="s-extern-total">…</div><div class="kpi-sub">CHF Total</div></div>
+            </div>
+          </section>
+
         </div>
       </div>
 
@@ -937,6 +1046,8 @@ function buildNav(){
       <div class="nav-sec">Info</div>
       <button class="ni" onclick="nav('sla',this)">📋 SLA-Modelle</button>`;
   }
+  const notifWrap=document.getElementById('notif-wrap');
+  if(notifWrap)notifWrap.style.display=isAdmin?'block':'none';
 }
 
 // ============================================================
@@ -1411,6 +1522,96 @@ function loadUsers(){
 // ============================================================
 // STATS
 // ============================================================
+function donutChart(data,colors,size=160){
+  const total=Object.values(data).reduce((a,b)=>a+b,0)||1;
+  let cumulative=0;
+  const r=size/2-14,cx=size/2,cy=size/2,circ=2*Math.PI*r;
+  const segments=Object.entries(data).map(([k,v])=>{
+    const pct=v/total;
+    const dash=pct*circ;
+    const offset=cumulative*circ;
+    cumulative+=pct;
+    return `<circle class="pie-segment" cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${colors[k]||'#5a6070'}" stroke-width="22" stroke-dasharray="${dash} ${circ-dash}" stroke-dashoffset="${-offset}" transform="rotate(-90 ${cx} ${cy})"/>`;
+  }).join('');
+  const legend=Object.entries(data).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`
+    <div class="donut-legend-item"><span class="donut-legend-dot" style="background:${colors[k]||'#5a6070'}"></span><span>${k}</span><span class="donut-legend-val">${v}</span></div>`).join('');
+  return `<div class="donut-wrap">
+    <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+      ${segments}
+      <text x="${cx}" y="${cy-4}" text-anchor="middle" font-size="22" font-weight="700" fill="#e2e4e9">${total}</text>
+      <text x="${cx}" y="${cy+14}" text-anchor="middle" font-size="10" fill="#4a5060">Total</text>
+    </svg>
+    <div class="donut-legend">${legend}</div>
+  </div>`;
+}
+
+function slaRing(label,pct,color,size=88){
+  const r=size/2-9,cx=size/2,cy=size/2,circ=2*Math.PI*r;
+  const dash=pct/100*circ;
+  return `<div class="sla-ring-item">
+    <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+      <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#1e2128" stroke-width="9"/>
+      <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${color}" stroke-width="9" stroke-dasharray="${dash} ${circ-dash}" stroke-linecap="round" transform="rotate(-90 ${cx} ${cy})"/>
+      <text x="${cx}" y="${cy+5}" text-anchor="middle" font-size="16" font-weight="700" fill="#e2e4e9">${pct}%</text>
+    </svg>
+    <div class="sla-ring-lbl">${label}</div>
+  </div>`;
+}
+
+function timelineChart(tickets){
+  const days=14;
+  const now=new Date();now.setHours(0,0,0,0);
+  const buckets=[];
+  for(let i=days-1;i>=0;i--){
+    const d=new Date(now-i*86400000);
+    buckets.push({date:d,created:0,resolved:0});
+  }
+  tickets.forEach(t=>{
+    const c=new Date(t.created);c.setHours(0,0,0,0);
+    const bucket=buckets.find(b=>b.date.getTime()===c.getTime());
+    if(bucket)bucket.created++;
+    const r=t.log?.find(l=>l.type==='resolve');
+    if(r){
+      const rd=new Date(r.time);rd.setHours(0,0,0,0);
+      const rb=buckets.find(b=>b.date.getTime()===rd.getTime());
+      if(rb)rb.resolved++;
+    }
+  });
+  const maxV=Math.max(...buckets.map(b=>Math.max(b.created,b.resolved)),1);
+  const w=820,h=180,padL=30,padB=24,padT=10,padR=10;
+  const chartW=w-padL-padR,chartH=h-padT-padB;
+  const stepX=chartW/(days-1);
+  const pathC=buckets.map((b,i)=>`${padL+i*stepX},${padT+chartH-(b.created/maxV)*chartH}`).join(' L ');
+  const pathR=buckets.map((b,i)=>`${padL+i*stepX},${padT+chartH-(b.resolved/maxV)*chartH}`).join(' L ');
+  const dots=buckets.map((b,i)=>{
+    const x=padL+i*stepX;
+    return `<circle cx="${x}" cy="${padT+chartH-(b.created/maxV)*chartH}" r="2.5" fill="#4a7aaa"/>
+            <circle cx="${x}" cy="${padT+chartH-(b.resolved/maxV)*chartH}" r="2.5" fill="#5aa870"/>`;
+  }).join('');
+  const labels=buckets.filter((_,i)=>i%2===0).map((b,idx)=>{
+    const i=idx*2;
+    const x=padL+i*stepX;
+    return `<text x="${x}" y="${h-6}" text-anchor="middle" font-size="9" fill="#4a5060">${b.date.getDate()}.${b.date.getMonth()+1}</text>`;
+  }).join('');
+  const gridLines=[0,0.5,1].map(f=>{
+    const y=padT+chartH-f*chartH;
+    return `<line x1="${padL}" y1="${y}" x2="${w-padR}" y2="${y}" stroke="#1e2128" stroke-width="1"/><text x="${padL-6}" y="${y+3}" text-anchor="end" font-size="9" fill="#3a3f4d">${Math.round(f*maxV)}</text>`;
+  }).join('');
+  return `<div class="timeline-svg-wrap">
+    <svg width="100%" height="${h}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid meet">
+      ${gridLines}
+      <path d="M ${pathC}" fill="none" stroke="#4a7aaa" stroke-width="2"/>
+      <path d="M ${pathR}" fill="none" stroke="#5aa870" stroke-width="2"/>
+      ${dots}
+      ${labels}
+    </svg>
+    <div style="display:flex;gap:16px;justify-content:center;margin-top:8px">
+      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:#7a8090"><span style="width:10px;height:2px;background:#4a7aaa;display:inline-block"></span>Erstellt</div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:#7a8090"><span style="width:10px;height:2px;background:#5aa870;display:inline-block"></span>Gelöst</div>
+    </div>
+  </div>`;
+}
+
 async function loadStats(){
   const tickets=await api('/api/tickets');
   const now=new Date(),weekAgo=new Date(now-7*86400000),monthStart=new Date(now.getFullYear(),now.getMonth(),1);
@@ -1419,28 +1620,50 @@ async function loadStats(){
   const resolved=tickets.filter(t=>t.status==='Gelöst'||t.status==='Geschlossen');
   const avgH=resolved.length?Math.round(resolved.reduce((a,t)=>{const r=t.log?.find(l=>l.type==='resolve');if(!r)return a+3;return a+(new Date(r.time)-new Date(t.created))/3600000;},0)/resolved.length):2;
   document.getElementById('s-avg').textContent=Math.max(1,Math.min(avgH,24))+'h';
+
+  // Timeline
+  document.getElementById('timeline-chart').innerHTML=timelineChart(tickets);
+
+  // Category donut
   const cats={};tickets.forEach(t=>{cats[t.category]=(cats[t.category]||0)+1;});
-  const maxC=Math.max(...Object.values(cats),1);
-  const catC={'Netzwerk':'#3a6a4a','Hardware':'#5a6070','Software / App':'#4a7aaa','E-Mail':'#6a5090','Drucker':'#5a4060','Server':'#8a7040','Sicherheit':'#8a4040','User & App':'#4a7aaa','Network':'#3a6a4a','Windows/OS':'#6a5090','Unix':'#8a7040'};
-  document.getElementById('cat-bars').innerHTML=Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([c,n])=>bar(c,n,maxC,catC[c]||'#5a6070')).join('');
+  const catC={'Netzwerk':'#3a7a5a','Hardware':'#6a7080','Software / App':'#4a7aaa','E-Mail':'#7a5a9a','Drucker':'#9a5a7a','Server':'#9a7a40','Sicherheit':'#9a5040','User & App':'#4a7aaa','Network':'#3a7a5a','Windows/OS':'#7a5a9a','Unix':'#9a7a40','Sonstiges':'#5a6070'};
+  document.getElementById('cat-donut').innerHTML=donutChart(cats,catC,170);
+
+  // Priority donut
   const prios={Critical:0,High:0,Medium:0,Low:0};tickets.forEach(t=>{if(prios[t.priority]!==undefined)prios[t.priority]++;});
-  const maxP=Math.max(...Object.values(prios),1);
-  const pc={Critical:'#8a4040',High:'#8a7040',Medium:'#4a7aaa',Low:'#5a6070'};
-  document.getElementById('prio-bars').innerHTML=Object.entries(prios).map(([p,n])=>bar(p,n,maxP,pc[p])).join('');
+  const pc={Critical:'#9a5040',High:'#9a7a40',Medium:'#4a7aaa',Low:'#5a6070'};
+  document.getElementById('prio-donut').innerHTML=donutChart(prios,pc,170);
+
+  // User bars
   const byUser={};resolved.forEach(t=>{byUser[t.assign]=(byUser[t.assign]||0)+1;});
   const maxU=Math.max(...Object.values(byUser),1);
-  document.getElementById('user-bars').innerHTML=Object.entries(byUser).sort((a,b)=>b[1]-a[1]).slice(0,7).map(([u,n])=>bar(u.replace('1st Level – ',''),n,maxU,'#3a6a4a')).join('')||'<div class="empty">Noch keine abgeschlossenen Tickets.</div>';
+  document.getElementById('user-bars').innerHTML=Object.entries(byUser).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([u,n])=>bar(u.replace('1st Level – ',''),n,maxU,'#3a7a5a')).join('')||'<div class="empty">Noch keine abgeschlossenen Tickets.</div>';
+
+  // SLA rings
   const slaData={Silver:{total:0,ok:0},Gold:{total:0,ok:0},Platinum:{total:0,ok:0}};
   const slaH={Silver:4,Gold:1,Platinum:0.5};
   tickets.forEach(t=>{if(!slaData[t.sla])return;slaData[t.sla].total++;const first=t.log?.find(l=>l.type==='update'||l.type==='resolve');if(!first){slaData[t.sla].ok++;return;}if((new Date(first.time)-new Date(t.created))/3600000<=slaH[t.sla])slaData[t.sla].ok++;});
-  const slaCol={Silver:'#5a6070',Gold:'#8a7040',Platinum:'#6a5090'};
-  document.getElementById('sla-compliance').innerHTML=Object.entries(slaData).map(([s,d])=>{const pct=d.total?Math.round(d.ok/d.total*100):100;return bar(s,pct,100,slaCol[s]);}).join('');
+  const slaCol={Silver:'#6a7080',Gold:'#9a7a40',Platinum:'#7a5a9a'};
+  document.getElementById('sla-rings').innerHTML=`<div class="sla-ring-row">${Object.entries(slaData).map(([s,d])=>slaRing(s,d.total?Math.round(d.ok/d.total*100):100,slaCol[s])).join('')}</div>`;
+  document.getElementById('sla-compliance').innerHTML=Object.entries(slaData).map(([s,d])=>bar(s,d.total,Math.max(...Object.values(slaData).map(x=>x.total),1),slaCol[s])).join('');
+
+  // Status donut
   const statuses={Offen:0,'In Bearbeitung':0,'Warten auf Kunde':0,Gelöst:0,Geschlossen:0};tickets.forEach(t=>{if(statuses[t.status]!==undefined)statuses[t.status]++;});
-  const maxSt=Math.max(...Object.values(statuses),1);const stc={Offen:'#4a7aaa','In Bearbeitung':'#8a7040','Warten auf Kunde':'#7a5090',Gelöst:'#3a6a4a',Geschlossen:'#5a6070'};
-  document.getElementById('status-bars').innerHTML=Object.entries(statuses).map(([s,n])=>bar(s,n,maxSt,stc[s])).join('');
+  const stc={Offen:'#4a7aaa','In Bearbeitung':'#9a7a40','Warten auf Kunde':'#7a5a9a',Gelöst:'#3a7a5a',Geschlossen:'#5a6070'};
+  document.getElementById('status-donut').innerHTML=donutChart(statuses,stc,170);
+
+  // Weekday bars
   const days=['Mo','Di','Mi','Do','Fr','Sa','So'];const dayCount=[0,0,0,0,0,0,0];
   tickets.forEach(t=>{const d=new Date(t.created).getDay();dayCount[d===0?6:d-1]++;});const maxD=Math.max(...dayCount,1);
-  document.getElementById('weekday-bars').innerHTML=days.map((d,i)=>bar(d,dayCount[i],maxD,'#4a5a8a')).join('');
+  document.getElementById('weekday-bars').innerHTML=days.map((d,i)=>bar(d,dayCount[i],maxD,'#5a6a9a')).join('');
+
+  // Extern stats
+  const externTickets=tickets.filter(t=>isExtern(t));
+  const billed=externTickets.filter(t=>t.invoice);
+  const totalBilled=billed.reduce((sum,t)=>sum+(t.invoice?.total||0),0);
+  document.getElementById('s-extern-count').textContent=externTickets.length;
+  document.getElementById('s-extern-billed').textContent=billed.length;
+  document.getElementById('s-extern-total').textContent='CHF '+totalBilled.toFixed(0);
 }
 
 // ============================================================
