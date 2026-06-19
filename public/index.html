@@ -440,6 +440,28 @@ td{padding:7px 11px;vertical-align:middle}
 .lp-tier{font-family:var(--lp-display);font-weight:600;font-size:14px}
 .lp-tier-gold{color:var(--lp-signal)}
 
+/* PRICING CARDS */
+.lp-pricing-grid{margin-top:50px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.lp-price-card{background:var(--lp-panel);border:1px solid var(--lp-line);border-radius:8px;padding:28px 26px;position:relative}
+.lp-price-featured{border-color:var(--lp-signal);background:linear-gradient(180deg,#1c1610 0%,var(--lp-panel) 100%)}
+.lp-price-badge{position:absolute;top:-11px;left:26px;background:var(--lp-signal);color:#1a1410;font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;letter-spacing:.03em}
+.lp-price-tier{font-family:var(--lp-mono);font-size:11px;color:var(--lp-ink-faint);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.lp-price-amount{font-family:var(--lp-display);font-size:32px;font-weight:600;color:var(--lp-ink)}
+.lp-price-amount span{font-size:13px;font-weight:400;color:var(--lp-ink-faint);font-family:var(--lp-body)}
+.lp-price-desc{font-size:12px;color:var(--lp-ink-dim);margin-top:8px;line-height:1.6}
+.lp-price-divider{height:1px;background:var(--lp-line);margin:18px 0}
+.lp-price-feat{font-size:12px;color:var(--lp-ink-dim);padding:5px 0}
+
+/* TEAM GRID */
+.lp-team-grid{margin-top:50px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.lp-team-card{text-align:center}
+.lp-team-photo{width:100px;height:100px;border-radius:50%;margin:0 auto 16px;overflow:hidden;border:2px solid var(--lp-line);background:#1a1d24;display:flex;align-items:center;justify-content:center}
+.lp-team-photo img{width:100%;height:100%;object-fit:cover}
+.lp-team-photo-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--lp-display);font-size:26px;font-weight:600;color:var(--lp-ink-faint);background:#1a1d24}
+.lp-team-name{font-family:var(--lp-display);font-size:15px;font-weight:600;color:var(--lp-ink)}
+.lp-team-role{font-size:11px;color:var(--lp-signal);margin-top:3px}
+.lp-team-class{font-size:10px;color:var(--lp-ink-faint);margin-top:2px;font-family:var(--lp-mono)}
+
 .lp-footer{border-top:1px solid var(--lp-line);padding:40px 0 30px}
 .lp-footer-grid{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:20px}
 .lp-footer-brand{font-family:var(--lp-display);font-size:15px;font-weight:600}
@@ -627,33 +649,82 @@ td{padding:7px 11px;vertical-align:middle}
 
   <section id="lp-sla" class="lp-section">
     <div class="lp-wrap">
-      <div class="lp-eyebrow">Servicequalität</div>
+      <div class="lp-eyebrow">Servicequalität & Preise</div>
       <h2 class="lp-section-title">Drei SLA-Stufen, exakt nach Vertrag konfiguriert.</h2>
+      <p class="lp-section-sub">Alle Preise pro Monat, exkl. MwSt. Mindestlaufzeit 12 Monate.</p>
 
-      <div class="lp-sla-strip">
-        <div class="lp-sla-row lp-sla-header">
-          <div class="lp-sla-cell">Stufe</div>
-          <div class="lp-sla-cell">Servicezeiten</div>
-          <div class="lp-sla-cell">Reaktionszeit</div>
-          <div class="lp-sla-cell">Verfügbarkeit</div>
+      <div class="lp-pricing-grid">
+        <div class="lp-price-card">
+          <div class="lp-price-tier">Silver</div>
+          <div class="lp-price-amount">CHF 290<span>/Mt.</span></div>
+          <div class="lp-price-desc">Basis-Betreuung während der Geschäftszeiten.</div>
+          <div class="lp-price-divider"></div>
+          <div class="lp-price-feat">✓ Mo–Fr, 08–17 Uhr</div>
+          <div class="lp-price-feat">✓ Reaktionszeit 4 Stunden</div>
+          <div class="lp-price-feat">✓ 95 % Verfügbarkeit</div>
+          <div class="lp-price-feat">✓ Monatliche Wartung</div>
+          <button class="lp-btn lp-btn-ghost" style="width:100%;justify-content:center;margin-top:20px" onclick="openSlaOrder('Silver','290')">Silver abonnieren</button>
         </div>
-        <div class="lp-sla-row">
-          <div class="lp-sla-cell lp-tier">Silver</div>
-          <div class="lp-sla-cell">Mo–Fr, 08–17 Uhr</div>
-          <div class="lp-sla-cell">4 Stunden</div>
-          <div class="lp-sla-cell">95 %</div>
+        <div class="lp-price-card lp-price-featured">
+          <div class="lp-price-badge">Empfohlen</div>
+          <div class="lp-price-tier">Gold</div>
+          <div class="lp-price-amount">CHF 690<span>/Mt.</span></div>
+          <div class="lp-price-desc">Pikett-Bereitschaft und fester Ansprechpartner.</div>
+          <div class="lp-price-divider"></div>
+          <div class="lp-price-feat">✓ Mo–Fr, 07–20 Uhr</div>
+          <div class="lp-price-feat">✓ Reaktionszeit 1 Stunde</div>
+          <div class="lp-price-feat">✓ 99 % Verfügbarkeit</div>
+          <div class="lp-price-feat">✓ Fester Ansprechpartner</div>
+          <div class="lp-price-feat">✓ Monatlicher Bericht</div>
+          <button class="lp-btn lp-btn-primary" style="width:100%;justify-content:center;margin-top:20px" onclick="openSlaOrder('Gold','690')">Gold abonnieren</button>
         </div>
-        <div class="lp-sla-row">
-          <div class="lp-sla-cell lp-tier lp-tier-gold">Gold</div>
-          <div class="lp-sla-cell">Mo–Fr, 07–20 Uhr</div>
-          <div class="lp-sla-cell">1 Stunde</div>
-          <div class="lp-sla-cell">99 %</div>
+        <div class="lp-price-card">
+          <div class="lp-price-tier">Platinum</div>
+          <div class="lp-price-amount">CHF 1490<span>/Mt.</span></div>
+          <div class="lp-price-desc">24/7 Premium-Service mit Senior TAM.</div>
+          <div class="lp-price-divider"></div>
+          <div class="lp-price-feat">✓ 24/7, 365 Tage</div>
+          <div class="lp-price-feat">✓ Reaktionszeit 30 Minuten</div>
+          <div class="lp-price-feat">✓ 99.9 % Verfügbarkeit</div>
+          <div class="lp-price-feat">✓ Senior Technical Account Manager</div>
+          <div class="lp-price-feat">✓ Detaillierter Monatsbericht</div>
+          <button class="lp-btn lp-btn-ghost" style="width:100%;justify-content:center;margin-top:20px" onclick="openSlaOrder('Platinum','1490')">Platinum abonnieren</button>
         </div>
-        <div class="lp-sla-row">
-          <div class="lp-sla-cell lp-tier">Platinum</div>
-          <div class="lp-sla-cell">24/7, 365 Tage</div>
-          <div class="lp-sla-cell">30 Minuten</div>
-          <div class="lp-sla-cell">99.9 %</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUSZUBILDENDE / LEHRLINGE -->
+  <section id="lp-team" class="lp-section" style="background:var(--lp-panel);border-top:1px solid var(--lp-line);border-bottom:1px solid var(--lp-line)">
+    <div class="lp-wrap">
+      <div class="lp-eyebrow">Unser Team</div>
+      <h2 class="lp-section-title">Die Lernenden hinter dem Projekt.</h2>
+      <p class="lp-section-sub">Modul 437 wurde im Rahmen der ICT-Ausbildung an der TBZ Zürich umgesetzt.</p>
+
+      <div class="lp-team-grid">
+        <div class="lp-team-card">
+          <div class="lp-team-photo">
+            <div class="lp-team-photo-fallback">NM</div>
+          </div>
+          <div class="lp-team-name">Nils Müller</div>
+          <div class="lp-team-role">CIO / Projektleiter</div>
+          <div class="lp-team-class">Klasse ICT 25b</div>
+        </div>
+        <div class="lp-team-card">
+          <div class="lp-team-photo">
+            <div class="lp-team-photo-fallback">CM</div>
+          </div>
+          <div class="lp-team-name">Calisto Marcello</div>
+          <div class="lp-team-role">CBO</div>
+          <div class="lp-team-class">Klasse ICT 25b</div>
+        </div>
+        <div class="lp-team-card">
+          <div class="lp-team-photo">
+            <div class="lp-team-photo-fallback">LF</div>
+          </div>
+          <div class="lp-team-name">Levi Frischknecht</div>
+          <div class="lp-team-role">Stv. IT-Leiter</div>
+          <div class="lp-team-class">Klasse ICT 25b</div>
         </div>
       </div>
     </div>
@@ -704,6 +775,76 @@ td{padding:7px 11px;vertical-align:middle}
     </div>
   </footer>
 
+</div>
+
+<!-- SLA ORDER FORM -->
+<div id="sla-order-screen" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:500;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto">
+  <div style="background:#13151a;border:1px solid #2a2d35;border-radius:8px;width:540px;max-width:100%;overflow:hidden">
+    <div style="padding:20px 24px 16px;border-bottom:1px solid #2a2d35;display:flex;align-items:center;gap:10px">
+      <div style="flex:1">
+        <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#3a3f4d">ICT-Consulting AG</div>
+        <div style="font-size:16px;font-weight:600;color:#e2e4e9;margin-top:2px">SLA-Vertrag abschliessen</div>
+        <div style="font-size:11px;color:#4a5060;margin-top:1px" id="order-plan-display">Silver — CHF 290/Mt.</div>
+      </div>
+      <button onclick="closeSlaOrder()" style="background:none;border:none;font-size:18px;color:#4a5060;cursor:pointer;padding:2px 5px;border-radius:4px">×</button>
+    </div>
+    <div style="padding:20px 24px" id="order-body">
+      <!-- Step 1: success -->
+      <div id="order-step1">
+        <div style="font-size:12px;color:#7a8090;margin-bottom:16px">Bitte füllen Sie alle Angaben vollständig aus. Wir senden Ihnen den Vertrag innert 1 Werktag zu.</div>
+
+        <div style="display:flex;gap:0;margin-bottom:16px;background:#1a1d23;border-radius:6px;padding:3px">
+          <button type="button" id="order-tab-firma" onclick="switchOrderType('firma')" style="flex:1;padding:7px;font-size:12px;font-weight:500;border:none;background:#2a2d35;color:#e2e4e9;border-radius:4px;cursor:pointer;font-family:inherit">Firma</button>
+          <button type="button" id="order-tab-privat" onclick="switchOrderType('privat')" style="flex:1;padding:7px;font-size:12px;font-weight:500;border:none;background:none;color:#5a6070;border-radius:4px;cursor:pointer;font-family:inherit">Privatperson</button>
+        </div>
+
+        <div class="form-row" id="order-firma-fields">
+          <div class="fgg"><label>Firmenname *</label><input type="text" id="o-company" placeholder="Musterfirma AG"></div>
+          <div class="fgg"><label>UID / Handelsregister-Nr.</label><input type="text" id="o-uid" placeholder="CHE-123.456.789"></div>
+        </div>
+
+        <div class="form-row">
+          <div class="fgg"><label>Vorname *</label><input type="text" id="o-firstname" placeholder="Max"></div>
+          <div class="fgg"><label>Nachname *</label><input type="text" id="o-lastname" placeholder="Mustermann"></div>
+        </div>
+
+        <div class="fgg"><label>Strasse & Hausnummer *</label><input type="text" id="o-street" placeholder="Musterstrasse 12"></div>
+
+        <div class="form-row">
+          <div class="fgg"><label>PLZ *</label><input type="text" id="o-zip" placeholder="8000"></div>
+          <div class="fgg"><label>Ort *</label><input type="text" id="o-city" placeholder="Zürich"></div>
+        </div>
+
+        <div class="form-row">
+          <div class="fgg"><label>Telefon / Mobile *</label><input type="text" id="o-phone" placeholder="+41 79 123 45 67"></div>
+          <div class="fgg"><label>E-Mail *</label><input type="email" id="o-email" placeholder="max@firma.ch"></div>
+        </div>
+
+        <div class="fgg"><label>Anzahl Mitarbeitende / Geräte (optional)</label><input type="text" id="o-size" placeholder="z.B. 25 Mitarbeitende"></div>
+
+        <div class="fgg"><label>Bemerkungen (optional)</label><textarea id="o-notes" placeholder="Spezielle Anforderungen, Wunschstarttermin..."></textarea></div>
+
+        <div style="display:flex;align-items:flex-start;gap:8px;margin-top:12px;margin-bottom:6px">
+          <input type="checkbox" id="o-agb" style="margin-top:3px;flex-shrink:0">
+          <label for="o-agb" style="font-size:11px;color:#7a8090;line-height:1.5">Ich akzeptiere die AGB und Vertragsbedingungen (Mindestlaufzeit 12 Monate, automatische Verlängerung, 3 Monate Kündigungsfrist).</label>
+        </div>
+
+        <button onclick="submitSlaOrder()" style="width:100%;margin-top:14px;padding:9px;background:#2d5a8e;color:#c5d8f0;border:1px solid #3a6a9e;border-radius:4px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">
+          Vertrag anfragen →
+        </button>
+      </div>
+      <!-- Step 2: success -->
+      <div id="order-step2" style="display:none;text-align:center;padding:10px 0">
+        <div style="font-size:32px;margin-bottom:12px">✅</div>
+        <div style="font-size:15px;font-weight:600;color:#e2e4e9;margin-bottom:6px">Anfrage erhalten!</div>
+        <div style="font-size:12px;color:#7a8090;margin-bottom:14px">Referenz: <strong id="order-ref" style="font-family:'Courier New',monospace;color:#5a8ab0"></strong></div>
+        <div style="font-size:11px;color:#4a5060;background:#1e2128;border-radius:4px;padding:10px;margin-bottom:14px;line-height:1.6">
+          Wir senden Ihnen den Vertrag und alle Details innert 1 Werktag an die angegebene E-Mail-Adresse.
+        </div>
+        <button onclick="closeSlaOrder()" style="padding:8px 20px;background:#2d5a8e;color:#c5d8f0;border:1px solid #3a6a9e;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit">Schliessen</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- GUEST TICKET MODAL -->
@@ -2198,6 +2339,72 @@ async function loadExternTickets(tab){
       <td style="font-size:11px">${inv?`<span style="color:#9a70c0;font-weight:600">CHF ${inv.total?.toFixed(2)||'0.00'}</span>`:`<span style="color:#3a3f4d">—</span>`}</td>
       <td style="font-size:11px;color:#4a5060;white-space:nowrap">${fmtDate(t.created)}</td>
     </tr>`;}).join('')}</tbody></table>`;
+}
+
+// ============================================================
+// SLA ORDER FORM
+// ============================================================
+let orderType='firma';
+let currentOrderPlan={name:'',price:''};
+
+function openSlaOrder(planName,price){
+  currentOrderPlan={name:planName,price};
+  document.getElementById('order-plan-display').textContent=`${planName} — CHF ${price}/Mt.`;
+  document.getElementById('sla-order-screen').style.display='flex';
+  document.getElementById('order-step1').style.display='block';
+  document.getElementById('order-step2').style.display='none';
+  switchOrderType('firma');
+}
+
+function closeSlaOrder(){
+  document.getElementById('sla-order-screen').style.display='none';
+  ['o-company','o-uid','o-firstname','o-lastname','o-street','o-zip','o-city','o-phone','o-email','o-size','o-notes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('o-agb').checked=false;
+}
+
+function switchOrderType(type){
+  orderType=type;
+  const firmaTab=document.getElementById('order-tab-firma');
+  const privatTab=document.getElementById('order-tab-privat');
+  const firmaFields=document.getElementById('order-firma-fields');
+  if(type==='firma'){
+    firmaTab.style.background='#2a2d35';firmaTab.style.color='#e2e4e9';
+    privatTab.style.background='none';privatTab.style.color='#5a6070';
+    firmaFields.style.display='grid';
+  } else {
+    privatTab.style.background='#2a2d35';privatTab.style.color='#e2e4e9';
+    firmaTab.style.background='none';firmaTab.style.color='#5a6070';
+    firmaFields.style.display='none';
+  }
+}
+
+function submitSlaOrder(){
+  const firstname=document.getElementById('o-firstname').value.trim();
+  const lastname=document.getElementById('o-lastname').value.trim();
+  const street=document.getElementById('o-street').value.trim();
+  const zip=document.getElementById('o-zip').value.trim();
+  const city=document.getElementById('o-city').value.trim();
+  const phone=document.getElementById('o-phone').value.trim();
+  const email=document.getElementById('o-email').value.trim();
+  const company=document.getElementById('o-company').value.trim();
+  const agb=document.getElementById('o-agb').checked;
+
+  if(!firstname||!lastname||!street||!zip||!city||!phone||!email){
+    alert('Bitte alle Pflichtfelder (*) ausfüllen.');return;
+  }
+  if(orderType==='firma'&&!company){
+    alert('Bitte Firmenname angeben oder zu "Privatperson" wechseln.');return;
+  }
+  if(!email.includes('@')){alert('Bitte eine gültige E-Mail-Adresse eingeben.');return;}
+  if(!agb){alert('Bitte AGB und Vertragsbedingungen akzeptieren.');return;}
+
+  const ref='SLA-'+Date.now().toString().slice(-8);
+  document.getElementById('order-ref').textContent=ref;
+  document.getElementById('order-step1').style.display='none';
+  document.getElementById('order-step2').style.display='block';
+
+  // Log the order (in-memory, visible to admin in system logs if logged in later)
+  addLog('SLA-Vertrag angefragt',email,'—',`${currentOrderPlan.name} (CHF ${currentOrderPlan.price}/Mt.) — ${orderType==='firma'?company:firstname+' '+lastname} — Ref: ${ref}`,'open');
 }
 
 // ============================================================
