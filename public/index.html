@@ -301,6 +301,40 @@ td{padding:7px 11px;vertical-align:middle}
 .pie-segment{transition:opacity .2s}
 .pie-segment:hover{opacity:.8}
 
+/* PROFILE MENU */
+#profile-menu-trigger:hover{background:#1e2128}
+.pm-item{display:block;width:100%;text-align:left;padding:9px 12px;font-size:12px;color:#9a9fad;background:none;border:none;cursor:pointer;font-family:inherit;transition:background .1s}
+.pm-item:hover{background:#22252c;color:#e2e4e9}
+.pm-theme-btn{flex:1;padding:7px 6px;font-size:11px;background:#13151a;border:1px solid #2a2d35;color:#7a8090;border-radius:5px;cursor:pointer;font-family:inherit;transition:all .15s}
+.pm-theme-btn.active{background:#1a2535;border-color:#3a6a9e;color:#5a8ab0}
+
+/* LIGHT MODE — applies to app only, not landing page */
+body.light-mode #app{
+  filter: invert(1) hue-rotate(180deg);
+}
+body.light-mode #app img,
+body.light-mode #app svg,
+body.light-mode #app .lp-team-photo{
+  filter: invert(1) hue-rotate(180deg);
+}
+/* Toast and modals also need correction since they're outside normal flow but still in #app */
+body.light-mode .modal-bg{filter: invert(1) hue-rotate(180deg);}
+
+/* SETTINGS PANEL */
+.settings-row{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #2a2d35}
+.settings-row:last-child{border-bottom:none}
+.settings-label{font-size:13px;color:#c9cdd6;font-weight:500}
+.settings-desc{font-size:11px;color:#4a5060;margin-top:2px}
+.toggle-switch{width:38px;height:21px;border-radius:11px;background:#2a2d35;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
+.toggle-switch.on{background:#3a6a9e}
+.toggle-switch-knob{width:17px;height:17px;border-radius:50%;background:#e2e4e9;position:absolute;top:2px;left:2px;transition:left .2s}
+.toggle-switch.on .toggle-switch-knob{left:19px}
+
+/* COMPACT MODE */
+body.compact-mode td{padding:5px 11px !important}
+body.compact-mode .inbox-inner{padding:7px 13px !important}
+body.compact-mode tbody tr{font-size:11px}
+
 /* SAVED FILTERS */
 .filter-chip{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #2a2d35;background:#161820;color:#7a8090;transition:all .15s}
 .filter-chip:hover{border-color:#3a3f4d;color:#c9cdd6}
@@ -712,14 +746,6 @@ td{padding:7px 11px;vertical-align:middle}
         </div>
         <div class="lp-team-card">
           <div class="lp-team-photo">
-            <div class="lp-team-photo-fallback">CM</div>
-          </div>
-          <div class="lp-team-name">Calisto Marcello</div>
-          <div class="lp-team-role">CBO</div>
-          <div class="lp-team-class">Klasse ICT 25b</div>
-        </div>
-        <div class="lp-team-card">
-          <div class="lp-team-photo">
             <div class="lp-team-photo-fallback">LF</div>
           </div>
           <div class="lp-team-name">Levi Frischknecht</div>
@@ -922,15 +948,28 @@ td{padding:7px 11px;vertical-align:middle}
       <div class="sb-name">Helpdesk Ticketsystem</div>
     </div>
     <div id="sidebar-nav"></div>
-    <div class="sb-footer">
-      <div class="u-row">
+    <div class="sb-footer" style="position:relative">
+      <div class="u-row" id="profile-menu-trigger" onclick="toggleProfileMenu()" style="cursor:pointer;padding:5px;margin:-5px;border-radius:6px;transition:background .15s">
         <div class="u-av" id="sb-av">NM</div>
         <div style="min-width:0;flex:1">
           <div class="u-name" id="sb-name">Nils Müller</div>
           <div class="u-role" id="sb-role">Administrator</div>
         </div>
+        <span style="font-size:10px;color:#3a3f4d">⚙</span>
       </div>
-      <button class="btn-logout" onclick="doLogout()">Abmelden</button>
+      <div id="profile-menu" style="display:none;position:absolute;bottom:54px;left:6px;right:6px;background:#1a1d23;border:1px solid #2a2d35;border-radius:7px;box-shadow:0 -8px 24px rgba(0,0,0,.4);overflow:hidden;z-index:200">
+        <div style="padding:9px 12px;border-bottom:1px solid #2a2d35">
+          <div style="font-size:11px;font-weight:600;color:#9a9fad">Mein Konto</div>
+        </div>
+        <button class="pm-item" onclick="nav('profile',null);toggleProfileMenu()">👤 Profil bearbeiten</button>
+        <button class="pm-item" onclick="openSettingsPanel()">⚙️ Einstellungen</button>
+        <div style="padding:9px 12px 4px;font-size:10px;color:#4a5060;text-transform:uppercase;letter-spacing:.05em;border-top:1px solid #2a2d35;margin-top:4px">Darstellung</div>
+        <div style="padding:6px 12px 10px;display:flex;gap:6px">
+          <button class="pm-theme-btn active" id="theme-btn-dark" onclick="setTheme('dark')">🌙 Dunkel</button>
+          <button class="pm-theme-btn" id="theme-btn-light" onclick="setTheme('light')">☀️ Hell</button>
+        </div>
+        <button class="pm-item" style="border-top:1px solid #2a2d35;color:#c07070" onclick="doLogout()">↪ Abmelden</button>
+      </div>
     </div>
   </aside>
 
@@ -1094,10 +1133,19 @@ td{padding:7px 11px;vertical-align:middle}
 
       <!-- INBOX -->
       <div class="view" id="view-inbox">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:13px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:13px;flex-wrap:wrap">
           <span style="font-size:12px;color:#5a6070">Inbox für:</span>
           <select id="inbox-agent" onchange="loadInbox()" style="width:220px">
             <option value="">Alle Anfragen</option>
+          </select>
+          <input type="text" id="inbox-search" placeholder="Suchen..." oninput="loadInbox()" style="width:140px">
+          <select id="inbox-sla" onchange="loadInbox()" style="width:120px">
+            <option value="">Alle SLA</option>
+            <option>Silver</option><option>Gold</option><option>Platinum</option><option>Extern</option>
+          </select>
+          <select id="inbox-prio" onchange="loadInbox()" style="width:120px">
+            <option value="">Alle Prioritäten</option>
+            <option>Critical</option><option>High</option><option>Medium</option><option>Low</option>
           </select>
         </div>
         <div class="view-tabs">
@@ -1366,6 +1414,53 @@ td{padding:7px 11px;vertical-align:middle}
 </div>
 
 <!-- MODAL: Save Filter -->
+<!-- MODAL: Settings -->
+<div class="modal-bg" id="m-settings">
+  <div class="modal" style="width:440px">
+    <div class="modal-hd"><h3>Einstellungen</h3><button class="modal-close" onclick="closeModal('m-settings')">×</button></div>
+    <div class="modal-body">
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">Helle Darstellung</div>
+          <div class="settings-desc">Invertiertes Farbschema für helle Umgebungen</div>
+        </div>
+        <div class="toggle-switch" id="toggle-theme" onclick="toggleThemeSwitch()"><div class="toggle-switch-knob"></div></div>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">Desktop-Benachrichtigungen</div>
+          <div class="settings-desc">Browser-Hinweis bei neuen Tickets</div>
+        </div>
+        <div class="toggle-switch" id="toggle-desktop-notif" onclick="toggleDesktopNotif()"><div class="toggle-switch-knob"></div></div>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">Ton bei neuer Anfrage</div>
+          <div class="settings-desc">Akustisches Signal in der Inbox</div>
+        </div>
+        <div class="toggle-switch" id="toggle-sound" onclick="toggleSound()"><div class="toggle-switch-knob"></div></div>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">Kompakte Tabellenansicht</div>
+          <div class="settings-desc">Reduzierte Zeilenhöhe in Listen</div>
+        </div>
+        <div class="toggle-switch" id="toggle-compact" onclick="toggleCompact()"><div class="toggle-switch-knob"></div></div>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">Auto-Aktualisierung</div>
+          <div class="settings-desc">Inbox alle 30 Sekunden neu laden</div>
+        </div>
+        <div class="toggle-switch on" id="toggle-autorefresh" onclick="toggleAutorefresh()"><div class="toggle-switch-knob"></div></div>
+      </div>
+    </div>
+    <div class="modal-ft" style="justify-content:flex-end">
+      <button class="btn btn-secondary" onclick="closeModal('m-settings')">Fertig</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-bg" id="m-save-filter">
   <div class="modal" style="width:400px">
     <div class="modal-hd"><h3>Filter speichern</h3><button class="modal-close" onclick="closeModal('m-save-filter')">×</button></div>
@@ -1656,8 +1751,19 @@ function switchInbox(tab,btn){
 
 async function loadInbox(){
   const agent=document.getElementById('inbox-agent')?.value||'';
+  const slaFilter=document.getElementById('inbox-sla')?.value||'';
+  const prioFilter=document.getElementById('inbox-prio')?.value||'';
+  const searchFilter=document.getElementById('inbox-search')?.value.toLowerCase().trim()||'';
   const tickets=await api('/api/tickets');
   let filtered=agent?tickets.filter(t=>t.assign===agent):tickets;
+  if(slaFilter)filtered=filtered.filter(t=>t.sla===slaFilter);
+  if(prioFilter)filtered=filtered.filter(t=>t.priority===prioFilter);
+  if(searchFilter)filtered=filtered.filter(t=>
+    t.title.toLowerCase().includes(searchFilter)||
+    t.id.toLowerCase().includes(searchFilter)||
+    t.reporter.toLowerCase().includes(searchFilter)||
+    (t.guestEmail||'').toLowerCase().includes(searchFilter)
+  );
   const openList=filtered.filter(t=>t.status==='Offen');
   const progList=filtered.filter(t=>t.status==='In Bearbeitung');
   const waitList=filtered.filter(t=>t.status==='Warten auf Kunde');
@@ -1971,13 +2077,29 @@ function renderDetail(t,editing){
       ${isOpen?`<button class="btn btn-primary btn-sm" onclick="doReply()">Antworten →</button>`:''}
       ${isOpen?`<button class="btn btn-warn btn-sm" onclick="doAction('wait')">⏸ Warten auf Kunde</button>`:''}
       ${isOpen?`<button class="btn btn-warn btn-sm" onclick="doAction('escalate')">Weiterleiten ↑</button>`:''}
-      ${isOpen?`<button class="btn btn-success btn-sm" onclick="doAction('resolve')">✓ Gelöst</button>`:''}
+      ${isOpen&&isExt?`<button class="btn btn-invoice btn-sm" onclick="scrollToInvoice()">💰 Verrechnen</button>`:''}
+      ${isOpen?`<button class="btn btn-success btn-sm" onclick="${isExt?'confirmResolveExtern()':"doAction('resolve')"}">✓ Gelöst</button>`:''}
       ${t.status==='Gelöst'?`<button class="btn btn-secondary btn-sm" onclick="doAction('close')">Schliessen</button>`:''}`;
   } else if(isAdmin&&editing){
     left.innerHTML=`<button class="btn btn-save btn-sm" onclick="saveEdit()">💾 Änderungen speichern</button>`;
   } else {
     left.innerHTML='';
   }
+}
+
+function scrollToInvoice(){
+  document.getElementById('inv-panel')?.scrollIntoView({behavior:'smooth',block:'center'});
+  document.getElementById('inv-desc')?.focus();
+}
+
+function confirmResolveExtern(){
+  if(!curTicket.invoice||!curTicket.invoice.items?.length){
+    if(!confirm('Für dieses externe Ticket wurde noch keine Verrechnung erstellt. Trotzdem als gelöst markieren?')){
+      scrollToInvoice();
+      return;
+    }
+  }
+  doAction('resolve');
 }
 
 function toggleEdit(){
@@ -2808,6 +2930,68 @@ document.addEventListener('click',e=>{
     if(panel)panel.style.display='none';
   }
 });
+
+// ============================================================
+// PROFILE MENU / THEME / SETTINGS
+// ============================================================
+let profileMenuOpen=false;
+let appSettings={theme:'dark',desktopNotif:false,sound:false,compact:false,autorefresh:true};
+
+function toggleProfileMenu(){
+  profileMenuOpen=!profileMenuOpen;
+  const menu=document.getElementById('profile-menu');
+  if(menu)menu.style.display=profileMenuOpen?'block':'none';
+}
+document.addEventListener('click',e=>{
+  if(profileMenuOpen&&!document.getElementById('profile-menu-trigger')?.contains(e.target)&&!document.getElementById('profile-menu')?.contains(e.target)){
+    profileMenuOpen=false;
+    const menu=document.getElementById('profile-menu');
+    if(menu)menu.style.display='none';
+  }
+});
+
+function setTheme(theme){
+  appSettings.theme=theme;
+  document.body.classList.toggle('light-mode',theme==='light');
+  document.getElementById('theme-btn-dark')?.classList.toggle('active',theme==='dark');
+  document.getElementById('theme-btn-light')?.classList.toggle('active',theme==='light');
+  const toggle=document.getElementById('toggle-theme');
+  if(toggle)toggle.classList.toggle('on',theme==='light');
+}
+
+function toggleThemeSwitch(){
+  setTheme(appSettings.theme==='dark'?'light':'dark');
+}
+
+function openSettingsPanel(){
+  toggleProfileMenu();
+  document.getElementById('m-settings').classList.add('open');
+}
+
+function toggleDesktopNotif(){
+  appSettings.desktopNotif=!appSettings.desktopNotif;
+  document.getElementById('toggle-desktop-notif').classList.toggle('on',appSettings.desktopNotif);
+  if(appSettings.desktopNotif&&'Notification' in window&&Notification.permission!=='granted'){
+    Notification.requestPermission();
+  }
+  toast(appSettings.desktopNotif?'Desktop-Benachrichtigungen aktiviert ✓':'Desktop-Benachrichtigungen deaktiviert','success');
+}
+
+function toggleSound(){
+  appSettings.sound=!appSettings.sound;
+  document.getElementById('toggle-sound').classList.toggle('on',appSettings.sound);
+}
+
+function toggleCompact(){
+  appSettings.compact=!appSettings.compact;
+  document.getElementById('toggle-compact').classList.toggle('on',appSettings.compact);
+  document.body.classList.toggle('compact-mode',appSettings.compact);
+}
+
+function toggleAutorefresh(){
+  appSettings.autorefresh=!appSettings.autorefresh;
+  document.getElementById('toggle-autorefresh').classList.toggle('on',appSettings.autorefresh);
+}
 
 function closeModal(id){document.getElementById(id).classList.remove('open');editMode=false;}
 document.querySelectorAll('.modal-bg').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id);});});
