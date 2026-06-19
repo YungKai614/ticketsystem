@@ -308,17 +308,127 @@ td{padding:7px 11px;vertical-align:middle}
 .pm-theme-btn{flex:1;padding:7px 6px;font-size:11px;background:#13151a;border:1px solid #2a2d35;color:#7a8090;border-radius:5px;cursor:pointer;font-family:inherit;transition:all .15s}
 .pm-theme-btn.active{background:#1a2535;border-color:#3a6a9e;color:#5a8ab0}
 
-/* LIGHT MODE — applies to app only, not landing page */
-body.light-mode #app{
-  filter: invert(1) hue-rotate(180deg);
-}
-body.light-mode #app img,
-body.light-mode #app svg,
-body.light-mode #app .lp-team-photo{
-  filter: invert(1) hue-rotate(180deg);
-}
-/* Toast and modals also need correction since they're outside normal flow but still in #app */
-body.light-mode .modal-bg{filter: invert(1) hue-rotate(180deg);}
+/* ============================================================
+   LIGHT MODE — proper color overrides, applies to #app only
+   ============================================================ */
+body.light-mode #app{background:#f4f5f7}
+body.light-mode .sb{background:#ffffff;border-right-color:#e3e5e9}
+body.light-mode .sb-brand{border-bottom-color:#e3e5e9}
+body.light-mode .sb-lbl{color:#a8acb8}
+body.light-mode .sb-name{color:#1a1d23}
+body.light-mode .nav-sec{color:#b8bcc8}
+body.light-mode .ni{color:#5a6070}
+body.light-mode .ni:hover{background:#f0f1f4;color:#1a1d23}
+body.light-mode .ni.active{background:#eaf0fa;color:#1a4d80}
+body.light-mode .ni-badge.blue{background:#deebff;color:#1a5a9e}
+body.light-mode .ni-badge.red{background:#ffe5e5;color:#b03030}
+body.light-mode .ni-badge.amber{background:#fff3da;color:#9a6a10}
+body.light-mode .sb-footer{border-top-color:#e3e5e9}
+body.light-mode .u-name{color:#3a4050}
+body.light-mode .u-role{color:#a8acb8}
+body.light-mode #profile-menu-trigger:hover{background:#f0f1f4}
+body.light-mode .topbar{background:#ffffff;border-bottom-color:#e3e5e9}
+body.light-mode .topbar-title{color:#1a1d23}
+body.light-mode .btn-secondary{background:#f0f1f4;color:#5a6070;border-color:#dcdfe5}
+body.light-mode .btn-secondary:hover{background:#e6e8ec}
+body.light-mode .card{background:#ffffff;border-color:#e3e5e9}
+body.light-mode .card-hd{background:#fafbfc;border-bottom-color:#e3e5e9;color:#5a6070}
+body.light-mode .kpi-card{background:#ffffff;border-color:#e3e5e9}
+body.light-mode .kpi-val{color:#1a1d23}
+body.light-mode .kpi-lbl{color:#a8acb8}
+body.light-mode .kpi-sub{color:#c0c4ce}
+body.light-mode input[type=text],body.light-mode input[type=number],body.light-mode select,body.light-mode textarea{background:#f7f8fa;border-color:#dcdfe5;color:#1a1d23}
+body.light-mode select option{background:#ffffff;color:#1a1d23}
+body.light-mode table{color:#3a4050}
+body.light-mode thead th{background:#fafbfc;border-bottom-color:#e3e5e9;color:#a8acb8}
+body.light-mode tbody tr{border-bottom-color:#eef0f3}
+body.light-mode tbody tr:hover{background:#f5f7fa}
+body.light-mode .td-title{color:#1a1d23}
+body.light-mode .td-sub{color:#a8acb8}
+body.light-mode .td-id{color:#3a7ab0}
+body.light-mode .filter-bar{border-bottom-color:#e3e5e9}
+body.light-mode .modal{background:#ffffff;border-color:#e3e5e9}
+body.light-mode .modal-hd{border-bottom-color:#e3e5e9}
+body.light-mode .modal-hd h3{color:#1a1d23}
+body.light-mode .modal-ft{background:#fafbfc;border-top-color:#e3e5e9}
+body.light-mode .modal-close{color:#a8acb8}
+body.light-mode .modal-close:hover{background:#f0f1f4;color:#1a1d23}
+body.light-mode .fgg label{color:#5a6070}
+body.light-mode .meta-box{background:#f7f8fa;border-color:#e3e5e9}
+body.light-mode .meta-lbl{color:#a8acb8}
+body.light-mode .meta-val{color:#1a1d23}
+body.light-mode .det-desc{background:#f7f8fa;border-color:#e3e5e9;color:#5a6070}
+body.light-mode .section-lbl{color:#a8acb8}
+body.light-mode .tl-note{background:#f7f8fa;border-left-color:#dcdfe5;color:#5a6070}
+body.light-mode .tl-who{color:#1a1d23}
+body.light-mode .tl-time{color:#b8bcc8}
+body.light-mode .tl-item::before{background:#e3e5e9}
+body.light-mode .sla-card{background:#ffffff;border-color:#e3e5e9}
+body.light-mode .sla-hd{background:#fafbfc;border-bottom-color:#e3e5e9}
+body.light-mode .sla-card.feat .sla-hd{background:#eaf0fa}
+body.light-mode .sla-name{color:#1a1d23}
+body.light-mode .sla-desc{color:#a8acb8}
+body.light-mode .sla-row{border-bottom-color:#eef0f3}
+body.light-mode .sla-k{color:#a8acb8}
+body.light-mode .sla-v{color:#1a1d23}
+body.light-mode .bar-track,body.light-mode .bar-h-track{background:#eef0f3}
+body.light-mode .bar-hd,body.light-mode .bar-h-lbl,body.light-mode .bar-h-val{color:#5a6070}
+body.light-mode .stat-section-hd{border-bottom-color:#e3e5e9}
+body.light-mode .stat-section-num{color:#dcdfe5}
+body.light-mode .stat-section-title{color:#1a1d23}
+body.light-mode .stat-section-sub{color:#a8acb8}
+body.light-mode .stats-scroll::-webkit-scrollbar-thumb{background:#dcdfe5}
+body.light-mode .donut-legend-item{color:#5a6070}
+body.light-mode .donut-legend-val{color:#1a1d23}
+body.light-mode .sla-ring-lbl{color:#5a6070}
+body.light-mode .sla-ring-pct{color:#1a1d23}
+body.light-mode .empty,body.light-mode .loading{color:#c0c4ce}
+body.light-mode .pagi{color:#a8acb8;border-top-color:#e3e5e9}
+body.light-mode .user-card{background:#ffffff;border-color:#e3e5e9}
+body.light-mode .skill-tag{background:#eaf0fa;border-color:#cfe0f5;color:#3a7ab0}
+body.light-mode .view-tabs{border-bottom-color:#e3e5e9}
+body.light-mode .vt{color:#a8acb8}
+body.light-mode .vt.active{color:#1a1d23}
+body.light-mode .vt:hover{color:#1a1d23}
+body.light-mode .inbox-item{border-bottom-color:#eef0f3}
+body.light-mode .inbox-item:hover{background:#f5f7fa}
+body.light-mode .inbox-title{color:#1a1d23}
+body.light-mode .inbox-preview{color:#a8acb8}
+body.light-mode .inbox-meta{color:#c0c4ce}
+body.light-mode .assignee-badge{background:#eaf0fa;border-color:#cfe0f5;color:#3a7ab0}
+body.light-mode .take-btn{background:#eaf0fa;border-color:#cfe0f5;color:#3a7ab0}
+body.light-mode .badge.b-open{background:#deebff;color:#1a5a9e;border-color:#b8d6f5}
+body.light-mode .badge.b-progress{background:#fff3da;color:#9a6a10;border-color:#f0d9a0}
+body.light-mode .badge.b-warten{background:#f0e5fa;color:#7a3aa0;border-color:#e0c8f0}
+body.light-mode .badge.b-resolved{background:#dff5e6;color:#1a7a3a;border-color:#b8e8c8}
+body.light-mode .badge.b-closed{background:#eef0f3;color:#5a6070;border-color:#dcdfe5}
+body.light-mode .badge.b-critical{background:#ffe0e0;color:#b02020;border-color:#f0b8b8}
+body.light-mode .badge.b-high{background:#fff3da;color:#9a6a10;border-color:#f0d9a0}
+body.light-mode .badge.b-medium{background:#deebff;color:#1a5a9e;border-color:#b8d6f5}
+body.light-mode .badge.b-low{background:#eef0f3;color:#5a6070;border-color:#dcdfe5}
+body.light-mode .badge.b-silver{background:#eef0f3;color:#5a6070;border-color:#dcdfe5}
+body.light-mode .badge.b-gold{background:#fff3da;color:#9a6a10;border-color:#f0d9a0}
+body.light-mode .badge.b-platinum{background:#f0e5fa;color:#7a3aa0;border-color:#e0c8f0}
+body.light-mode .badge.b-extern{background:#f0e5fa;color:#7a3aa0;border-color:#e0c8f0}
+body.light-mode .badge.b-1st{background:#deebff;color:#1a5a9e;border-color:#b8d6f5}
+body.light-mode .badge.b-2nd{background:#fff3da;color:#9a6a10;border-color:#f0d9a0}
+body.light-mode .badge.b-3rd{background:#ffe0e0;color:#b02020;border-color:#f0b8b8}
+body.light-mode .filter-chip{background:#ffffff;border-color:#dcdfe5;color:#5a6070}
+body.light-mode .filter-chip:hover{border-color:#b8bcc8;color:#1a1d23}
+body.light-mode .filter-chip.active{background:#eaf0fa;border-color:#3a7ab0;color:#1a5a9e}
+body.light-mode .filter-chip-count{background:#eef0f3;color:#5a6070}
+body.light-mode .toast{background:#ffffff;color:#1a1d23;border-color:#e3e5e9;box-shadow:0 4px 16px rgba(0,0,0,.12)}
+body.light-mode .toast.success{background:#dff5e6;color:#1a7a3a;border-color:#b8e8c8}
+body.light-mode .toast.error{background:#ffe0e0;color:#b02020;border-color:#f0b8b8}
+body.light-mode .settings-row{border-bottom-color:#eef0f3}
+body.light-mode .settings-label{color:#1a1d23}
+body.light-mode .settings-desc{color:#a8acb8}
+body.light-mode .pm-item{color:#5a6070}
+body.light-mode .pm-item:hover{background:#f5f7fa;color:#1a1d23}
+body.light-mode #profile-menu{background:#ffffff;border-color:#e3e5e9;box-shadow:0 -8px 24px rgba(0,0,0,.12)}
+body.light-mode .login-hint{background:#f7f8fa;color:#a8acb8}
+body.light-mode .invoice-panel{background:#f9f5fc;border-color:#e0c8f0}
+body.light-mode .invoice-total{color:#7a3aa0;border-top-color:#e0c8f0}
 
 /* SETTINGS PANEL */
 .settings-row{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #2a2d35}
@@ -1079,6 +1189,24 @@ body.compact-mode tbody tr{font-size:11px}
             </div>
           </section>
 
+          <!-- SECTION 3.5: KUNDENZUFRIEDENHEIT -->
+          <section class="stat-section">
+            <div class="stat-section-hd">
+              <div class="stat-section-num">3b</div>
+              <div><div class="stat-section-title">Kundenzufriedenheit</div><div class="stat-section-sub">Feedback nach Ticket-Abschluss</div></div>
+            </div>
+            <div class="chart-grid">
+              <div class="card">
+                <div class="card-hd"><h3>Bewertungen gesamt</h3></div>
+                <div style="padding:18px" id="feedback-donut"></div>
+              </div>
+              <div class="card">
+                <div class="card-hd"><h3>Letzte Kommentare</h3></div>
+                <div id="feedback-comments" style="max-height:240px;overflow-y:auto"></div>
+              </div>
+            </div>
+          </section>
+
           <!-- SECTION 4: SLA -->
           <section class="stat-section">
             <div class="stat-section-hd">
@@ -1219,6 +1347,19 @@ body.compact-mode tbody tr{font-size:11px}
         <div class="card"><div class="card-hd"><h3>Support-Team</h3></div><div style="padding:11px" id="user-grid-wrap"></div></div>
       </div>
 
+      <!-- KUNDEN-KONTEN -->
+      <div class="view" id="view-customers">
+        <div style="margin-bottom:12px">
+          <h2 style="font-size:14px;font-weight:600;color:#e2e4e9;margin-bottom:3px">Kunden-Konten</h2>
+          <p style="font-size:12px;color:#4a5060">Verwaltung der Kunden-Logins, SLA-Verträge und Status.</p>
+        </div>
+        <div id="sla-pending-box"></div>
+        <div class="card">
+          <div class="card-hd"><h3>Alle Kunden</h3></div>
+          <div id="customer-list"><div class="loading">Lade...</div></div>
+        </div>
+      </div>
+
       <!-- EXTERNE TICKETS -->
       <div class="view" id="view-extern-tickets">
         <div style="margin-bottom:12px">
@@ -1343,28 +1484,35 @@ body.compact-mode tbody tr{font-size:11px}
 
       <!-- SLA -->
       <div class="view" id="view-sla">
+        <div id="customer-sla-current" style="display:none"></div>
         <div style="margin-bottom:12px"><h2 style="font-size:14px;font-weight:600;color:#e2e4e9;margin-bottom:3px">SLA-Modelle</h2><p style="font-size:12px;color:#4a5060">Gemäss SLA-Dokument Mai 2026.</p></div>
         <div class="sla-grid">
-          <div class="sla-card"><div class="sla-hd"><div class="sla-tier">Silver</div><div class="sla-name">Silver</div><div class="sla-desc">Basis-Betreuung Geschäftszeiten.</div></div>
+          <div class="sla-card" id="sla-card-silver"><div class="sla-hd"><div class="sla-tier">Silver</div><div class="sla-name">Silver</div><div class="sla-desc">Basis-Betreuung Geschäftszeiten.</div></div>
             <div class="sla-row"><span class="sla-k">Servicezeiten</span><span class="sla-v">Mo–Fr 08–17</span></div>
             <div class="sla-row"><span class="sla-k">Reaktionszeit</span><span class="sla-v mono">4 Stunden</span></div>
             <div class="sla-row"><span class="sla-k">Verfügbarkeit</span><span class="sla-v mono">95 %</span></div>
             <div class="sla-row"><span class="sla-k">Pikett</span><span class="sla-v">Nein</span></div>
             <div class="sla-row"><span class="sla-k">Gutschrift/Vorfall</span><span class="sla-v mono">CHF 50</span></div>
+            <div class="sla-row"><span class="sla-k">Preis</span><span class="sla-v mono">CHF 290/Mt.</span></div>
+            <div id="sla-action-silver" style="padding:10px 13px"></div>
           </div>
-          <div class="sla-card feat"><div class="sla-hd"><div class="sla-tier">Gold — Empfohlen</div><div class="sla-name">Gold</div><div class="sla-desc">Pikett und fester Ansprechpartner.</div></div>
+          <div class="sla-card feat" id="sla-card-gold"><div class="sla-hd"><div class="sla-tier">Gold — Empfohlen</div><div class="sla-name">Gold</div><div class="sla-desc">Pikett und fester Ansprechpartner.</div></div>
             <div class="sla-row"><span class="sla-k">Servicezeiten</span><span class="sla-v">Mo–Fr 07–20</span></div>
             <div class="sla-row"><span class="sla-k">Reaktionszeit</span><span class="sla-v mono">1 Stunde</span></div>
             <div class="sla-row"><span class="sla-k">Verfügbarkeit</span><span class="sla-v mono">99 %</span></div>
             <div class="sla-row"><span class="sla-k">Pikett</span><span class="sla-v">Teilweise</span></div>
             <div class="sla-row"><span class="sla-k">Gutschrift/Vorfall</span><span class="sla-v mono">CHF 50</span></div>
+            <div class="sla-row"><span class="sla-k">Preis</span><span class="sla-v mono">CHF 690/Mt.</span></div>
+            <div id="sla-action-gold" style="padding:10px 13px"></div>
           </div>
-          <div class="sla-card"><div class="sla-hd"><div class="sla-tier">Platinum</div><div class="sla-name">Platinum</div><div class="sla-desc">24/7 Senior TAM.</div></div>
+          <div class="sla-card" id="sla-card-platinum"><div class="sla-hd"><div class="sla-tier">Platinum</div><div class="sla-name">Platinum</div><div class="sla-desc">24/7 Senior TAM.</div></div>
             <div class="sla-row"><span class="sla-k">Servicezeiten</span><span class="sla-v">24/7 · 365 Tage</span></div>
             <div class="sla-row"><span class="sla-k">Reaktionszeit</span><span class="sla-v mono">30 Minuten</span></div>
             <div class="sla-row"><span class="sla-k">Verfügbarkeit</span><span class="sla-v mono">99.9 %</span></div>
             <div class="sla-row"><span class="sla-k">Pikett</span><span class="sla-v">Ja, 24/7</span></div>
             <div class="sla-row"><span class="sla-k">Gutschrift/Vorfall</span><span class="sla-v mono">CHF 50</span></div>
+            <div class="sla-row"><span class="sla-k">Preis</span><span class="sla-v mono">CHF 1490/Mt.</span></div>
+            <div id="sla-action-platinum" style="padding:10px 13px"></div>
           </div>
         </div>
         <div class="card" style="margin-top:11px"><div class="card-hd"><h3>Vertragsbedingungen</h3></div>
@@ -1552,6 +1700,15 @@ const STAFF=[
 
 let currentUser=null,curTicket=null,curId=null,loginTab='admin',inboxTab='open',editMode=false;
 let invoiceItems=[];
+let pendingSlaChanges=[]; // [{id,username,name,from,to,time}]
+let customerAccounts={}; // {username: {active:true, sla:'Gold', notes:''}}
+function initCustomerAccounts(){
+  Object.entries(USERS).forEach(([key,u])=>{
+    if(u.role==='customer'&&!customerAccounts[key]){
+      customerAccounts[key]={active:true,sla:u.sla,notes:''};
+    }
+  });
+}
 let userProfiles={
   'nils.mueller':{status:'active',bio:'CIO und Projektleiter bei ICT-Consulting AG. Verantwortlich für die Reorganisation der Support-Abteilung und Einführung des neuen Ticketsystems.',phone:'+41 44 123 45 67',email:'nils.mueller@ict-consulting.ch',location:'Zürich, Büro 3.01',linkedin:'https://linkedin.com/in/nilsmueller',github:'',skills:'Projektmanagement, ITIL, Cloud Infrastructure, Windows Server'},
   'calisto.marcello':{status:'active',bio:'CBO bei ICT-Consulting AG. Verantwortlich für Geschäftsentwicklung und Kundenbeziehungen.',phone:'+41 44 123 45 68',email:'calisto.marcello@ict-consulting.ch',location:'Zürich, Büro 3.02',linkedin:'',github:'',skills:'Business Development, SLA-Management, Kundenbeziehungen'},
@@ -1581,8 +1738,14 @@ function doLogin(){
   if(!user||user.pass!==p){err.style.display='block';err.textContent='Benutzername oder Passwort falsch.';return;}
   if(loginTab==='admin'&&user.role!=='admin'){err.style.display='block';err.textContent='Kein Admin-Zugang.';return;}
   if(loginTab==='customer'&&user.role!=='customer'){err.style.display='block';err.textContent='Kein Kunden-Zugang.';return;}
+  initCustomerAccounts();
+  if(user.role==='customer'&&customerAccounts[u]&&!customerAccounts[u].active){
+    err.style.display='block';err.textContent='Dieses Konto wurde deaktiviert. Bitte kontaktieren Sie den Support.';return;
+  }
   err.style.display='none';
-  currentUser={...user,username:u};
+  // Apply any admin-updated SLA
+  const effectiveSla=(user.role==='customer'&&customerAccounts[u]?.sla)||user.sla;
+  currentUser={...user,username:u,sla:effectiveSla};
   startApp();
 }
 function doLogout(){
@@ -1637,6 +1800,7 @@ function buildNav(){
       <button class="ni" onclick="nav('extern-tickets',this)">🌐 Externe Tickets <span class="ni-badge amber" id="nb-extern">…</span></button>
       <div class="nav-sec">Verwaltung</div>
       <button class="ni" onclick="nav('users',this)">👥 Benutzer</button>
+      <button class="ni" onclick="nav('customers',this)">🏢 Kunden-Konten <span class="ni-badge amber" id="nb-sla-pending">…</span></button>
       <button class="ni" onclick="nav('sla',this)">📋 SLA-Modelle</button>`;
   } else {
     document.getElementById('sidebar-nav').innerHTML=`
@@ -1675,7 +1839,7 @@ function toast(msg,type=''){const t=document.getElementById('toast');t.textConte
 function nav(view,btn){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+view)?.classList.add('active');
-  const titles={dashboard:'Dashboard',stats:'Statistiken',inbox:'Inbox — Anfragen',tickets:'Alle Tickets','extern-tickets':'Externe Tickets',portal:'Meine Tickets','new-ticket':'Ticket erstellen',users:'Benutzerverwaltung',sla:'SLA-Modelle',logs:'System-Logs',profile:'Mein Profil',ai:'Claude KI-Assistent'};
+  const titles={dashboard:'Dashboard',stats:'Statistiken',inbox:'Inbox — Anfragen',tickets:'Alle Tickets','extern-tickets':'Externe Tickets',portal:'Meine Tickets','new-ticket':'Ticket erstellen',users:'Benutzerverwaltung',customers:'Kunden-Konten',sla:'SLA-Modelle',logs:'System-Logs',profile:'Mein Profil',ai:'Claude KI-Assistent'};
   document.getElementById('topbar-title').textContent=titles[view]||view;
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
   if(btn)btn.classList.add('active');
@@ -1689,6 +1853,49 @@ function nav(view,btn){
   if(view==='profile')loadProfile();
   if(view==='ai')initAI();
   if(view==='portal')loadMyTickets();
+  if(view==='sla')loadSlaView();
+  if(view==='customers')loadCustomers();
+}
+
+function loadSlaView(){
+  ['silver','gold','platinum'].forEach(s=>{
+    const card=document.getElementById('sla-card-'+s);
+    const action=document.getElementById('sla-action-'+s);
+    if(!card||!action)return;
+    card.classList.remove('sla-current');
+  });
+  const currentBox=document.getElementById('customer-sla-current');
+  if(currentUser?.role!=='customer'){
+    if(currentBox)currentBox.style.display='none';
+    ['silver','gold','platinum'].forEach(s=>{const a=document.getElementById('sla-action-'+s);if(a)a.innerHTML='';});
+    return;
+  }
+  const mySla=(currentUser.sla||'Silver').toLowerCase();
+  if(currentBox){
+    currentBox.style.display='block';
+    currentBox.innerHTML=`<div class="card" style="margin-bottom:14px;border-color:#3a6a9e"><div class="card-hd" style="background:#1a2535"><h3 style="color:#5a8ab0">Ihr aktuelles Abo</h3></div><div style="padding:14px;display:flex;align-items:center;gap:14px"><div style="font-family:'Fraunces',serif;font-size:22px;font-weight:600;color:#e2e4e9">${currentUser.sla}</div><div style="font-size:12px;color:#7a8090;flex:1">Aktiv seit Vertragsbeginn · Änderungen werden vom Support geprüft</div></div></div>`;
+  }
+  const order={silver:1,gold:2,platinum:3};
+  ['silver','gold','platinum'].forEach(s=>{
+    const action=document.getElementById('sla-action-'+s);
+    const card=document.getElementById('sla-card-'+s);
+    if(!action)return;
+    if(s===mySla){
+      card?.classList.add('sla-current');
+      action.innerHTML=`<div style="text-align:center;font-size:11px;color:#5aa870;font-weight:600;padding:6px;background:#1a2d20;border-radius:4px">✓ Aktuelles Abo</div>`;
+    } else if(order[s]>order[mySla]){
+      action.innerHTML=`<button class="btn btn-primary btn-sm" style="width:100%;justify-content:center" onclick="requestSlaChange('${s.charAt(0).toUpperCase()+s.slice(1)}')">↑ Upgrade anfragen</button>`;
+    } else {
+      action.innerHTML=`<button class="btn btn-secondary btn-sm" style="width:100%;justify-content:center" onclick="requestSlaChange('${s.charAt(0).toUpperCase()+s.slice(1)}')">↓ Downgrade anfragen</button>`;
+    }
+  });
+}
+
+async function requestSlaChange(newSla){
+  if(!confirm(`Möchten Sie Ihr SLA-Abo wirklich von ${currentUser.sla} auf ${newSla} ändern? Die Anfrage wird an den Support gesendet und muss bestätigt werden.`))return;
+  pendingSlaChanges.push({username:currentUser.username,name:currentUser.name,from:currentUser.sla,to:newSla,time:Date.now(),id:'sc-'+Date.now()});
+  addLog('SLA-Änderung angefragt',currentUser.name,'—',`${currentUser.sla} → ${newSla}`,'open');
+  toast(`Änderungsanfrage gesendet: ${currentUser.sla} → ${newSla}`,'success');
 }
 
 // ============================================================
@@ -2043,6 +2250,8 @@ function renderDetail(t,editing){
     <div class="section-lbl">Verlauf</div>
     <div class="tl">${tl}</div>
     ${invHtml}
+    ${t.feedback?renderFeedbackDisplay(t.feedback):''}
+    ${!isAdmin&&(t.status==='Gelöst'||t.status==='Geschlossen')&&!t.feedback?renderFeedbackBox(t):''}
     ${isAdmin&&!editing?`
     <div style="margin-top:10px">
       <div class="reply-box show">
@@ -2055,7 +2264,7 @@ function renderDetail(t,editing){
       <div class="section-lbl">Änderungsnotiz (optional)</div>
       <textarea id="edit-note" placeholder="Grund für Änderung..." style="width:100%;font-size:12px;padding:7px;border-radius:4px;background:#1a1d23;border:1px solid #2a2d35;color:#c9cdd6;resize:vertical;min-height:45px;font-family:inherit"></textarea>
     </div>`:''}
-    ${isAdmin&&isExt&&!editing?`
+    ${isAdmin&&isExt&&editing?`
     <div class="invoice-panel show" id="inv-panel">
       <h4>💰 Verrechnung (Externer Kunde)</h4>
       <div id="inv-items">${renderInvoiceItems()}</div>
@@ -2087,9 +2296,66 @@ function renderDetail(t,editing){
   }
 }
 
+// ============================================================
+// CUSTOMER FEEDBACK
+// ============================================================
+function renderFeedbackBox(t){
+  return`<div style="margin-top:12px;padding-top:12px;border-top:1px solid #2a2d35">
+    <div class="section-lbl">Wie zufrieden waren Sie mit der Lösung?</div>
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <button class="fb-btn" data-val="good" onclick="selectFeedback('good')" style="flex:1;padding:12px;background:#1a1d23;border:1px solid #2a2d35;border-radius:6px;cursor:pointer;font-family:inherit;text-align:center;transition:all .15s">
+        <div style="font-size:22px">🙂</div>
+        <div style="font-size:11px;color:#7a8090;margin-top:4px">Zufrieden</div>
+      </button>
+      <button class="fb-btn" data-val="bad" onclick="selectFeedback('bad')" style="flex:1;padding:12px;background:#1a1d23;border:1px solid #2a2d35;border-radius:6px;cursor:pointer;font-family:inherit;text-align:center;transition:all .15s">
+        <div style="font-size:22px">🙁</div>
+        <div style="font-size:11px;color:#7a8090;margin-top:4px">Nicht zufrieden</div>
+      </button>
+    </div>
+    <textarea id="fb-comment" placeholder="Kommentar (optional)..." style="width:100%;font-size:12px;padding:7px 10px;border-radius:5px;font-family:inherit;resize:vertical;min-height:50px;background:#1a1d23;border:1px solid #2a2d35;color:#c9cdd6;margin-bottom:8px"></textarea>
+    <button class="btn btn-primary btn-sm" style="width:100%;justify-content:center" onclick="submitFeedback()">Feedback senden</button>
+  </div>`;
+}
+
+function renderFeedbackDisplay(fb){
+  const icon=fb.rating==='good'?'🙂':'🙁';
+  const label=fb.rating==='good'?'Zufrieden':'Nicht zufrieden';
+  const color=fb.rating==='good'?'#5aa870':'#c07070';
+  return`<div style="margin-top:12px;padding:10px 12px;background:#1a1d23;border:1px solid #2a2d35;border-radius:5px">
+    <div style="display:flex;align-items:center;gap:8px"><span style="font-size:16px">${icon}</span><span style="font-size:12px;font-weight:600;color:${color}">Kunden-Feedback: ${label}</span></div>
+    ${fb.comment?`<div style="font-size:11px;color:#7a8090;margin-top:6px;padding-top:6px;border-top:1px solid #2a2d35">"${fb.comment}"</div>`:''}
+  </div>`;
+}
+
+let selectedFeedbackRating=null;
+function selectFeedback(val){
+  selectedFeedbackRating=val;
+  document.querySelectorAll('.fb-btn').forEach(b=>{
+    if(b.dataset.val===val){b.style.borderColor=val==='good'?'#3a6a4a':'#7a4040';b.style.background=val==='good'?'#1a2d20':'#2d1818';}
+    else{b.style.borderColor='#2a2d35';b.style.background='#1a1d23';}
+  });
+}
+
+async function submitFeedback(){
+  if(!selectedFeedbackRating){toast('Bitte zuerst Bewertung auswählen.','error');return;}
+  const comment=document.getElementById('fb-comment')?.value.trim()||'';
+  const feedback={rating:selectedFeedbackRating,comment,time:new Date().toISOString(),by:currentUser.name};
+  await api('/api/tickets/'+curId,{method:'PATCH',body:JSON.stringify({feedback,who:currentUser.name,action:'update',note:`Kunden-Feedback: ${selectedFeedbackRating==='good'?'Zufrieden 🙂':'Nicht zufrieden 🙁'}${comment?' — '+comment:''}`})});
+  toast('Vielen Dank für Ihr Feedback ✓','success');
+  selectedFeedbackRating=null;
+  const updated=await api('/api/tickets/'+curId);
+  curTicket=updated;renderDetail(updated,false);
+}
+
 function scrollToInvoice(){
-  document.getElementById('inv-panel')?.scrollIntoView({behavior:'smooth',block:'center'});
-  document.getElementById('inv-desc')?.focus();
+  if(!editMode){
+    editMode=true;
+    renderDetail(curTicket,true);
+  }
+  setTimeout(()=>{
+    document.getElementById('inv-panel')?.scrollIntoView({behavior:'smooth',block:'center'});
+    document.getElementById('inv-desc')?.focus();
+  },50);
 }
 
 function confirmResolveExtern(){
@@ -2267,8 +2533,94 @@ function loadUsers(){
 }
 
 // ============================================================
-// STATS
+// CUSTOMER ACCOUNT MANAGEMENT
 // ============================================================
+function loadCustomers(){
+  initCustomerAccounts();
+
+  // Pending SLA change requests
+  const pendBox=document.getElementById('sla-pending-box');
+  const nbPending=document.getElementById('nb-sla-pending');
+  if(nbPending)nbPending.textContent=pendingSlaChanges.length;
+  if(pendBox){
+    if(!pendingSlaChanges.length){
+      pendBox.innerHTML='';
+    } else {
+      pendBox.innerHTML=`<div class="card" style="border-color:#7a6040;margin-bottom:13px">
+        <div class="card-hd" style="background:#2a2010"><h3 style="color:#c8a060">⚠ Offene Abo-Änderungen (${pendingSlaChanges.length})</h3></div>
+        <div>${pendingSlaChanges.map(c=>`
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid #2a2d35">
+            <div style="flex:1">
+              <div style="font-size:12px;font-weight:500;color:#c9cdd6">${c.name}</div>
+              <div style="font-size:11px;color:#7a8090;margin-top:2px">${c.from} → <strong style="color:#c8a060">${c.to}</strong> · angefragt ${fmtTime(c.time)}</div>
+            </div>
+            <button class="btn btn-success btn-sm" onclick="approveSlaChange('${c.id}')">✓ Genehmigen</button>
+            <button class="btn btn-secondary btn-sm" onclick="rejectSlaChange('${c.id}')">Ablehnen</button>
+          </div>`).join('')}
+        </div>
+      </div>`;
+    }
+  }
+
+  // Customer list
+  const list=document.getElementById('customer-list');
+  if(!list)return;
+  const customers=Object.entries(USERS).filter(([k,u])=>u.role==='customer');
+  list.innerHTML=`<table><thead><tr><th>Benutzername</th><th>Name / Firma</th><th>SLA-Abo</th><th>Status</th><th></th></tr></thead><tbody>
+    ${customers.map(([key,u])=>{
+      const acc=customerAccounts[key]||{active:true,sla:u.sla};
+      return`<tr style="cursor:default">
+        <td class="td-id">${key}</td>
+        <td><div class="td-title">${u.name}</div><div class="td-sub">${u.dept}</div></td>
+        <td>
+          <select onchange="changeCustomerSla('${key}',this.value)" style="font-size:11px">
+            ${['Silver','Gold','Platinum'].map(s=>`<option value="${s}" ${acc.sla===s?'selected':''}>${s}</option>`).join('')}
+          </select>
+        </td>
+        <td>${acc.active?'<span class="badge b-resolved">Aktiv</span>':'<span class="badge b-closed">Deaktiviert</span>'}</td>
+        <td><button class="btn btn-secondary btn-sm" onclick="toggleCustomerActive('${key}')">${acc.active?'Deaktivieren':'Aktivieren'}</button></td>
+      </tr>`;
+    }).join('')}
+  </tbody></table>`;
+}
+
+function changeCustomerSla(key,newSla){
+  initCustomerAccounts();
+  const old=customerAccounts[key].sla;
+  customerAccounts[key].sla=newSla;
+  addLog('SLA geändert (Admin)',currentUser.name,'—',`${USERS[key].name}: ${old} → ${newSla}`,'update');
+  toast(`SLA für ${USERS[key].name} geändert: ${old} → ${newSla}`,'success');
+}
+
+function toggleCustomerActive(key){
+  initCustomerAccounts();
+  customerAccounts[key].active=!customerAccounts[key].active;
+  addLog(customerAccounts[key].active?'Konto aktiviert':'Konto deaktiviert',currentUser.name,'—',USERS[key].name,'update');
+  toast(`${USERS[key].name} ${customerAccounts[key].active?'aktiviert':'deaktiviert'} ✓`,'success');
+  loadCustomers();
+}
+
+function approveSlaChange(id){
+  const c=pendingSlaChanges.find(x=>x.id===id);
+  if(!c)return;
+  initCustomerAccounts();
+  customerAccounts[c.username].sla=c.to;
+  pendingSlaChanges=pendingSlaChanges.filter(x=>x.id!==id);
+  addLog('SLA-Änderung genehmigt',currentUser.name,'—',`${c.name}: ${c.from} → ${c.to}`,'resolve');
+  toast(`Genehmigt: ${c.name} jetzt ${c.to}`,'success');
+  loadCustomers();
+}
+
+function rejectSlaChange(id){
+  const c=pendingSlaChanges.find(x=>x.id===id);
+  if(!c)return;
+  pendingSlaChanges=pendingSlaChanges.filter(x=>x.id!==id);
+  addLog('SLA-Änderung abgelehnt',currentUser.name,'—',`${c.name}: ${c.from} → ${c.to} abgelehnt`,'close');
+  toast('Anfrage abgelehnt','success');
+  loadCustomers();
+}
+
+
 function donutChart(data,colors,size=160){
   const total=Object.values(data).reduce((a,b)=>a+b,0)||1;
   let cumulative=0;
@@ -2411,6 +2763,36 @@ async function loadStats(){
   document.getElementById('s-extern-count').textContent=externTickets.length;
   document.getElementById('s-extern-billed').textContent=billed.length;
   document.getElementById('s-extern-total').textContent='CHF '+totalBilled.toFixed(0);
+
+  // Feedback stats
+  const feedbackTickets=tickets.filter(t=>t.feedback);
+  const goodFb=feedbackTickets.filter(t=>t.feedback.rating==='good').length;
+  const badFb=feedbackTickets.filter(t=>t.feedback.rating==='bad').length;
+  const fbDonut=document.getElementById('feedback-donut');
+  if(fbDonut){
+    if(!feedbackTickets.length){
+      fbDonut.innerHTML='<div class="empty">Noch kein Kunden-Feedback erhalten.</div>';
+    } else {
+      fbDonut.innerHTML=donutChart({Zufrieden:goodFb,'Nicht zufrieden':badFb},{Zufrieden:'#3a7a5a','Nicht zufrieden':'#9a5040'},170);
+    }
+  }
+  const fbComments=document.getElementById('feedback-comments');
+  if(fbComments){
+    const withComments=feedbackTickets.filter(t=>t.feedback.comment).slice(0,8);
+    if(!withComments.length){
+      fbComments.innerHTML='<div class="empty">Keine Kommentare vorhanden.</div>';
+    } else {
+      fbComments.innerHTML=withComments.map(t=>`
+        <div style="padding:9px 13px;border-bottom:1px solid #1e2128">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
+            <span style="font-size:13px">${t.feedback.rating==='good'?'🙂':'🙁'}</span>
+            <span class="td-id" style="font-size:10px">${t.id}</span>
+            <span style="font-size:11px;color:#5a6070">${t.reporter}</span>
+          </div>
+          <div style="font-size:11px;color:#7a8090">"${t.feedback.comment}"</div>
+        </div>`).join('');
+    }
+  }
 }
 
 // ============================================================
