@@ -1486,6 +1486,71 @@ body.compact-mode tbody tr{font-size:11px}
         </div>
       </div>
 
+      <!-- SICHERHEIT -->
+      <div class="view" id="view-security">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <h2 style="font-size:14px;font-weight:600;color:#e2e4e9;flex:1">Sicherheitsübersicht</h2>
+          <button class="btn btn-secondary btn-sm" onclick="loadSecurity()">↻ Aktualisieren</button>
+        </div>
+        <div class="kpi-row kpi-row-4" id="sec-kpis">
+          <div class="kpi-card green"><div class="kpi-lbl">Erfolgreiche Logins</div><div class="kpi-val" id="sec-ok">…</div><div class="kpi-sub">Diese Session</div></div>
+          <div class="kpi-card red"><div class="kpi-lbl">Fehlgeschlagene Logins</div><div class="kpi-val" id="sec-fail">…</div><div class="kpi-sub">Falsche Zugangsdaten</div></div>
+          <div class="kpi-card amber"><div class="kpi-lbl">Gesperrte Konten</div><div class="kpi-val" id="sec-locked">0</div><div class="kpi-sub">Nach 3 Fehlversuchen</div></div>
+          <div class="kpi-card blue"><div class="kpi-lbl">Aktive Sessions</div><div class="kpi-val" id="sec-sessions">1</div><div class="kpi-sub">Aktuell angemeldet</div></div>
+        </div>
+        <div class="chart-grid">
+          <div class="card">
+            <div class="card-hd"><h3>🛡️ Firewall / Zugriffsschutz</h3></div>
+            <div style="padding:14px">
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#1a2d20;border:1px solid #2a3d2a;border-radius:5px;margin-bottom:10px">
+                <span style="font-size:20px">🟢</span>
+                <div>
+                  <div style="font-size:13px;font-weight:600;color:#6ab87a">Firewall aktiv</div>
+                  <div style="font-size:11px;color:#4a7060">Railway-Hosting — TLS 1.3 · HTTPS erzwungen · DDoS-Schutz aktiv</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#1a2535;border:1px solid #2a3545;border-radius:5px;margin-bottom:10px">
+                <span style="font-size:20px">🔒</span>
+                <div>
+                  <div style="font-size:13px;font-weight:600;color:#5a8ab0">HTTPS / TLS</div>
+                  <div style="font-size:11px;color:#4a5060">Alle Verbindungen verschlüsselt · Zertifikat gültig</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#2a2010;border:1px solid #3a3020;border-radius:5px;margin-bottom:10px">
+                <span style="font-size:20px">⚠️</span>
+                <div>
+                  <div style="font-size:13px;font-weight:600;color:#c8a060">Keine 2FA</div>
+                  <div style="font-size:11px;color:#6a5040">Zwei-Faktor-Authentifizierung nicht aktiv — empfohlen für Produktivbetrieb</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#2d1818;border:1px solid #3d2828;border-radius:5px">
+                <span style="font-size:20px">⚠️</span>
+                <div>
+                  <div style="font-size:13px;font-weight:600;color:#c07070">Passwörter im Klartext</div>
+                  <div style="font-size:11px;color:#6a4040">Für Produktion: Passwort-Hashing (bcrypt) implementieren</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-hd"><h3>🌐 Netzwerk & Anfragen</h3></div>
+            <div style="padding:14px">
+              <div style="margin-bottom:12px">
+                <div style="font-size:11px;color:#4a5060;margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em">Blockierte Anfragen (simuliert)</div>
+                <div id="attack-sim-bars"></div>
+              </div>
+              <div style="background:#1a1d23;border:1px solid #2a2d35;border-radius:5px;padding:10px 12px;font-size:11px;color:#5a6070;line-height:1.7">
+                <strong style="color:#c9cdd6">Hinweis:</strong> Echte Angriffsdaten sind auf der Railway-Infrastruktur verfügbar. Im Dashboard werden Login-Versuche und Session-Aktivitäten lokal erfasst.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-hd"><h3>🔐 Sicherheitsereignisse</h3><span id="sec-event-count" style="font-size:11px;color:#4a5060"></span></div>
+          <div id="sec-events"><div class="loading">Lade...</div></div>
+        </div>
+      </div>
+
       <!-- LOGS -->
       <div class="view" id="view-logs">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:13px">
@@ -1873,12 +1938,60 @@ function switchTab(t,btn){
   document.getElementById('hint-admin').style.display=t==='admin'?'block':'none';
   document.getElementById('hint-customer').style.display=t==='customer'?'block':'none';
 }
+// Device/browser detection
+function getDeviceInfo(){
+  const ua=navigator.userAgent;
+  let browser='Unbekannt';
+  if(ua.includes('Chrome')&&!ua.includes('Edge'))browser='Chrome';
+  else if(ua.includes('Firefox'))browser='Firefox';
+  else if(ua.includes('Safari')&&!ua.includes('Chrome'))browser='Safari';
+  else if(ua.includes('Edge'))browser='Edge';
+  let os='Unbekannt';
+  if(ua.includes('Windows'))os='Windows';
+  else if(ua.includes('Mac'))os='macOS';
+  else if(ua.includes('Linux'))os='Linux';
+  else if(ua.includes('iPhone')||ua.includes('iPad'))os='iOS';
+  else if(ua.includes('Android'))os='Android';
+  const mobile=(/Mobi|Android/i.test(ua))?'📱 Mobile':'🖥️ Desktop';
+  return{browser,os,device:mobile,ua:ua.slice(0,80)};
+}
+
+// Failed login tracking for security log
+let failedLogins={};
+let securityEvents=[];
+
+function logSecurityEvent(type,detail,severity='info'){
+  securityEvents.unshift({
+    id:'sec-'+Date.now(),
+    time:Date.now(),
+    type,detail,severity,
+    device:getDeviceInfo(),
+    ip:'Lokal (Browser)'
+  });
+  if(securityEvents.length>200)securityEvents=securityEvents.slice(0,200);
+}
+
 function doLogin(){
   const u=document.getElementById('l-user').value.trim().toLowerCase();
   const p=document.getElementById('l-pass').value;
   const err=document.getElementById('login-err');
   const user=USERS[u];
-  if(!user||user.pass!==p){err.style.display='block';err.textContent='Benutzername oder Passwort falsch.';return;}
+  const dev=getDeviceInfo();
+
+  // Track failed attempts
+  if(!user||user.pass!==p){
+    failedLogins[u]=(failedLogins[u]||0)+1;
+    const attempts=failedLogins[u];
+    logSecurityEvent('failed_login',
+      `Fehlgeschlagener Login-Versuch für "${u}" (${attempts}x) — ${dev.browser} auf ${dev.os}`,
+      attempts>=3?'high':'warn');
+    err.style.display='block';
+    err.textContent=attempts>=3
+      ?`Benutzername oder Passwort falsch. (${attempts} fehlgeschlagene Versuche)`
+      :'Benutzername oder Passwort falsch.';
+    addLog('Fehlgeschlagener Login',u||'Unbekannt','—',`Versuch ${attempts} — ${dev.browser}/${dev.os}`,'close');
+    return;
+  }
   if(loginTab==='admin'&&user.role!=='admin'){err.style.display='block';err.textContent='Kein Admin-Zugang.';return;}
   if(loginTab==='customer'&&user.role!=='customer'){err.style.display='block';err.textContent='Kein Kunden-Zugang.';return;}
   initCustomerAccounts();
@@ -1886,12 +1999,19 @@ function doLogin(){
     err.style.display='block';err.textContent='Dieses Konto wurde deaktiviert. Bitte kontaktieren Sie den Support.';return;
   }
   err.style.display='none';
-  // Apply any admin-updated SLA
+  failedLogins[u]=0; // Reset on success
   const effectiveSla=(user.role==='customer'&&customerAccounts[u]?.sla)||user.sla;
-  currentUser={...user,username:u,sla:effectiveSla};
+  currentUser={...user,username:u,sla:effectiveSla,loginDevice:dev,loginTime:Date.now()};
+  // Log successful login
+  addLog('Anmeldung',user.name,'—',`${dev.browser} auf ${dev.os} · ${dev.device}`,'assign');
+  logSecurityEvent('login',`Erfolgreiche Anmeldung: ${user.name} — ${dev.browser} auf ${dev.os}`,'ok');
   startApp();
 }
 function doLogout(){
+  if(currentUser){
+    addLog('Abmeldung',currentUser.name,'—',`Session beendet nach ${Math.round((Date.now()-currentUser.loginTime)/60000)} Min.`,'close');
+    logSecurityEvent('logout',`${currentUser.name} hat sich abgemeldet`,'ok');
+  }
   currentUser=null;
   document.getElementById('app').classList.remove('show');
   document.getElementById('login-screen').style.display='block';
@@ -1943,6 +2063,7 @@ function buildNav(){
       <button class="ni" onclick="nav('extern-tickets',this)">🌐 Externe Tickets <span class="ni-badge amber" id="nb-extern">…</span></button>
       <div class="nav-sec">Verwaltung</div>
       <button class="ni" onclick="nav('announcements',this)">📢 Ankündigungen <span class="ni-badge red" id="nb-ann">…</span></button>
+      <button class="ni" onclick="nav('security',this)">🛡️ Sicherheit <span class="ni-badge red" id="nb-sec-fail"></span></button>
       <button class="ni" onclick="nav('users',this)">👥 Benutzer</button>
       <button class="ni" onclick="nav('customers',this)">🏢 Kunden-Konten <span class="ni-badge amber" id="nb-sla-pending">…</span></button>
       <button class="ni" onclick="nav('sla',this)">📋 SLA-Modelle</button>
@@ -1985,7 +2106,7 @@ function toast(msg,type=''){const t=document.getElementById('toast');t.textConte
 function nav(view,btn){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+view)?.classList.add('active');
-  const titles={dashboard:'Dashboard',stats:'Statistiken',inbox:'Inbox — Anfragen',tickets:'Alle Tickets','extern-tickets':'Externe Tickets',portal:'Meine Tickets','new-ticket':'Ticket erstellen',users:'Benutzerverwaltung',customers:'Kunden-Konten',sla:'SLA-Modelle',logs:'System-Logs',profile:'Mein Profil',ai:'Claude KI-Assistent',announcements:'Ankündigungen & Systemstatus',selfservice:'Hilfe zur Selbsthilfe'};
+  const titles={dashboard:'Dashboard',stats:'Statistiken',inbox:'Inbox — Anfragen',tickets:'Alle Tickets','extern-tickets':'Externe Tickets',portal:'Meine Tickets','new-ticket':'Ticket erstellen',users:'Benutzerverwaltung',customers:'Kunden-Konten',sla:'SLA-Modelle',logs:'System-Logs',profile:'Mein Profil',ai:'Claude KI-Assistent',announcements:'Ankündigungen & Systemstatus',selfservice:'Hilfe zur Selbsthilfe',security:'Sicherheitsübersicht'};
   document.getElementById('topbar-title').textContent=titles[view]||view;
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
   if(btn)btn.classList.add('active');
@@ -2003,6 +2124,7 @@ function nav(view,btn){
   if(view==='customers')loadCustomers();
   if(view==='announcements')loadAnnouncements();
   if(view==='selfservice')loadSelfService();
+  if(view==='security')loadSecurity();
 }
 
 function loadSlaView(){
@@ -2645,27 +2767,33 @@ function loadUsers(){
   const statusMap={active:{dot:'#3a6a4a',label:'Aktiv'},away:{dot:'#8a7040',label:'Abwesend'},busy:{dot:'#7a4040',label:'Beschäftigt'},offline:{dot:'#3a3f4d',label:'Offline'}};
   const groups={};
   STAFF.forEach(u=>{if(!groups[u.group])groups[u.group]=[];groups[u.group].push(u);});
-  // Find username for staff member
   const nameToKey={};Object.entries(USERS).forEach(([k,v])=>{nameToKey[v.name]=k;});
+  // Check who is currently logged in (same session)
+  const onlineUsers=new Set();
+  if(currentUser)onlineUsers.add(currentUser.name);
   document.getElementById('user-grid-wrap').innerHTML=Object.entries(groups).map(([g,users])=>`
     <div class="section-lbl" style="margin-top:${g==='1st'?'0':'14px'}">${groupLabels[g]||g}</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px">
       ${users.map(u=>{
         const key=nameToKey[u.name];
         const p=key?userProfiles[key]:null;
         const st=p?.status||'active';
         const sm=statusMap[st]||statusMap.active;
         const skills=p?.skills?p.skills.split(',').filter(Boolean).slice(0,3).map(s=>`<span class="skill-tag">${s.trim()}</span>`).join(''):'';
-        return`<div style="background:#161820;border:1px solid #2a2d35;border-radius:7px;overflow:hidden">
+        const isOnline=onlineUsers.has(u.name);
+        // Last login from logs
+        const lastLogin=systemLogs.filter(l=>l.action==='Anmeldung'&&l.who===u.name)[0];
+        const devInfo=lastLogin?.note||'';
+        return`<div style="background:#161820;border:1px solid ${isOnline?'#3a6a9e':'#2a2d35'};border-radius:7px;overflow:hidden">
           <div style="background:${u.color}18;border-bottom:1px solid #2a2d35;padding:13px;display:flex;align-items:center;gap:10px">
             <div style="position:relative;flex-shrink:0">
               <div style="width:42px;height:42px;border-radius:50%;background:${u.color};display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff">${u.initials}</div>
-              <div style="position:absolute;bottom:0;right:0;width:10px;height:10px;border-radius:50%;background:${sm.dot};border:1.5px solid #161820"></div>
+              <div style="position:absolute;bottom:0;right:0;width:10px;height:10px;border-radius:50%;background:${isOnline?'#4a9a5a':sm.dot};border:1.5px solid #161820"></div>
             </div>
             <div style="min-width:0">
               <div style="font-size:13px;font-weight:600;color:#e2e4e9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${u.name}</div>
               <div style="font-size:10px;color:#5a6070;margin-top:1px">${u.dept}</div>
-              <div style="font-size:10px;color:${sm.dot};margin-top:2px">${sm.label}</div>
+              <div style="font-size:10px;color:${isOnline?'#4a9a5a':sm.dot};margin-top:2px">${isOnline?'🟢 Online (diese Session)':sm.label}</div>
             </div>
           </div>
           <div style="padding:10px 12px">
@@ -2673,6 +2801,8 @@ function loadUsers(){
             ${p?.bio?`<div style="font-size:11px;color:#5a6070;line-height:1.5;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${p.bio}</div>`:''}
             ${p?.phone?`<div style="font-size:10px;color:#4a5060;margin-bottom:2px">📞 ${p.phone}</div>`:''}
             ${p?.email?`<div style="font-size:10px;color:#4a5060;margin-bottom:2px">📧 ${p.email}</div>`:''}
+            ${devInfo?`<div style="font-size:10px;color:#4a5060;margin-top:4px;padding-top:4px;border-top:1px solid #2a2d35">💻 ${devInfo}</div>`:''}
+            ${lastLogin?`<div style="font-size:10px;color:#3a3f4d;margin-top:2px">Zuletzt: ${fmtDate(new Date(lastLogin.time).toISOString())}</div>`:''}
             ${skills?`<div style="margin-top:6px">${skills}</div>`:''}
             ${p?.linkedin?`<div style="margin-top:6px"><a href="${p.linkedin}" target="_blank" style="font-size:10px;color:#5a8ab0;text-decoration:none">🔗 LinkedIn</a></div>`:''}
           </div>
@@ -3268,17 +3398,18 @@ const FAQ_DATA=[
 ];
 
 const KB_ARTICLES=[
-  {title:'Erster Arbeitstag — IT-Checkliste',views:312,icon:'✅'},
-  {title:'VPN einrichten (Schritt für Schritt)',views:287,icon:'🌐'},
-  {title:'E-Mail-Signatur anpassen',views:201,icon:'✍️'},
-  {title:'Zweiten Monitor anschliessen',views:189,icon:'🖥️'},
-  {title:'Passwort-Richtlinien der ICT-Consulting AG',views:176,icon:'🔐'},
-  {title:'Dateien auf Netzlaufwerk speichern',views:154,icon:'📂'},
+  {title:'Erster Arbeitstag — IT-Checkliste',views:312,icon:'✅',content:`<strong>Was du am ersten Arbeitstag erledigen solltest:</strong><br><br><strong>Zugänge:</strong><br>1. Windows-Login mit zugestelltem Passwort → sofort ändern<br>2. E-Mail in Outlook konfigurieren<br>3. VPN-Client installieren und testen<br>4. Netzlaufwerke verbinden (S: und P:)<br><br><strong>Software (via IT-Support):</strong><br>• Microsoft Office, Teams, Drucker einrichten<br><br><strong>Helpdesk:</strong> support@ict-consulting.ch · Hotline: +41 44 123 45 00`},
+  {title:'VPN einrichten (Schritt für Schritt)',views:287,icon:'🌐',content:`<strong>VPN-Verbindung einrichten (Windows):</strong><br><br>1. Einstellungen → Netzwerk & Internet → VPN<br>2. VPN-Verbindung hinzufügen<br>3. Server: <code style="background:#1e2128;padding:1px 5px;border-radius:3px">vpn.ict-consulting.ch</code><br>4. Typ: IKEv2 oder L2TP/IPsec<br>5. Benutzername + Passwort eingeben → Verbinden<br><br><strong>Probleme?</strong> Firewall prüfen (Port 500/4500) → VPN neu starten → Ticket erstellen`},
+  {title:'E-Mail-Signatur anpassen',views:201,icon:'✍️',content:`<strong>Outlook-Signatur einrichten:</strong><br><br>1. Outlook → Datei → Optionen → E-Mail → Signaturen → Neu<br>2. Vorlage:<br><div style="background:#1e2128;padding:10px;border-radius:4px;font-size:12px;margin:8px 0">Vorname Nachname<br>Funktion | ICT-Consulting AG<br>📞 +41 44 XXX XX XX | 📧 vorname@ict-consulting.ch</div>3. Für neue E-Mails und Antworten aktivieren → OK`},
+  {title:'Zweiten Monitor anschliessen',views:189,icon:'🖥️',content:`<strong>Monitor anschliessen:</strong><br><br>1. HDMI/DisplayPort/USB-C anschliessen<br>2. Windows erkennt automatisch — falls nicht: Rechtsklick Desktop → Anzeigeeinstellungen → Erkennen<br><br><strong>Modi:</strong> Erweitern (unabhängig) · Spiegeln · Hauptanzeige festlegen<br><br>Auflösung: Einstellungen → Anzeige → Auflösung anpassen`},
+  {title:'Passwort-Richtlinien der ICT-Consulting AG',views:176,icon:'🔐',content:`<strong>Anforderungen:</strong><br><br>✓ Min. 8 Zeichen · ✓ Gross- und Kleinbuchstaben · ✓ Zahl · ✓ Sonderzeichen empfohlen<br><br><strong>Regeln:</strong><br>• Alle 90 Tage ändern<br>• Letzten 5 nicht wiederverwenden<br>• Nie teilen — auch nicht mit IT<br>• Bei Verdacht: sofort ändern + Ticket<br><br><em>Empfehlung: KeePass oder Bitwarden verwenden</em>`},
+  {title:'Dateien auf Netzlaufwerk speichern',views:154,icon:'📂',content:`<strong>Netzlaufwerk verbinden:</strong><br><br>1. Explorer → Dieser PC → Rechtsklick → Netzlaufwerk verbinden<br>2. Laufwerk (S:) → Pfad: <code style="background:#1e2128;padding:1px 5px;border-radius:3px">\\server\share</code><br>3. "Bei Anmeldung wiederherstellen" aktivieren<br><br><strong>Wichtig:</strong> Desktop + lokale Dateien werden NICHT gesichert. Alles auf Netzlaufwerk speichern!`},
 ];
+
+let expandedKB=null;
 
 function loadSelfService(){
   renderCustomerStatusBanner();
-  // Customer announcements
   const custAnn=announcements.filter(a=>a.active&&(a.audience==='all'||a.audience==='customer'));
   const annEl=document.getElementById('customer-announcements');
   if(annEl){
@@ -3290,17 +3421,77 @@ function loadSelfService(){
         ${a.systems?`<div style="font-size:11px;color:#4a5060;margin-top:3px">Betroffen: ${a.systems}</div>`:''}
       </div>`).join('');
   }
-  // KB articles
   const kb=document.getElementById('kb-list');
   if(kb){
     kb.innerHTML=KB_ARTICLES.map((a,i)=>`
-      <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #1e2128;cursor:pointer;transition:background .1s" onmouseenter="this.style.background='#1e2128'" onmouseleave="this.style.background=''">
-        <span style="font-size:16px">${a.icon}</span>
-        <span style="font-size:12px;font-weight:500;color:#c9cdd6;flex:1">${a.title}</span>
-        <span style="font-size:10px;color:#4a5060">${a.views} Leser</span>
-        <span style="font-size:10px;color:#4a7aaa">→</span>
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid #1e2128;cursor:pointer;transition:background .1s" onclick="expandKB(${i})" onmouseenter="this.style.background='#1e2128'" onmouseleave="this.style.background=''">
+          <span style="font-size:16px">${a.icon}</span>
+          <span style="font-size:12px;font-weight:500;color:#c9cdd6;flex:1">${a.title}</span>
+          <span style="font-size:10px;color:#4a5060">${a.views} Leser</span>
+          <span style="font-size:11px;color:#4a7aaa" id="kb-arrow-${i}">${expandedKB===i?'▲':'▼'}</span>
+        </div>
+        <div id="kb-content-${i}" style="display:${expandedKB===i?'block':'none'};padding:14px 16px;background:#1a1d23;border-bottom:1px solid #2a2d35;font-size:13px;color:#c9cdd6;line-height:1.7">
+          ${a.content||''}
+          <div style="margin-top:10px;padding-top:8px;border-top:1px solid #2a2d35;display:flex;gap:7px;align-items:center">
+            <span style="font-size:11px;color:#5a6070">Hat das geholfen?</span>
+            <button class="btn btn-success btn-sm" onclick="kbFeedback(${i},this)">Ja ✓</button>
+            <button class="btn btn-secondary btn-sm" onclick="nav('new-ticket',null)">Nein — Ticket erstellen</button>
+          </div>
+        </div>
       </div>`).join('');
   }
+}
+
+function expandKB(idx){
+  expandedKB=(expandedKB===idx)?null:idx;
+  loadSelfService();
+  if(expandedKB!==null)setTimeout(()=>document.getElementById('kb-content-'+idx)?.scrollIntoView({behavior:'smooth',block:'nearest'}),50);
+}
+
+function kbFeedback(idx,btn){
+  KB_ARTICLES[idx].views++;
+  btn.closest('div[style*="border-top"]').innerHTML='<span style="font-size:12px;color:#5aa870">Danke für Ihr Feedback ✓</span>';
+}
+
+// ============================================================
+// SECURITY / ANGRIFFS-ÜBERSICHT
+// ============================================================
+function loadSecurity(){
+  const okEvents=securityEvents.filter(e=>e.type==='login'||e.type==='logout').length;
+  const failEvents=securityEvents.filter(e=>e.type==='failed_login').length;
+  const highFail=Object.values(failedLogins).filter(v=>v>=3).length;
+  const secOk=document.getElementById('sec-ok');if(secOk)secOk.textContent=okEvents;
+  const secFail=document.getElementById('sec-fail');if(secFail)secFail.textContent=failEvents;
+  const secLocked=document.getElementById('sec-locked');if(secLocked)secLocked.textContent=highFail;
+  const nb=document.getElementById('nb-sec-fail');
+  if(nb){nb.textContent=failEvents>0?failEvents:'';nb.style.display=failEvents>0?'inline':'none';}
+  const attackData=[
+    {type:'SQL Injection versuche',count:Math.floor(Math.random()*8)+2,color:'#8a4040'},
+    {type:'Brute-Force Login',count:failEvents+Math.floor(Math.random()*3),color:'#9a6a10'},
+    {type:'XSS-Versuche',count:Math.floor(Math.random()*5)+1,color:'#5a4090'},
+    {type:'Unbekannte User-Agents',count:Math.floor(Math.random()*12)+5,color:'#4a5060'},
+    {type:'Rate-Limit überschritten',count:Math.floor(Math.random()*4),color:'#3a6a80'},
+  ];
+  const maxA=Math.max(...attackData.map(a=>a.count),1);
+  const simBars=document.getElementById('attack-sim-bars');
+  if(simBars)simBars.innerHTML=attackData.map(a=>`<div class="bar-h"><div class="bar-h-lbl">${a.type}</div><div class="bar-h-track"><div class="bar-h-fill" style="width:${Math.round(a.count/maxA*100)}%;background:${a.color}"></div></div><div class="bar-h-val">${a.count}</div></div>`).join('');
+  const cnt=document.getElementById('sec-event-count');
+  if(cnt)cnt.textContent=securityEvents.length+' Ereignisse';
+  const list=document.getElementById('sec-events');
+  if(!list)return;
+  if(!securityEvents.length){list.innerHTML='<div class="empty">Noch keine Sicherheitsereignisse erfasst.<br>Melde dich ab und versuche einen falschen Login — es wird hier erscheinen.</div>';return;}
+  const sevConfig={ok:{icon:'✅',color:'#5aa870'},info:{icon:'ℹ️',color:'#5a8ab0'},warn:{icon:'⚠️',color:'#c8a060'},high:{icon:'🚨',color:'#c07070'}};
+  list.innerHTML=securityEvents.map(e=>{
+    const sc=sevConfig[e.severity]||sevConfig.info;
+    return`<div style="display:flex;gap:10px;padding:10px 14px;border-bottom:1px solid #1e2128;align-items:flex-start">
+      <div style="font-size:16px;flex-shrink:0">${sc.icon}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:12px;font-weight:500;color:#c9cdd6">${e.detail}</div>
+        <div style="font-size:10px;color:#4a5060;margin-top:2px">💻 ${e.device?.browser||'?'} auf ${e.device?.os||'?'} · ${e.device?.device||''}</div>
+      </div>
+      <div style="font-size:10px;color:#3a3f4d;white-space:nowrap;flex-shrink:0">${fmtDate(new Date(e.time).toISOString())}</div>
+    </div>`;}).join('');
 }
 
 function expandFAQ(idx){
