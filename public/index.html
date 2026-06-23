@@ -430,6 +430,34 @@ body.light-mode .login-hint{background:#f7f8fa;color:#a8acb8}
 body.light-mode .invoice-panel{background:#f9f5fc;border-color:#e0c8f0}
 body.light-mode .invoice-total{color:#7a3aa0;border-top-color:#e0c8f0}
 
+/* FAQ TILES */
+.faq-tile{background:#13151a;border:1px solid #2a2d35;border-radius:6px;padding:12px 14px;font-size:12px;font-weight:500;color:#c9cdd6;cursor:pointer;text-align:left;font-family:inherit;transition:all .15s}
+.faq-tile:hover{background:#1e2128;border-color:#3a3f4d;color:#e2e4e9;transform:translateY(-1px)}
+body.light-mode .faq-tile{background:#ffffff;border-color:#e3e5e9;color:#3a4050}
+body.light-mode .faq-tile:hover{background:#f5f7fa;border-color:#b8bcc8;color:#1a1d23}
+
+/* ANNOUNCEMENT BANNERS */
+.ann-banner-ok{background:#1a2d20;border:1px solid #2a3d2a;color:#6ab87a}
+.ann-banner-warn{background:#2a2010;border:1px solid #3a3020;color:#c8a060}
+.ann-banner-down{background:#2d1818;border:1px solid #3d2828;color:#c07070}
+.ann-banner-info{background:#1a2535;border:1px solid #2a3545;color:#5a8ab0}
+.ann-banner-maintenance{background:#22203a;border:1px solid #32304a;color:#8a7abf}
+.ann-card{padding:12px 14px;border-bottom:1px solid #1e2128}
+.ann-card:last-child{border-bottom:none}
+.ann-card-hd{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.ann-card-title{font-size:13px;font-weight:600;color:#c9cdd6;flex:1}
+.ann-card-time{font-size:10px;color:#4a5060}
+.ann-card-msg{font-size:12px;color:#7a8090;line-height:1.5}
+.ann-card-systems{font-size:11px;color:#4a5060;margin-top:4px}
+body.light-mode .ann-card{border-bottom-color:#eef0f3}
+body.light-mode .ann-card-title{color:#1a1d23}
+body.light-mode .ann-card-msg{color:#5a6070}
+body.light-mode .ann-banner-ok{background:#dff5e6;border-color:#b8e8c8;color:#1a7a3a}
+body.light-mode .ann-banner-warn{background:#fff3da;border-color:#f0d9a0;color:#9a6a10}
+body.light-mode .ann-banner-down{background:#ffe0e0;border-color:#f0b8b8;color:#b02020}
+body.light-mode .ann-banner-info{background:#deebff;border-color:#b8d6f5;color:#1a5a9e}
+
+
 /* SETTINGS PANEL */
 .settings-row{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #2a2d35}
 .settings-row:last-child{border-bottom:none}
@@ -1376,6 +1404,88 @@ body.compact-mode tbody tr{font-size:11px}
         </div>
       </div>
 
+      <!-- ANKÜNDIGUNGEN -->
+      <div class="view" id="view-announcements">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <h2 style="font-size:14px;font-weight:600;color:#e2e4e9;flex:1">Ankündigungen & Systemstatus</h2>
+          <button class="btn btn-primary btn-sm" onclick="openNewAnn()">+ Neue Ankündigung</button>
+        </div>
+
+        <!-- Status Ampel -->
+        <div class="card" style="margin-bottom:14px">
+          <div class="card-hd"><h3>Live-Systemstatus</h3></div>
+          <div style="padding:14px">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+              <span style="font-size:12px;color:#7a8090">Aktueller Status:</span>
+              <select id="system-status-sel" onchange="updateSystemStatus()" style="font-size:12px">
+                <option value="ok">🟢 Alle Systeme laufen normal</option>
+                <option value="warn">🟡 Bekannte Störung — wird bearbeitet</option>
+                <option value="down">🔴 Systemausfall — sofortige Massnahmen</option>
+                <option value="maintenance">🔵 Wartungsarbeiten geplant</option>
+              </select>
+            </div>
+            <div id="system-status-banner" style="padding:10px 14px;border-radius:5px;font-size:13px;font-weight:500"></div>
+          </div>
+        </div>
+
+        <!-- Ankündigungen Liste -->
+        <div class="card">
+          <div class="card-hd"><h3>Aktive Ankündigungen</h3><span id="ann-count" style="font-size:11px;color:#4a5060"></span></div>
+          <div id="ann-list"><div class="loading">Lade...</div></div>
+        </div>
+      </div>
+
+      <!-- SELF-SERVICE (Kunde) -->
+      <div class="view" id="view-selfservice">
+        <!-- System Status Banner für Kunden -->
+        <div id="customer-status-banner" style="display:none;padding:11px 16px;border-radius:6px;font-size:13px;font-weight:500;margin-bottom:14px"></div>
+
+        <!-- Ankündigungen für Kunden -->
+        <div id="customer-announcements" style="margin-bottom:14px"></div>
+
+        <!-- Suchleiste -->
+        <div class="card" style="margin-bottom:14px">
+          <div style="padding:20px;text-align:center">
+            <div style="font-size:18px;font-weight:600;color:#e2e4e9;margin-bottom:6px">Wie können wir dir heute helfen?</div>
+            <div style="font-size:12px;color:#4a5060;margin-bottom:16px">Durchsuche häufige Fragen oder erstelle ein Support-Ticket.</div>
+            <div style="display:flex;gap:8px;max-width:500px;margin:0 auto">
+              <input type="text" id="ss-search" placeholder="Problem suchen (z.B. Passwort, VPN, Drucker)..." style="flex:1;padding:10px 14px;font-size:13px;border-radius:5px" oninput="searchFAQ()">
+              <button class="btn btn-primary" onclick="searchFAQ()">Suchen</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ Kacheln -->
+        <div style="margin-bottom:16px">
+          <div style="font-size:12px;font-weight:600;color:#5a6070;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Häufige Fragen</div>
+          <div id="faq-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px">
+            <button class="faq-tile" onclick="expandFAQ(0)">🔑 Passwort zurücksetzen</button>
+            <button class="faq-tile" onclick="expandFAQ(1)">🌐 VPN-Verbindung</button>
+            <button class="faq-tile" onclick="expandFAQ(2)">🖨️ Drucker einrichten</button>
+            <button class="faq-tile" onclick="expandFAQ(3)">📧 E-Mail-Probleme</button>
+            <button class="faq-tile" onclick="expandFAQ(4)">💻 Software installieren</button>
+            <button class="faq-tile" onclick="expandFAQ(5)">📁 Datei nicht auffindbar</button>
+          </div>
+        </div>
+
+        <!-- FAQ Antwort -->
+        <div id="faq-answer" style="display:none" class="card" style="margin-bottom:14px">
+          <div class="card-hd"><h3 id="faq-title">FAQ</h3><button class="btn btn-secondary btn-sm" onclick="document.getElementById('faq-answer').style.display='none'">×</button></div>
+          <div style="padding:16px;font-size:13px;color:#c9cdd6;line-height:1.7" id="faq-content"></div>
+          <div style="padding:12px 16px;border-top:1px solid #2a2d35;background:#161820;display:flex;align-items:center;gap:10px">
+            <span style="font-size:12px;color:#5a6070">Hat das geholfen?</span>
+            <button class="btn btn-success btn-sm" onclick="this.parentElement.innerHTML='<span style=font-size:12px;color:#5aa870>Danke für Ihr Feedback ✓</span>'">Ja ✓</button>
+            <button class="btn btn-secondary btn-sm" onclick="nav('new-ticket',null)">Nein — Ticket erstellen</button>
+          </div>
+        </div>
+
+        <!-- Beliebte KB Artikel -->
+        <div class="card">
+          <div class="card-hd"><h3>Beliebte Knowledge-Base-Artikel</h3></div>
+          <div id="kb-list" style="padding:0"></div>
+        </div>
+      </div>
+
       <!-- LOGS -->
       <div class="view" id="view-logs">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:13px">
@@ -1563,6 +1673,39 @@ body.compact-mode tbody tr{font-size:11px}
 
 <!-- MODAL: Save Filter -->
 <!-- MODAL: Settings -->
+<!-- MODAL: Neue Ankündigung -->
+<div class="modal-bg" id="m-announcement">
+  <div class="modal" style="width:500px">
+    <div class="modal-hd"><h3>Neue Ankündigung</h3><button class="modal-close" onclick="closeModal('m-announcement')">×</button></div>
+    <div class="modal-body">
+      <div class="fgg"><label>Titel *</label><input type="text" id="ann-title" placeholder="z.B. Server-Wartung am Samstag"></div>
+      <div class="fgg"><label>Nachricht *</label><textarea id="ann-msg" placeholder="Details zur Ankündigung..." style="min-height:90px"></textarea></div>
+      <div class="form-row">
+        <div class="fgg"><label>Typ</label>
+          <select id="ann-type">
+            <option value="info">ℹ️ Information</option>
+            <option value="warn">⚠️ Warnung</option>
+            <option value="down">🔴 Systemausfall</option>
+            <option value="ok">✅ Behoben</option>
+          </select>
+        </div>
+        <div class="fgg"><label>Sichtbar für</label>
+          <select id="ann-audience">
+            <option value="all">Alle (Kunden + Supporter)</option>
+            <option value="admin">Nur Supporter</option>
+            <option value="customer">Nur Kunden</option>
+          </select>
+        </div>
+      </div>
+      <div class="fgg"><label>Betroffene Systeme (optional)</label><input type="text" id="ann-systems" placeholder="z.B. VPN, E-Mail-Server, Active Directory"></div>
+    </div>
+    <div class="modal-ft" style="justify-content:flex-end">
+      <button class="btn btn-secondary" onclick="closeModal('m-announcement')">Abbrechen</button>
+      <button class="btn btn-primary" onclick="submitAnnouncement()">Veröffentlichen</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-bg" id="m-settings">
   <div class="modal" style="width:440px">
     <div class="modal-hd"><h3>Einstellungen</h3><button class="modal-close" onclick="closeModal('m-settings')">×</button></div>
@@ -1799,14 +1942,17 @@ function buildNav(){
       <button class="ni" onclick="openNew()">＋ Neues Ticket</button>
       <button class="ni" onclick="nav('extern-tickets',this)">🌐 Externe Tickets <span class="ni-badge amber" id="nb-extern">…</span></button>
       <div class="nav-sec">Verwaltung</div>
+      <button class="ni" onclick="nav('announcements',this)">📢 Ankündigungen <span class="ni-badge red" id="nb-ann">…</span></button>
       <button class="ni" onclick="nav('users',this)">👥 Benutzer</button>
       <button class="ni" onclick="nav('customers',this)">🏢 Kunden-Konten <span class="ni-badge amber" id="nb-sla-pending">…</span></button>
-      <button class="ni" onclick="nav('sla',this)">📋 SLA-Modelle</button>`;
+      <button class="ni" onclick="nav('sla',this)">📋 SLA-Modelle</button>
+      <button class="ni" onclick="nav('logs',this)">📋 System-Logs</button>`;
   } else {
     document.getElementById('sidebar-nav').innerHTML=`
       <div class="nav-sec">Mein Support</div>
       <button class="ni active" onclick="nav('portal',this)">🎫 Meine Tickets</button>
       <button class="ni" onclick="nav('new-ticket',this)">＋ Ticket erstellen</button>
+      <button class="ni" onclick="nav('selfservice',this)">💡 Hilfe zur Selbsthilfe</button>
       <div class="nav-sec">Info</div>
       <button class="ni" onclick="nav('sla',this)">📋 SLA-Modelle</button>`;
   }
@@ -1839,7 +1985,7 @@ function toast(msg,type=''){const t=document.getElementById('toast');t.textConte
 function nav(view,btn){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+view)?.classList.add('active');
-  const titles={dashboard:'Dashboard',stats:'Statistiken',inbox:'Inbox — Anfragen',tickets:'Alle Tickets','extern-tickets':'Externe Tickets',portal:'Meine Tickets','new-ticket':'Ticket erstellen',users:'Benutzerverwaltung',customers:'Kunden-Konten',sla:'SLA-Modelle',logs:'System-Logs',profile:'Mein Profil',ai:'Claude KI-Assistent'};
+  const titles={dashboard:'Dashboard',stats:'Statistiken',inbox:'Inbox — Anfragen',tickets:'Alle Tickets','extern-tickets':'Externe Tickets',portal:'Meine Tickets','new-ticket':'Ticket erstellen',users:'Benutzerverwaltung',customers:'Kunden-Konten',sla:'SLA-Modelle',logs:'System-Logs',profile:'Mein Profil',ai:'Claude KI-Assistent',announcements:'Ankündigungen & Systemstatus',selfservice:'Hilfe zur Selbsthilfe'};
   document.getElementById('topbar-title').textContent=titles[view]||view;
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
   if(btn)btn.classList.add('active');
@@ -1855,6 +2001,8 @@ function nav(view,btn){
   if(view==='portal')loadMyTickets();
   if(view==='sla')loadSlaView();
   if(view==='customers')loadCustomers();
+  if(view==='announcements')loadAnnouncements();
+  if(view==='selfservice')loadSelfService();
 }
 
 function loadSlaView(){
@@ -2962,6 +3110,218 @@ async function submitGuestTicket(){
   const tickets=await api('/api/tickets');
   const nb=document.getElementById('nb-extern');
   if(nb)nb.textContent=tickets.filter(t=>isExtern(t)&&t.status!=='Gelöst'&&t.status!=='Geschlossen').length;
+}
+
+// ============================================================
+// ANNOUNCEMENTS & SYSTEM STATUS
+// ============================================================
+let announcements = [];
+let systemStatus = 'ok';
+
+const STATUS_CONFIG = {
+  ok:          {icon:'🟢', label:'Alle Systeme laufen normal',       cls:'ann-banner-ok'},
+  warn:        {icon:'🟡', label:'Bekannte Störung — wird bearbeitet',cls:'ann-banner-warn'},
+  down:        {icon:'🔴', label:'Systemausfall — sofortige Massnahmen',cls:'ann-banner-down'},
+  maintenance: {icon:'🔵', label:'Wartungsarbeiten geplant',          cls:'ann-banner-maintenance'},
+};
+
+function updateSystemStatus(){
+  systemStatus = document.getElementById('system-status-sel')?.value||'ok';
+  renderSystemStatusBanner();
+  renderCustomerStatusBanner();
+  toast('Systemstatus aktualisiert ✓','success');
+  addLog('Systemstatus geändert',currentUser?.name||'System','—',STATUS_CONFIG[systemStatus]?.label||systemStatus,'update');
+}
+
+function renderSystemStatusBanner(){
+  const cfg=STATUS_CONFIG[systemStatus]||STATUS_CONFIG.ok;
+  const el=document.getElementById('system-status-banner');
+  if(!el)return;
+  el.className=cfg.cls;
+  el.style.padding='10px 14px';
+  el.style.borderRadius='5px';
+  el.style.fontWeight='500';
+  el.style.fontSize='13px';
+  el.textContent=cfg.icon+' '+cfg.label;
+}
+
+function renderCustomerStatusBanner(){
+  const cfg=STATUS_CONFIG[systemStatus]||STATUS_CONFIG.ok;
+  const el=document.getElementById('customer-status-banner');
+  if(!el)return;
+  if(systemStatus==='ok'){el.style.display='none';return;}
+  el.style.display='block';
+  el.className=cfg.cls;
+  el.style.padding='10px 14px';
+  el.style.borderRadius='6px';
+  el.style.fontWeight='500';
+  el.style.fontSize='13px';
+  el.textContent=cfg.icon+' '+cfg.label;
+}
+
+function openNewAnn(){document.getElementById('m-announcement').classList.add('open');}
+
+function submitAnnouncement(){
+  const title=document.getElementById('ann-title')?.value.trim();
+  const msg=document.getElementById('ann-msg')?.value.trim();
+  if(!title||!msg){toast('Bitte Titel und Nachricht ausfüllen.','error');return;}
+  const ann={
+    id:'ann-'+Date.now(),
+    title,msg,
+    type:document.getElementById('ann-type')?.value||'info',
+    audience:document.getElementById('ann-audience')?.value||'all',
+    systems:document.getElementById('ann-systems')?.value.trim()||'',
+    time:Date.now(),
+    by:currentUser?.name||'System',
+    active:true,
+  };
+  announcements.unshift(ann);
+  addLog('Ankündigung erstellt',currentUser?.name||'System','—',title,'open');
+  closeModal('m-announcement');
+  toast('Ankündigung veröffentlicht ✓','success');
+  loadAnnouncements();
+  renderCustomerStatusBanner();
+  // Update badge
+  const nb=document.getElementById('nb-ann');
+  if(nb)nb.textContent=announcements.filter(a=>a.active).length;
+}
+
+function loadAnnouncements(){
+  const nb=document.getElementById('nb-ann');
+  const active=announcements.filter(a=>a.active);
+  if(nb)nb.textContent=active.length;
+  // Set selector to current status
+  const sel=document.getElementById('system-status-sel');
+  if(sel)sel.value=systemStatus;
+  renderSystemStatusBanner();
+  const cnt=document.getElementById('ann-count');
+  if(cnt)cnt.textContent=active.length+' aktiv';
+  const list=document.getElementById('ann-list');
+  if(!list)return;
+  if(!active.length){list.innerHTML='<div class="empty">Keine Ankündigungen. Erstelle eine neue.</div>';return;}
+  const typeIcons={info:'ℹ️',warn:'⚠️',down:'🔴',ok:'✅',maintenance:'🔵'};
+  const audienceLabels={all:'Alle',admin:'Nur Supporter',customer:'Nur Kunden'};
+  list.innerHTML=active.map(a=>`
+    <div class="ann-card">
+      <div class="ann-card-hd">
+        <span style="font-size:16px">${typeIcons[a.type]||'📢'}</span>
+        <span class="ann-card-title">${a.title}</span>
+        <span style="font-size:10px;background:#1e2128;padding:1px 6px;border-radius:3px;color:#5a6070">${audienceLabels[a.audience]||'Alle'}</span>
+        <span class="ann-card-time">${fmtDate(new Date(a.time).toISOString())}</span>
+        <button class="btn btn-danger btn-sm" onclick="deleteAnn('${a.id}')">Löschen</button>
+      </div>
+      <div class="ann-card-msg">${a.msg}</div>
+      ${a.systems?`<div class="ann-card-systems">Betroffen: ${a.systems}</div>`:''}
+      <div style="font-size:10px;color:#3a3f4d;margin-top:4px">von ${a.by}</div>
+    </div>`).join('');
+}
+
+function deleteAnn(id){
+  announcements=announcements.filter(a=>a.id!==id);
+  toast('Ankündigung gelöscht','success');
+  loadAnnouncements();
+  const nb=document.getElementById('nb-ann');
+  if(nb)nb.textContent=announcements.filter(a=>a.active).length;
+}
+
+// ============================================================
+// SELF-SERVICE (Kunde)
+// ============================================================
+const FAQ_DATA=[
+  {title:'Passwort zurücksetzen',icon:'🔑',answer:`<strong>So setzen Sie Ihr Passwort zurück:</strong><br><br>
+    1. Öffnen Sie die Windows-Anmeldemaske<br>
+    2. Klicken Sie auf "Passwort vergessen"<br>
+    3. Geben Sie Ihren Benutzernamen ein<br>
+    4. Folgen Sie den Anweisungen — oder kontaktieren Sie den 1st Level Support.<br><br>
+    <em>Tipp:</em> Passwörter müssen mindestens 8 Zeichen haben und Gross-/Kleinbuchstaben sowie Zahlen enthalten.`},
+  {title:'VPN-Verbindung',icon:'🌐',answer:`<strong>VPN funktioniert nicht? Folgende Schritte helfen:</strong><br><br>
+    1. Netzwerkverbindung prüfen (Internet vorhanden?)<br>
+    2. VPN-Client neu starten<br>
+    3. Sicherstellen, dass VPN-Client aktuell ist<br>
+    4. Windows-Firewall prüfen<br>
+    5. Falls nichts hilft: Ticket erstellen mit Fehlermeldung (Screenshot).<br><br>
+    <em>VPN-Server:</em> vpn.ict-consulting.ch`},
+  {title:'Drucker einrichten',icon:'🖨️',answer:`<strong>Drucker wird nicht gefunden:</strong><br><br>
+    1. Drucker eingeschaltet und verbunden?<br>
+    2. Windows → Einstellungen → Drucker & Scanner<br>
+    3. "Drucker oder Scanner hinzufügen"<br>
+    4. Netzwerkdrucker: IP-Adresse eingeben (Aufkleber am Gerät)<br>
+    5. Treiber nicht gefunden: Ticket mit Drucker-Modell erstellen.`},
+  {title:'E-Mail-Probleme',icon:'📧',answer:`<strong>E-Mail lädt nicht oder kann nicht gesendet werden:</strong><br><br>
+    1. Outlook neu starten<br>
+    2. Internetverbindung prüfen<br>
+    3. Passwort noch korrekt? → Outlook-Konto prüfen<br>
+    4. Postfach voll? → Alte E-Mails archivieren<br>
+    5. Outlook → Datei → Konto-Einstellungen → Verbindung testen<br><br>
+    Weiterhin Probleme? Ticket erstellen.`},
+  {title:'Software installieren',icon:'💻',answer:`<strong>Software kann nicht installiert werden:</strong><br><br>
+    1. Administrator-Rechte vorhanden? (Normalerweise nicht — Support nötig)<br>
+    2. Software über Softwarecenter abrufen<br>
+    3. Wenn Software-Anfrage: Ticket mit Namen und Begründung erstellen<br>
+    4. Lizenzen werden zentral verwaltet — kein eigenmächtiges Installieren.`},
+  {title:'Datei nicht auffindbar',icon:'📁',answer:`<strong>Datei oder Ordner verschwunden:</strong><br><br>
+    1. Zuletzt verwendete Dateien prüfen (Windows Explorer → Schnellzugriff)<br>
+    2. Windows-Suche verwenden (Windows-Taste, Dateiname eingeben)<br>
+    3. Papierkorb prüfen<br>
+    4. Netzlaufwerke verbunden? (Laufwerksbuchstabe im Explorer sichtbar?)<br>
+    5. Falls Netzwerkdatei: IT kann evtl. aus Backup wiederherstellen → Ticket erstellen.`},
+];
+
+const KB_ARTICLES=[
+  {title:'Erster Arbeitstag — IT-Checkliste',views:312,icon:'✅'},
+  {title:'VPN einrichten (Schritt für Schritt)',views:287,icon:'🌐'},
+  {title:'E-Mail-Signatur anpassen',views:201,icon:'✍️'},
+  {title:'Zweiten Monitor anschliessen',views:189,icon:'🖥️'},
+  {title:'Passwort-Richtlinien der ICT-Consulting AG',views:176,icon:'🔐'},
+  {title:'Dateien auf Netzlaufwerk speichern',views:154,icon:'📂'},
+];
+
+function loadSelfService(){
+  renderCustomerStatusBanner();
+  // Customer announcements
+  const custAnn=announcements.filter(a=>a.active&&(a.audience==='all'||a.audience==='customer'));
+  const annEl=document.getElementById('customer-announcements');
+  if(annEl){
+    const typeIcons={info:'ℹ️',warn:'⚠️',down:'🔴',ok:'✅',maintenance:'🔵'};
+    annEl.innerHTML=custAnn.map(a=>`
+      <div class="ann-card card" style="margin-bottom:8px;padding:11px 14px;border-radius:5px">
+        <div style="font-weight:600;font-size:13px;color:#c9cdd6;margin-bottom:3px">${typeIcons[a.type]||'📢'} ${a.title}</div>
+        <div style="font-size:12px;color:#7a8090">${a.msg}</div>
+        ${a.systems?`<div style="font-size:11px;color:#4a5060;margin-top:3px">Betroffen: ${a.systems}</div>`:''}
+      </div>`).join('');
+  }
+  // KB articles
+  const kb=document.getElementById('kb-list');
+  if(kb){
+    kb.innerHTML=KB_ARTICLES.map((a,i)=>`
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #1e2128;cursor:pointer;transition:background .1s" onmouseenter="this.style.background='#1e2128'" onmouseleave="this.style.background=''">
+        <span style="font-size:16px">${a.icon}</span>
+        <span style="font-size:12px;font-weight:500;color:#c9cdd6;flex:1">${a.title}</span>
+        <span style="font-size:10px;color:#4a5060">${a.views} Leser</span>
+        <span style="font-size:10px;color:#4a7aaa">→</span>
+      </div>`).join('');
+  }
+}
+
+function expandFAQ(idx){
+  const faq=FAQ_DATA[idx];
+  if(!faq)return;
+  document.getElementById('faq-title').textContent=faq.icon+' '+faq.title;
+  document.getElementById('faq-content').innerHTML=faq.answer;
+  document.getElementById('faq-answer').style.display='block';
+  document.getElementById('faq-answer').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function searchFAQ(){
+  const q=(document.getElementById('ss-search')?.value||'').toLowerCase().trim();
+  if(!q)return;
+  const match=FAQ_DATA.findIndex(f=>f.title.toLowerCase().includes(q)||f.answer.toLowerCase().includes(q));
+  if(match>=0){expandFAQ(match);}
+  else{
+    document.getElementById('faq-title').textContent='Suchergebnis';
+    document.getElementById('faq-content').innerHTML=`<p style="color:#7a8090">Kein FAQ-Eintrag für "<strong>${q}</strong>" gefunden.</p><p style="margin-top:10px">Bitte erstelle ein <button class="btn btn-primary btn-sm" onclick="nav('new-ticket',null)">Support-Ticket →</button></p>`;
+    document.getElementById('faq-answer').style.display='block';
+  }
 }
 
 // ============================================================
