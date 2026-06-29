@@ -634,12 +634,81 @@ body.compact-mode tbody tr{font-size:11px}
 .lp-team-role{font-size:11px;color:var(--lp-signal);margin-top:3px}
 .lp-team-class{font-size:10px;color:var(--lp-ink-faint);margin-top:2px;font-family:var(--lp-mono)}
 
-.lp-footer{border-top:1px solid var(--lp-line);padding:40px 0 30px}
-.lp-footer-grid{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:20px}
-.lp-footer-brand{font-family:var(--lp-display);font-size:15px;font-weight:600}
-.lp-footer-meta{font-size:10px;color:var(--lp-ink-faint);margin-top:6px;font-family:var(--lp-mono)}
-.lp-footer-links{display:flex;gap:24px}
-.lp-footer-links a{font-size:11px;color:var(--lp-ink-dim)}
+.lp-footer{border-top:1px solid var(--lp-line);padding:60px 0 36px}
+.lp-footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.lp-footer-brand{font-family:var(--lp-display);font-size:16px;font-weight:600;margin-bottom:8px}
+.lp-footer-meta{font-size:11px;color:var(--lp-ink-faint);line-height:1.7}
+.lp-footer-col-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--lp-ink-faint);margin-bottom:14px}
+.lp-footer-col-links{display:flex;flex-direction:column;gap:9px}
+.lp-footer-col-links a{font-size:12px;color:var(--lp-ink-dim);text-decoration:none;transition:color .15s}
+.lp-footer-col-links a:hover{color:var(--lp-ink)}
+.lp-footer-bottom{border-top:1px solid var(--lp-line);padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.lp-footer-bottom-left{font-size:11px;color:var(--lp-ink-faint)}
+.lp-footer-bottom-right{display:flex;gap:20px}
+.lp-footer-bottom-right a{font-size:11px;color:var(--lp-ink-faint);text-decoration:none}
+
+/* BURGER MENU */
+.lp-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:none}
+.lp-burger span{width:22px;height:2px;background:var(--lp-ink-dim);border-radius:1px;transition:all .2s}
+.lp-mobile-menu{display:none;position:fixed;inset:0;background:rgba(14,16,21,.97);z-index:500;flex-direction:column;padding:80px 32px 40px}
+.lp-mobile-menu.open{display:flex}
+.lp-mobile-close{position:absolute;top:20px;right:24px;font-size:22px;background:none;border:none;color:var(--lp-ink-dim);cursor:pointer}
+.lp-mobile-nav-link{font-family:var(--lp-display);font-size:28px;font-weight:500;color:var(--lp-ink);padding:12px 0;border-bottom:1px solid var(--lp-line);text-decoration:none;letter-spacing:-.01em}
+.lp-mobile-nav-link:hover{color:var(--lp-signal)}
+.lp-mobile-sub{font-size:12px;color:var(--lp-ink-faint);margin-top:20px;line-height:1.8}
+
+/* SUB-PAGES */
+.lp-subpage{display:none}
+.lp-subpage.active{display:block}
+.lp-page-hero{padding:80px 0 60px;border-bottom:1px solid var(--lp-line)}
+.lp-page-hero h1{font-family:var(--lp-display);font-size:clamp(32px,4vw,54px);font-weight:600;letter-spacing:-.02em;line-height:1.1;max-width:700px}
+.lp-page-hero h1 em{font-style:italic;color:var(--lp-signal)}
+.lp-page-hero p{font-size:15px;color:var(--lp-ink-dim);max-width:520px;margin-top:18px;line-height:1.7}
+.lp-back{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--lp-ink-faint);cursor:pointer;margin-bottom:16px;background:none;border:none;font-family:inherit;padding:0}
+.lp-back:hover{color:var(--lp-ink)}
+
+/* ACCORDION */
+.lp-accordion{border:1px solid var(--lp-line);border-radius:6px;overflow:hidden;margin-top:20px}
+.lp-acc-item{border-bottom:1px solid var(--lp-line)}
+.lp-acc-item:last-child{border-bottom:none}
+.lp-acc-trigger{width:100%;text-align:left;padding:16px 20px;background:none;border:none;font-family:inherit;font-size:13px;font-weight:500;color:var(--lp-ink);cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background .15s}
+.lp-acc-trigger:hover{background:var(--lp-panel)}
+.lp-acc-arrow{font-size:11px;color:var(--lp-ink-faint);transition:transform .2s}
+.lp-acc-trigger.open .lp-acc-arrow{transform:rotate(180deg)}
+.lp-acc-body{display:none;padding:0 20px 16px;font-size:13px;color:var(--lp-ink-dim);line-height:1.8}
+.lp-acc-body.open{display:block}
+
+/* TIMELINE */
+.lp-timeline{position:relative;padding-left:30px;margin-top:30px}
+.lp-timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--lp-line)}
+.lp-tl-item{position:relative;margin-bottom:32px}
+.lp-tl-item::before{content:'';position:absolute;left:-26px;top:4px;width:10px;height:10px;border-radius:50%;background:var(--lp-signal);box-shadow:0 0 8px var(--lp-signal)}
+.lp-tl-title{font-family:var(--lp-display);font-size:16px;font-weight:600;color:var(--lp-ink);margin-bottom:6px}
+.lp-tl-desc{font-size:13px;color:var(--lp-ink-dim);line-height:1.7}
+
+/* JOBS */
+.lp-job-card{background:var(--lp-panel);border:1px solid var(--lp-line);border-radius:8px;padding:26px;margin-bottom:12px;display:flex;align-items:center;gap:20px}
+.lp-job-card:hover{border-color:var(--lp-signal)}
+.lp-job-icon{width:44px;height:44px;border-radius:8px;background:var(--lp-paper);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.lp-job-title{font-family:var(--lp-display);font-size:16px;font-weight:600;color:var(--lp-ink)}
+.lp-job-meta{font-size:12px;color:var(--lp-ink-faint);margin-top:4px}
+.lp-job-tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.lp-job-tag{font-size:10px;background:var(--lp-paper);border:1px solid var(--lp-line);color:var(--lp-ink-faint);padding:2px 8px;border-radius:10px}
+
+/* TESTIMONIALS */
+.lp-testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+.lp-testimonial{background:var(--lp-panel);border:1px solid var(--lp-line);border-radius:8px;padding:24px}
+.lp-testimonial-stars{color:var(--lp-signal);font-size:14px;margin-bottom:12px}
+.lp-testimonial-text{font-size:13px;color:var(--lp-ink-dim);line-height:1.7;margin-bottom:16px;font-style:italic}
+.lp-testimonial-author{font-size:12px;color:var(--lp-ink-faint)}
+.lp-testimonial-company{font-size:11px;color:var(--lp-signal);margin-top:2px}
+
+@media(max-width:860px){
+  .lp-nav-links,.lp-btn.lp-btn-primary{display:none}
+  .lp-burger{display:flex}
+  .lp-footer-grid{grid-template-columns:1fr 1fr}
+  .lp-testimonial-grid{grid-template-columns:1fr}
+}
 
 @media(max-width:860px){
   .lp-demo-body{grid-template-columns:1fr}
@@ -677,14 +746,36 @@ body.compact-mode tbody tr{font-size:11px}
     <div class="lp-wrap lp-nav-inner">
       <div class="lp-brand"><span class="lp-brand-mark"></span>ICT-Consulting AG</div>
       <div class="lp-nav-links">
-        <a href="#lp-extern">Ohne Abo</a>
-        <a href="#lp-sla">SLA-Abonnements</a>
-        <a href="#lp-vorteile">Kunden-Vorteile</a>
-        <a href="#lp-login">Anmelden</a>
+        <a href="javascript:void(0)" onclick="showPage('home')">Start</a>
+        <a href="javascript:void(0)" onclick="showPage('about')">Über uns</a>
+        <a href="javascript:void(0)" onclick="showPage('services')">Leistungen</a>
+        <a href="javascript:void(0)" onclick="showPage('process')">Ablauf & Rechte</a>
+        <a href="javascript:void(0)" onclick="showPage('jobs')">Karriere</a>
+        <a href="javascript:void(0)" onclick="showPage('reviews')">Kundenstimmen</a>
       </div>
-      <a href="#lp-login" class="lp-btn lp-btn-primary">Anmelden →</a>
+      <div style="display:flex;gap:8px;align-items:center">
+        <a href="#lp-login" class="lp-btn lp-btn-primary">Anmelden →</a>
+        <button class="lp-burger" onclick="openMobileMenu()" aria-label="Menü">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
   </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="lp-mobile-menu" id="lp-mobile-menu">
+    <button class="lp-mobile-close" onclick="closeMobileMenu()">×</button>
+    <a class="lp-mobile-nav-link" href="javascript:void(0)" onclick="showPage('home');closeMobileMenu()">Start</a>
+    <a class="lp-mobile-nav-link" href="javascript:void(0)" onclick="showPage('about');closeMobileMenu()">Über uns</a>
+    <a class="lp-mobile-nav-link" href="javascript:void(0)" onclick="showPage('services');closeMobileMenu()">Leistungen</a>
+    <a class="lp-mobile-nav-link" href="javascript:void(0)" onclick="showPage('process');closeMobileMenu()">Ablauf & Rechte</a>
+    <a class="lp-mobile-nav-link" href="javascript:void(0)" onclick="showPage('jobs');closeMobileMenu()">Karriere</a>
+    <a class="lp-mobile-nav-link" href="javascript:void(0)" onclick="showPage('reviews');closeMobileMenu()">Kundenstimmen</a>
+    <div class="lp-mobile-sub">ICT-Consulting AG · Zürich · Modul 437</div>
+  </div>
+
+  <!-- HOME PAGE -->
+  <div class="lp-subpage active" id="lp-page-home">
 
   <header class="lp-hero">
     <div class="lp-wrap">
@@ -932,16 +1023,271 @@ body.compact-mode tbody tr{font-size:11px}
     </div>
   </section>
 
-  <footer class="lp-footer">
-    <div class="lp-wrap lp-footer-grid">
-      <div>
-        <div class="lp-footer-brand">ICT-Consulting AG</div>
-        <div class="lp-footer-meta">Helpdesk Ticketsystem · Modul 437 · TBZ Zürich</div>
+  </div><!-- end home page -->
+
+  <!-- ÜBER UNS -->
+  <div class="lp-subpage" id="lp-page-about">
+    <div class="lp-page-hero">
+      <div class="lp-wrap">
+        <button class="lp-back" onclick="showPage('home')">← Zurück</button>
+        <h1>Kompetenz aus <em>Zürich.</em></h1>
+        <p>Wir sind ein Team von IT-Fachleuten, das zuverlässigen Support für KMU, Firmen und Einzelpersonen bietet — schnell, transparent und auf Augenhöhe.</p>
       </div>
-      <div class="lp-footer-links">
-        <a href="#lp-produkt">Produkt</a>
-        <a href="#lp-sla">SLA-Modelle</a>
-        <a href="#lp-login">Anmelden</a>
+    </div>
+    <div class="lp-wrap" style="padding:70px 0">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start">
+        <div>
+          <div class="lp-eyebrow">Unsere Geschichte</div>
+          <h2 style="font-family:var(--lp-display);font-size:28px;font-weight:600;color:var(--lp-ink);margin:12px 0 20px;letter-spacing:-.01em">Entstanden aus einem Schulprojekt — gewachsen zu einem echten Serviceangebot.</h2>
+          <p style="font-size:13px;color:var(--lp-ink-dim);line-height:1.8;margin-bottom:16px">Das Projekt startete im Rahmen des Moduls 437 an der TBZ Zürich. Die Aufgabe: Eine Support-Abteilung reorganisieren und ein professionelles Helpdesk-System aufbauen.</p>
+          <p style="font-size:13px;color:var(--lp-ink-dim);line-height:1.8">Was als Schulprojekt begann, ist ein vollständiges IT-Helpdesk-System geworden — mit SLA-Verträgen, Kundenportal, KI-Assistent und professionellem Support auf drei Ebenen.</p>
+        </div>
+        <div>
+          <div class="lp-eyebrow">Das Team</div>
+          <div style="margin-top:20px;display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;gap:14px;align-items:center;padding:16px;background:var(--lp-panel);border:1px solid var(--lp-line);border-radius:8px">
+              <div style="width:44px;height:44px;border-radius:50%;background:#3a4a7a;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff;flex-shrink:0">NM</div>
+              <div><div style="font-size:13px;font-weight:600;color:var(--lp-ink)">Nils Müller</div><div style="font-size:11px;color:var(--lp-signal);margin-top:2px">CIO / Projektleiter</div><div style="font-size:11px;color:var(--lp-ink-faint);margin-top:2px">Projektmanagement · ITIL · Cloud Infrastructure</div></div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:center;padding:16px;background:var(--lp-panel);border:1px solid var(--lp-line);border-radius:8px">
+              <div style="width:44px;height:44px;border-radius:50%;background:#4a5a7a;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff;flex-shrink:0">LF</div>
+              <div><div style="font-size:13px;font-weight:600;color:var(--lp-ink)">Levi Frischknecht</div><div style="font-size:11px;color:var(--lp-signal);margin-top:2px">Stv. IT-Leiter</div><div style="font-size:11px;color:var(--lp-ink-faint);margin-top:2px">Windows OS · Active Directory · 1st Level Support</div></div>
+            </div>
+          </div>
+          <div style="margin-top:20px;padding:16px 20px;background:var(--lp-paper);border:1px solid var(--lp-line);border-radius:6px;font-size:12px;color:var(--lp-ink-faint);line-height:1.7">
+            📍 Zürich, Schweiz<br>
+            🏫 TBZ Zürich · Klasse ICT 25b · Modul 437<br>
+            📧 support@ict-consulting.ch
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEISTUNGEN -->
+  <div class="lp-subpage" id="lp-page-services">
+    <div class="lp-page-hero">
+      <div class="lp-wrap">
+        <button class="lp-back" onclick="showPage('home')">← Zurück</button>
+        <h1>Unser <em>Angebot.</em></h1>
+        <p>Ob einmalige Anfrage oder laufender Vertrag — wir bieten passende IT-Unterstützung für jeden Bedarf.</p>
+      </div>
+    </div>
+    <div class="lp-wrap" style="padding:70px 0">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:50px">
+        <div style="background:var(--lp-panel);border:1px solid var(--lp-line);border-radius:8px;padding:30px">
+          <div style="font-size:32px;margin-bottom:16px">🎫</div>
+          <div style="font-family:var(--lp-display);font-size:20px;font-weight:600;color:var(--lp-ink);margin-bottom:10px">Externe Anfrage</div>
+          <div style="font-size:13px;color:var(--lp-ink-dim);line-height:1.8;margin-bottom:20px">Kein Account, keine Verpflichtung. Anfrage einreichen, Problem lösen, Rechnung bezahlen. Abgerechnet wird nach effektivem Zeit- und Materialaufwand.</div>
+          <button class="lp-btn lp-btn-ghost" onclick="showGuestForm()">Anfrage stellen →</button>
+        </div>
+        <div style="background:var(--lp-panel);border:2px solid var(--lp-signal);border-radius:8px;padding:30px;position:relative">
+          <div style="position:absolute;top:-11px;left:24px;background:var(--lp-signal);color:#1a1410;font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px">Empfohlen</div>
+          <div style="font-size:32px;margin-bottom:16px">📋</div>
+          <div style="font-family:var(--lp-display);font-size:20px;font-weight:600;color:var(--lp-ink);margin-bottom:10px">SLA-Abonnement</div>
+          <div style="font-size:13px;color:var(--lp-ink-dim);line-height:1.8;margin-bottom:20px">Fixer Monatspreis, garantierte Reaktionszeiten, eigener Account. Drei Stufen je nach Anforderung — Silver, Gold oder Platinum.</div>
+          <button class="lp-btn lp-btn-primary" onclick="showPage('home');setTimeout(()=>document.getElementById('lp-sla').scrollIntoView({behavior:'smooth'}),100)">Pakete ansehen →</button>
+        </div>
+      </div>
+      <div class="lp-eyebrow">Was wir unterstützen</div>
+      <h2 style="font-family:var(--lp-display);font-size:26px;font-weight:600;color:var(--lp-ink);margin:12px 0 24px;letter-spacing:-.01em">Von Passwort bis Server.</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+        ${["🔑 Passwort & Zugang","🌐 Netzwerk & VPN","🖨️ Drucker & Hardware","📧 E-Mail & Office","💻 Software & Lizenzen","🖥️ Server & Infrastruktur","🔒 IT-Sicherheit","📱 Mobile Geräte","☁️ Cloud-Dienste"].map(s=>`<div style="background:var(--lp-panel);border:1px solid var(--lp-line);border-radius:6px;padding:14px 16px;font-size:13px;color:var(--lp-ink-dim)">${s}</div>`).join('')}
+      </div>
+    </div>
+  </div>
+
+  <!-- ABLAUF & RECHTE -->
+  <div class="lp-subpage" id="lp-page-process">
+    <div class="lp-page-hero">
+      <div class="lp-wrap">
+        <button class="lp-back" onclick="showPage('home')">← Zurück</button>
+        <h1>Ablauf & <em>Ihre Rechte.</em></h1>
+        <p>Transparent von Anfang bis Ende — so läuft eine Anfrage ab, und das können Sie von uns erwarten.</p>
+      </div>
+    </div>
+    <div class="lp-wrap" style="padding:70px 0">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px">
+        <div>
+          <div class="lp-eyebrow">So läuft es ab</div>
+          <div class="lp-timeline" style="margin-top:28px">
+            <div class="lp-tl-item"><div class="lp-tl-title">1. Anfrage einreichen</div><div class="lp-tl-desc">Online über das Portal oder Formular — mit Beschreibung des Problems und Ihren Kontaktdaten.</div></div>
+            <div class="lp-tl-item"><div class="lp-tl-title">2. Bestätigung & Ticket-ID</div><div class="lp-tl-desc">Sie erhalten sofort eine Ticket-ID zur Nachverfolgung. SLA-Kunden bekommen zusätzlich eine E-Mail-Bestätigung.</div></div>
+            <div class="lp-tl-item"><div class="lp-tl-title">3. Bearbeitung durch unser Team</div><div class="lp-tl-desc">Ihr Ticket wird dem zuständigen Techniker zugewiesen und innerhalb der vereinbarten Reaktionszeit bearbeitet.</div></div>
+            <div class="lp-tl-item"><div class="lp-tl-title">4. Rückmeldung & Lösung</div><div class="lp-tl-desc">Wir melden uns mit einer Lösung oder einem Zwischenstand. Bei Bedarf wird das Ticket an Spezialisten weitergeleitet.</div></div>
+            <div class="lp-tl-item"><div class="lp-tl-title">5. Abschluss & Feedback</div><div class="lp-tl-desc">Nach der Lösung können Sie Feedback geben. Externe Anfragen erhalten eine detaillierte Rechnung.</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="lp-eyebrow">Ihre Rechte</div>
+          <div class="lp-accordion" style="margin-top:28px">
+            <div class="lp-acc-item"><button class="lp-acc-trigger" onclick="toggleAcc(this)">Externe Anfragen — was ist inklusive? <span class="lp-acc-arrow">▼</span></button><div class="lp-acc-body">Sie erhalten vorab eine Einschätzung des Aufwands. Ohne Ihre Zustimmung wird keine kostenpflichtige Arbeit begonnen. Abgerechnet wird nur tatsächlich geleistete Arbeit. Material wird zum Einkaufspreis plus einem transparenten Aufschlag verrechnet.</div></div>
+            <div class="lp-acc-item"><button class="lp-acc-trigger" onclick="toggleAcc(this)">SLA-Abonnement — was ist garantiert? <span class="lp-acc-arrow">▼</span></button><div class="lp-acc-body">Die vereinbarte Reaktionszeit ist garantiert. Bei Nichteinhaltung erhalten Sie eine Gutschrift von CHF 50 pro Vorfall. Die Verfügbarkeitsgarantie gilt pro Kalendermonat. Alle Garantien sind im SLA-Vertrag schriftlich festgehalten.</div></div>
+            <div class="lp-acc-item"><button class="lp-acc-trigger" onclick="toggleAcc(this)">Kündigung & Vertragslaufzeit <span class="lp-acc-arrow">▼</span></button><div class="lp-acc-body">SLA-Abonnements haben eine Mindestlaufzeit von 12 Monaten. Kündigung schriftlich 3 Monate vor Vertragsablauf. Ohne Kündigung verlängert sich der Vertrag automatisch um 12 Monate. Upgrade jederzeit möglich, Downgrade mit 4 Wochen Vorankündigung.</div></div>
+            <div class="lp-acc-item"><button class="lp-acc-trigger" onclick="toggleAcc(this)">Datenschutz & Vertraulichkeit <span class="lp-acc-arrow">▼</span></button><div class="lp-acc-body">Alle Anfragen und Kundendaten werden vertraulich behandelt. Keine Weitergabe an Dritte. Daten werden nur für die Bearbeitung Ihrer Anfrage verwendet und nach Abschluss gemäss Datenschutzgesetz archiviert.</div></div>
+            <div class="lp-acc-item"><button class="lp-acc-trigger" onclick="toggleAcc(this)">Was wenn das Problem nicht gelöst wird? <span class="lp-acc-arrow">▼</span></button><div class="lp-acc-body">Bei externen Anfragen zahlen Sie nur für tatsächlich geleistete Arbeit — auch wenn das Problem nicht vollständig gelöst werden konnte. Bei SLA-Kunden eskalieren wir das Problem an den Hersteller (3rd Level) — auf unsere Kosten.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KARRIERE -->
+  <div class="lp-subpage" id="lp-page-jobs">
+    <div class="lp-page-hero">
+      <div class="lp-wrap">
+        <button class="lp-back" onclick="showPage('home')">← Zurück</button>
+        <h1>Werden Sie Teil <em>unseres Teams.</em></h1>
+        <p>Wir suchen motivierte IT-Fachkräfte für unser wachsendes Support-Team in Zürich.</p>
+      </div>
+    </div>
+    <div class="lp-wrap" style="padding:70px 0">
+      <div class="lp-eyebrow">Offene Stellen</div>
+      <h2 style="font-family:var(--lp-display);font-size:26px;font-weight:600;color:var(--lp-ink);margin:12px 0 30px;letter-spacing:-.01em">Was wir gerade suchen.</h2>
+
+      <div class="lp-job-card" style="cursor:pointer" onclick="openJobApply('1st Level Support Spezialist/in')">
+        <div class="lp-job-icon">🎧</div>
+        <div style="flex:1">
+          <div class="lp-job-title">1st Level Support Spezialist/in</div>
+          <div class="lp-job-meta">📍 Zürich · 80–100% · Festanstellung</div>
+          <div class="lp-job-tags"><span class="lp-job-tag">Windows</span><span class="lp-job-tag">Helpdesk</span><span class="lp-job-tag">Deutsch</span><span class="lp-job-tag">Kundenkontakt</span></div>
+        </div>
+        <div class="lp-btn lp-btn-ghost" style="flex-shrink:0">Bewerben →</div>
+      </div>
+
+      <div class="lp-job-card" style="cursor:pointer" onclick="openJobApply('Network Engineer')">
+        <div class="lp-job-icon">🌐</div>
+        <div style="flex:1">
+          <div class="lp-job-title">Network Engineer (2nd Level)</div>
+          <div class="lp-job-meta">📍 Zürich · 100% · Festanstellung</div>
+          <div class="lp-job-tags"><span class="lp-job-tag">Cisco</span><span class="lp-job-tag">VPN</span><span class="lp-job-tag">Firewall</span><span class="lp-job-tag">TCP/IP</span></div>
+        </div>
+        <div class="lp-btn lp-btn-ghost" style="flex-shrink:0">Bewerben →</div>
+      </div>
+
+      <div class="lp-job-card" style="cursor:pointer" onclick="openJobApply('System Engineer Windows/Linux')">
+        <div class="lp-job-icon">🖥️</div>
+        <div style="flex:1">
+          <div class="lp-job-title">System Engineer Windows/Linux</div>
+          <div class="lp-job-meta">📍 Zürich · 80–100% · Festanstellung</div>
+          <div class="lp-job-tags"><span class="lp-job-tag">Windows Server</span><span class="lp-job-tag">Active Directory</span><span class="lp-job-tag">Linux</span></div>
+        </div>
+        <div class="lp-btn lp-btn-ghost" style="flex-shrink:0">Bewerben →</div>
+      </div>
+
+      <div class="lp-job-card" style="cursor:pointer" onclick="openJobApply('ICT-Lernende/r')">
+        <div class="lp-job-icon">🎓</div>
+        <div style="flex:1">
+          <div class="lp-job-title">ICT-Lernende/r (Informatiker/in EFZ)</div>
+          <div class="lp-job-meta">📍 Zürich · Lehrstelle · 3 Jahre</div>
+          <div class="lp-job-tags"><span class="lp-job-tag">Ausbildung</span><span class="lp-job-tag">EFZ</span><span class="lp-job-tag">TBZ</span></div>
+        </div>
+        <div class="lp-btn lp-btn-primary" style="flex-shrink:0">Bewerben →</div>
+      </div>
+
+      <div style="margin-top:40px;padding:24px;background:var(--lp-panel);border:1px solid var(--lp-line);border-radius:8px">
+        <div style="font-family:var(--lp-display);font-size:16px;font-weight:600;color:var(--lp-ink);margin-bottom:8px">Spontanbewerbung</div>
+        <div style="font-size:13px;color:var(--lp-ink-dim);margin-bottom:16px">Keine passende Stelle? Senden Sie uns eine Spontanbewerbung — wir melden uns bei Bedarf.</div>
+        <button class="lp-btn lp-btn-ghost" onclick="openJobApply('Spontanbewerbung')">Initiativbewerbung →</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- KUNDENSTIMMEN -->
+  <div class="lp-subpage" id="lp-page-reviews">
+    <div class="lp-page-hero">
+      <div class="lp-wrap">
+        <button class="lp-back" onclick="showPage('home')">← Zurück</button>
+        <h1>Was unsere Kunden <em>sagen.</em></h1>
+        <p>Echte Erfahrungen von Unternehmen, die auf uns setzen.</p>
+      </div>
+    </div>
+    <div class="lp-wrap" style="padding:70px 0">
+      <div class="lp-testimonial-grid">
+        <div class="lp-testimonial"><div class="lp-testimonial-stars">★★★★★</div><div class="lp-testimonial-text">„Seit wir den Gold-Plan haben, hatten wir noch keinen ungeplanten Ausfall. Das Team reagiert innert Minuten und löst Probleme bevor wir sie bemerken."</div><div class="lp-testimonial-author">Sandra M., IT-Leiterin</div><div class="lp-testimonial-company">Musterfirma AG · Gold-Kunde</div></div>
+        <div class="lp-testimonial"><div class="lp-testimonial-stars">★★★★★</div><div class="lp-testimonial-text">„Wir hatten einen Server-Ausfall mitten in der Nacht. Platinum-Support hat innerhalb von 20 Minuten zurückgerufen und das Problem in 40 Minuten behoben."</div><div class="lp-testimonial-author">Thomas B., Geschäftsführer</div><div class="lp-testimonial-company">Tech Solutions GmbH · Platinum-Kunde</div></div>
+        <div class="lp-testimonial"><div class="lp-testimonial-stars">★★★★☆</div><div class="lp-testimonial-text">„Für eine einmalige Migration hat das alles sehr gut geklappt. Transparente Abrechnung, keine bösen Überraschungen. Empfehlenswert!"</div><div class="lp-testimonial-author">Maria K.</div><div class="lp-testimonial-company">Externe Anfrage</div></div>
+        <div class="lp-testimonial"><div class="lp-testimonial-stars">★★★★★</div><div class="lp-testimonial-text">„Das Ticket-Portal ist sehr übersichtlich. Ich sehe immer genau, was mit meiner Anfrage passiert und kann jederzeit den Status prüfen."</div><div class="lp-testimonial-author">Patrick R., Büroinhaber</div><div class="lp-testimonial-company">PR Consulting · Silver-Kunde</div></div>
+        <div class="lp-testimonial"><div class="lp-testimonial-stars">★★★★★</div><div class="lp-testimonial-text">„Fester Ansprechpartner ist Gold wert. Kein erklären von vorne bei jeder Anfrage — die kennen unsere Infrastruktur bereits."</div><div class="lp-testimonial-author">Lea H., CFO</div><div class="lp-testimonial-company">Holding AG · Gold-Kunde</div></div>
+        <div class="lp-testimonial"><div class="lp-testimonial-stars">★★★★★</div><div class="lp-testimonial-text">„Wir sind Silver-Kunden und für unsere Grösse absolut ausreichend. Support kommt immer vor 17 Uhr und das Problem wird gelöst."</div><div class="lp-testimonial-author">Andreas W.</div><div class="lp-testimonial-company">Werkstatt Weber · Silver-Kunde</div></div>
+      </div>
+
+      <div style="margin-top:50px;text-align:center;padding:40px;background:var(--lp-panel);border:1px solid var(--lp-line);border-radius:8px">
+        <div style="font-family:var(--lp-display);font-size:22px;font-weight:600;color:var(--lp-ink);margin-bottom:8px">Bereit durchzustarten?</div>
+        <div style="font-size:13px;color:var(--lp-ink-dim);margin-bottom:20px">Ohne Risiko starten — einmalige Anfrage oder SLA-Abo.</div>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <button class="lp-btn lp-btn-primary" onclick="showPage('home');setTimeout(()=>document.getElementById('lp-sla').scrollIntoView({behavior:'smooth'}),100)">SLA-Abonnements →</button>
+          <button class="lp-btn lp-btn-ghost" onclick="showGuestForm()">Einmalige Anfrage</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JOB APPLICATION MODAL -->
+  <div id="job-apply-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:600;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto">
+    <div style="background:#13151a;border:1px solid #2a2d35;border-radius:8px;width:500px;max-width:100%;overflow:hidden">
+      <div style="padding:18px 22px;border-bottom:1px solid #2a2d35;display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:10px;color:#3a3f4d;text-transform:uppercase;letter-spacing:.07em">ICT-Consulting AG</div>
+          <div style="font-size:15px;font-weight:600;color:#e2e4e9;margin-top:3px" id="job-apply-title">Bewerbung</div>
+        </div>
+        <button onclick="document.getElementById('job-apply-modal').style.display='none'" style="background:none;border:none;font-size:18px;color:#4a5060;cursor:pointer">×</button>
+      </div>
+      <div style="padding:20px 22px" id="job-apply-body">
+        <div class="fgg"><label>Vorname & Nachname *</label><input type="text" id="job-name" placeholder="Max Mustermann"></div>
+        <div class="fgg"><label>E-Mail *</label><input type="email" id="job-email" placeholder="max@email.ch"></div>
+        <div class="fgg"><label>Telefon</label><input type="text" id="job-phone" placeholder="+41 79 123 45 67"></div>
+        <div class="fgg"><label>Wohnort</label><input type="text" id="job-location" placeholder="Zürich"></div>
+        <div class="fgg"><label>Motivationsschreiben / Nachricht *</label><textarea id="job-message" placeholder="Warum möchten Sie bei uns arbeiten?" style="min-height:100px"></textarea></div>
+        <div style="font-size:11px;color:#4a5060;margin-bottom:14px">Lebenslauf bitte als PDF an: <strong style="color:#c9cdd6">jobs@ict-consulting.ch</strong> senden.</div>
+        <button onclick="submitJobApplication()" style="width:100%;padding:9px;background:#2d5a8e;color:#c5d8f0;border:1px solid #3a6a9e;border-radius:4px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">Bewerbung absenden →</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="lp-footer">
+    <div class="lp-wrap">
+      <div class="lp-footer-grid">
+        <div>
+          <div class="lp-footer-brand">ICT-Consulting AG</div>
+          <div class="lp-footer-meta">Professioneller IT-Support in Zürich.<br>SLA-Abonnements · Externe Anfragen · 3-Level-Support.<br><br>📧 support@ict-consulting.ch<br>📞 +41 44 123 45 00<br>📍 Zürich, Schweiz</div>
+        </div>
+        <div>
+          <div class="lp-footer-col-title">Leistungen</div>
+          <div class="lp-footer-col-links">
+            <a href="javascript:void(0)" onclick="showPage('services')">Externe Anfrage</a>
+            <a href="javascript:void(0)" onclick="showPage('home');setTimeout(()=>document.getElementById('lp-sla').scrollIntoView({behavior:'smooth'}),100)">Silver Abo</a>
+            <a href="javascript:void(0)" onclick="showPage('home');setTimeout(()=>document.getElementById('lp-sla').scrollIntoView({behavior:'smooth'}),100)">Gold Abo</a>
+            <a href="javascript:void(0)" onclick="showPage('home');setTimeout(()=>document.getElementById('lp-sla').scrollIntoView({behavior:'smooth'}),100)">Platinum Abo</a>
+          </div>
+        </div>
+        <div>
+          <div class="lp-footer-col-title">Unternehmen</div>
+          <div class="lp-footer-col-links">
+            <a href="javascript:void(0)" onclick="showPage('about')">Über uns</a>
+            <a href="javascript:void(0)" onclick="showPage('process')">Ablauf & Rechte</a>
+            <a href="javascript:void(0)" onclick="showPage('reviews')">Kundenstimmen</a>
+            <a href="javascript:void(0)" onclick="showPage('jobs')">Karriere</a>
+          </div>
+        </div>
+        <div>
+          <div class="lp-footer-col-title">Zugang</div>
+          <div class="lp-footer-col-links">
+            <a href="#lp-login">Kunden-Login</a>
+            <a href="javascript:void(0)" onclick="showGuestForm()">Externe Anfrage</a>
+            <a href="javascript:void(0)" onclick="showPage('process')">Datenschutz</a>
+            <a href="javascript:void(0)" onclick="showPage('process')">AGB</a>
+          </div>
+        </div>
+      </div>
+      <div class="lp-footer-bottom">
+        <div class="lp-footer-bottom-left">© 2026 ICT-Consulting AG · Modul 437 · TBZ Zürich · Klasse ICT 25b</div>
+        <div class="lp-footer-bottom-right">
+          <a href="javascript:void(0)" onclick="showPage('process')">Datenschutz</a>
+          <a href="javascript:void(0)" onclick="showPage('process')">AGB</a>
+          <a href="javascript:void(0)" onclick="showPage('process')">Impressum</a>
+        </div>
       </div>
     </div>
   </footer>
@@ -3203,6 +3549,42 @@ async function loadExternTickets(tab){
 // ============================================================
 let orderType='firma';
 let currentOrderPlan={name:'',price:''};
+
+// ============================================================
+// LANDING PAGE NAVIGATION
+// ============================================================
+function showPage(page){
+  document.querySelectorAll('.lp-subpage').forEach(p=>p.classList.remove('active'));
+  const el=document.getElementById('lp-page-'+page);
+  if(el){el.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+}
+function openMobileMenu(){document.getElementById('lp-mobile-menu').classList.add('open');}
+function closeMobileMenu(){document.getElementById('lp-mobile-menu').classList.remove('open');}
+function toggleAcc(btn){
+  const body=btn.nextElementSibling;
+  const isOpen=body.classList.contains('open');
+  btn.closest('.lp-accordion').querySelectorAll('.lp-acc-body').forEach(b=>b.classList.remove('open'));
+  btn.closest('.lp-accordion').querySelectorAll('.lp-acc-trigger').forEach(b=>b.classList.remove('open'));
+  if(!isOpen){body.classList.add('open');btn.classList.add('open');}
+}
+function openJobApply(title){
+  document.getElementById('job-apply-title').textContent=title;
+  ['job-name','job-email','job-phone','job-location','job-message'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('job-apply-modal').style.display='flex';
+}
+function submitJobApplication(){
+  const name=document.getElementById('job-name')?.value.trim();
+  const email=document.getElementById('job-email')?.value.trim();
+  const msg=document.getElementById('job-message')?.value.trim();
+  if(!name||!email||!msg){alert('Bitte Name, E-Mail und Nachricht ausfüllen.');return;}
+  document.getElementById('job-apply-body').innerHTML=`
+    <div style="text-align:center;padding:20px 0">
+      <div style="font-size:36px;margin-bottom:14px">🎉</div>
+      <div style="font-size:15px;font-weight:600;color:#e2e4e9;margin-bottom:8px">Bewerbung erhalten!</div>
+      <div style="font-size:12px;color:#7a8090;line-height:1.7">Vielen Dank, ${name}.<br>Wir melden uns in den nächsten Tagen bei Ihnen.</div>
+      <button onclick="document.getElementById('job-apply-modal').style.display='none'" style="margin-top:18px;padding:8px 20px;background:#2d5a8e;color:#c5d8f0;border:1px solid #3a6a9e;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit">Schliessen</button>
+    </div>`;
+}
 
 function openSlaOrder(planName,price){
   currentOrderPlan={name:planName,price};
