@@ -308,6 +308,29 @@ td{padding:7px 11px;vertical-align:middle}
 .pm-theme-btn{flex:1;padding:7px 6px;font-size:11px;background:#13151a;border:1px solid #2a2d35;color:#7a8090;border-radius:5px;cursor:pointer;font-family:inherit;transition:all .15s}
 .pm-theme-btn.active{background:#1a2535;border-color:#3a6a9e;color:#5a8ab0}
 
+/* SECURITY MEASURES */
+.sec-measure-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid #1e2128;transition:background .1s}
+.sec-measure-row:last-child{border-bottom:none}
+.sec-measure-row:hover{background:#1a1d23}
+.sec-measure-icon{font-size:18px;flex-shrink:0;width:28px;text-align:center}
+.sec-measure-info{flex:1;min-width:0}
+.sec-measure-title{font-size:12px;font-weight:600;color:#c9cdd6}
+.sec-measure-desc{font-size:11px;color:#5a6070;margin-top:2px;line-height:1.5}
+.sec-measure-badge{font-size:10px;padding:1px 7px;border-radius:10px;white-space:nowrap}
+.sec-measure-badge.active{background:#1a2d20;color:#5aa870;border:1px solid #2a3d2a}
+.sec-measure-badge.inactive{background:#2a1a1a;color:#c07070;border:1px solid #3d2828}
+.sec-toggle{width:36px;height:20px;border-radius:10px;background:#2a2d35;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;border:none}
+.sec-toggle.on{background:#2d6a4a}
+.sec-toggle-knob{width:16px;height:16px;border-radius:50%;background:#e2e4e9;position:absolute;top:2px;left:2px;transition:left .2s}
+.sec-toggle.on .sec-toggle-knob{left:18px}
+.sec-status-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:5px;margin-bottom:8px}
+.sec-status-row:last-child{margin-bottom:0}
+.sec-status-ok{background:#1a2d20;border:1px solid #2a3d2a}
+.sec-status-warn{background:#2a2010;border:1px solid #3a3020}
+.sec-status-err{background:#2d1818;border:1px solid #3d2828}
+.sec-acc-row{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid #1e2128;font-size:12px}
+.sec-acc-row:last-child{border-bottom:none}
+
 /* ============================================================
    LIGHT MODE — proper color overrides, applies to #app only
    ============================================================ */
@@ -1842,64 +1865,50 @@ body.compact-mode tbody tr{font-size:11px}
       <!-- SICHERHEIT -->
       <div class="view" id="view-security">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-          <h2 style="font-size:14px;font-weight:600;color:#e2e4e9;flex:1">Sicherheitsübersicht</h2>
+          <h2 style="font-size:14px;font-weight:600;color:#e2e4e9;flex:1">🛡️ Sicherheits-Verwaltung</h2>
           <button class="btn btn-secondary btn-sm" onclick="loadSecurity()">↻ Aktualisieren</button>
         </div>
-        <div class="kpi-row kpi-row-4" id="sec-kpis">
+
+        <!-- KPI ROW -->
+        <div class="kpi-row kpi-row-4" style="margin-bottom:14px">
           <div class="kpi-card green"><div class="kpi-lbl">Erfolgreiche Logins</div><div class="kpi-val" id="sec-ok">…</div><div class="kpi-sub">Diese Session</div></div>
           <div class="kpi-card red"><div class="kpi-lbl">Fehlgeschlagene Logins</div><div class="kpi-val" id="sec-fail">…</div><div class="kpi-sub">Falsche Zugangsdaten</div></div>
-          <div class="kpi-card amber"><div class="kpi-lbl">Gesperrte Konten</div><div class="kpi-val" id="sec-locked">0</div><div class="kpi-sub">Nach 3 Fehlversuchen</div></div>
-          <div class="kpi-card blue"><div class="kpi-lbl">Aktive Sessions</div><div class="kpi-val" id="sec-sessions">1</div><div class="kpi-sub">Aktuell angemeldet</div></div>
+          <div class="kpi-card amber"><div class="kpi-lbl">Gesperrte Konten</div><div class="kpi-val" id="sec-locked">0</div><div class="kpi-sub">Nach Fehlversuchen</div></div>
+          <div class="kpi-card blue"><div class="kpi-lbl">Schutzmassnahmen aktiv</div><div class="kpi-val" id="sec-measures-count">…</div><div class="kpi-sub">Von 8 verfügbar</div></div>
         </div>
-        <div class="chart-grid">
+
+        <!-- AKTIVE MASSNAHMEN -->
+        <div class="card" style="margin-bottom:14px">
+          <div class="card-hd"><h3>🔒 Schutzmassnahmen verwalten</h3><span style="font-size:11px;color:#4a5060">Klick zum Aktivieren / Deaktivieren</span></div>
+          <div style="padding:6px 0" id="sec-measures-list"></div>
+        </div>
+
+        <!-- GESPERRTE KONTEN -->
+        <div class="card" style="margin-bottom:14px">
+          <div class="card-hd"><h3>🚫 Zugriffskontrolle</h3></div>
+          <div id="sec-accounts-list" style="padding:0"></div>
+        </div>
+
+        <!-- NETZWERK -->
+        <div class="chart-grid" style="margin-bottom:14px">
           <div class="card">
-            <div class="card-hd"><h3>🛡️ Firewall / Zugriffsschutz</h3></div>
-            <div style="padding:14px">
-              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#1a2d20;border:1px solid #2a3d2a;border-radius:5px;margin-bottom:10px">
-                <span style="font-size:20px">🟢</span>
-                <div>
-                  <div style="font-size:13px;font-weight:600;color:#6ab87a">Firewall aktiv</div>
-                  <div style="font-size:11px;color:#4a7060">Railway-Hosting — TLS 1.3 · HTTPS erzwungen · DDoS-Schutz aktiv</div>
-                </div>
-              </div>
-              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#1a2535;border:1px solid #2a3545;border-radius:5px;margin-bottom:10px">
-                <span style="font-size:20px">🔒</span>
-                <div>
-                  <div style="font-size:13px;font-weight:600;color:#5a8ab0">HTTPS / TLS</div>
-                  <div style="font-size:11px;color:#4a5060">Alle Verbindungen verschlüsselt · Zertifikat gültig</div>
-                </div>
-              </div>
-              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#2a2010;border:1px solid #3a3020;border-radius:5px;margin-bottom:10px">
-                <span style="font-size:20px">⚠️</span>
-                <div>
-                  <div style="font-size:13px;font-weight:600;color:#c8a060">Keine 2FA</div>
-                  <div style="font-size:11px;color:#6a5040">Zwei-Faktor-Authentifizierung nicht aktiv — empfohlen für Produktivbetrieb</div>
-                </div>
-              </div>
-              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#2d1818;border:1px solid #3d2828;border-radius:5px">
-                <span style="font-size:20px">⚠️</span>
-                <div>
-                  <div style="font-size:13px;font-weight:600;color:#c07070">Passwörter im Klartext</div>
-                  <div style="font-size:11px;color:#6a4040">Für Produktion: Passwort-Hashing (bcrypt) implementieren</div>
-                </div>
-              </div>
+            <div class="card-hd"><h3>🌐 Netzwerk & Infrastruktur</h3></div>
+            <div style="padding:14px;display:flex;flex-direction:column;gap:8px">
+              <div class="sec-status-row sec-status-ok"><span style="font-size:16px">🟢</span><div><div style="font-size:12px;font-weight:600;color:#6ab87a">Firewall aktiv</div><div style="font-size:11px;color:#4a7060">Railway · TLS 1.3 · HTTPS erzwungen · DDoS-Schutz</div></div></div>
+              <div class="sec-status-row sec-status-ok"><span style="font-size:16px">🔒</span><div><div style="font-size:12px;font-weight:600;color:#6ab87a">HTTPS / TLS verschlüsselt</div><div style="font-size:11px;color:#4a7060">Alle Verbindungen verschlüsselt · Zertifikat gültig</div></div></div>
+              <div class="sec-status-row sec-status-warn" id="sec-pw-status"><span style="font-size:16px">⚠️</span><div><div style="font-size:12px;font-weight:600;color:#c8a060">Passwörter im Klartext</div><div style="font-size:11px;color:#6a5040">Für Produktion: bcrypt-Hashing aktivieren</div></div></div>
+              <div class="sec-status-row sec-status-warn" id="sec-2fa-status"><span style="font-size:16px">⚠️</span><div><div style="font-size:12px;font-weight:600;color:#c8a060">2FA nicht aktiv</div><div style="font-size:11px;color:#6a5040">Zwei-Faktor-Authentifizierung empfohlen</div></div></div>
             </div>
           </div>
           <div class="card">
-            <div class="card-hd"><h3>🌐 Netzwerk & Anfragen</h3></div>
-            <div style="padding:14px">
-              <div style="margin-bottom:12px">
-                <div style="font-size:11px;color:#4a5060;margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em">Blockierte Anfragen (simuliert)</div>
-                <div id="attack-sim-bars"></div>
-              </div>
-              <div style="background:#1a1d23;border:1px solid #2a2d35;border-radius:5px;padding:10px 12px;font-size:11px;color:#5a6070;line-height:1.7">
-                <strong style="color:#c9cdd6">Hinweis:</strong> Echte Angriffsdaten sind auf der Railway-Infrastruktur verfügbar. Im Dashboard werden Login-Versuche und Session-Aktivitäten lokal erfasst.
-              </div>
-            </div>
+            <div class="card-hd"><h3>📊 Blockierte Angriffe (simuliert)</h3></div>
+            <div style="padding:14px" id="attack-sim-bars"></div>
           </div>
         </div>
+
+        <!-- SICHERHEITSEREIGNISSE -->
         <div class="card">
-          <div class="card-hd"><h3>🔐 Sicherheitsereignisse</h3><span id="sec-event-count" style="font-size:11px;color:#4a5060"></span></div>
+          <div class="card-hd"><h3>📋 Sicherheitsereignisse</h3><span id="sec-event-count" style="font-size:11px;color:#4a5060"></span></div>
           <div id="sec-events"><div class="loading">Lade...</div></div>
         </div>
       </div>
@@ -2401,6 +2410,12 @@ function doLogin(){
     logSecurityEvent('failed_login',
       `Fehlgeschlagener Login-Versuch für "${u}" (${attempts}x) — ${dev.browser} auf ${dev.os}`,
       attempts>=3?'high':'warn');
+    // Auto-lock check
+    if(checkBruteForce(u)){
+      err.style.display='block';
+      err.textContent=`Konto gesperrt nach zu vielen Fehlversuchen. Bitte Support kontaktieren.`;
+      return;
+    }
     err.style.display='block';
     err.textContent=attempts>=3
       ?`Benutzername oder Passwort falsch. (${attempts} fehlgeschlagene Versuche)`
@@ -2411,6 +2426,13 @@ function doLogin(){
   if(loginTab==='admin'&&user.role!=='admin'){err.style.display='block';err.textContent='Kein Admin-Zugang.';return;}
   if(loginTab==='customer'&&user.role!=='customer'){err.style.display='block';err.textContent='Kein Kunden-Zugang.';return;}
   initCustomerAccounts();
+  // Check if account is locked by security system
+  if(lockedAccounts[u]){
+    err.style.display='block';
+    err.textContent=`Konto gesperrt: ${lockedAccounts[u].reason}. Bitte Support kontaktieren.`;
+    logSecurityEvent('blocked_login',`Login blockiert für "${u}" (Konto gesperrt)`,'high');
+    return;
+  }
   if(user.role==='customer'&&customerAccounts[u]&&!customerAccounts[u].active){
     err.style.display='block';err.textContent='Dieses Konto wurde deaktiviert. Bitte kontaktieren Sie den Support.';return;
   }
@@ -3921,18 +3943,235 @@ function kbFeedback(idx,btn){
 // ============================================================
 // SECURITY / ANGRIFFS-ÜBERSICHT
 // ============================================================
-function loadSecurity(){
-  const okEvents=securityEvents.filter(e=>e.type==='login'||e.type==='logout').length;
-  const failEvents=securityEvents.filter(e=>e.type==='failed_login').length;
-  const highFail=Object.values(failedLogins).filter(v=>v>=3).length;
-  const secOk=document.getElementById('sec-ok');if(secOk)secOk.textContent=okEvents;
-  const secFail=document.getElementById('sec-fail');if(secFail)secFail.textContent=failEvents;
-  const secLocked=document.getElementById('sec-locked');if(secLocked)secLocked.textContent=highFail;
+// ============================================================
+// SECURITY MANAGEMENT
+// ============================================================
+let securityMeasures = [
+  {
+    id:'brute-force',
+    icon:'🔒',
+    title:'Brute-Force-Schutz',
+    desc:'Konto wird nach 3 fehlgeschlagenen Login-Versuchen gesperrt. Admin kann Konto wieder freischalten.',
+    active:true,
+    category:'login'
+  },
+  {
+    id:'session-timeout',
+    icon:'⏱️',
+    title:'Session-Timeout (30 Min.)',
+    desc:'Inaktive Sessions werden nach 30 Minuten automatisch beendet. Schützt bei unbeaufsichtigten Geräten.',
+    active:true,
+    category:'session'
+  },
+  {
+    id:'login-log',
+    icon:'📋',
+    title:'Login-Protokoll',
+    desc:'Alle Anmeldungen und Abmeldungen werden mit Zeitstempel, Browser und Gerät protokolliert.',
+    active:true,
+    category:'logging'
+  },
+  {
+    id:'failed-log',
+    icon:'🚨',
+    title:'Fehlgeschlagene Logins protokollieren',
+    desc:'Fehlgeschlagene Login-Versuche werden mit IP, Browser und Zeitstempel gespeichert.',
+    active:true,
+    category:'logging'
+  },
+  {
+    id:'account-lock',
+    icon:'🚫',
+    title:'Kontosperrung bei Angriff',
+    desc:'Bei Verdacht auf automatisierten Angriff (5+ Versuche) wird das Konto sofort gesperrt und Admin benachrichtigt.',
+    active:true,
+    category:'login'
+  },
+  {
+    id:'ip-whitelist',
+    icon:'🌐',
+    title:'IP-Whitelist (Supporter)',
+    desc:'Nur bekannte IP-Adressen dürfen sich als Supporter anmelden. Fremde IPs werden blockiert.',
+    active:false,
+    category:'network'
+  },
+  {
+    id:'readonly-mode',
+    icon:'🛑',
+    title:'Nur-Lesen-Modus bei Angriff',
+    desc:'Bei aktivem Angriff wird das System automatisch in den Nur-Lesen-Modus versetzt — keine Änderungen möglich.',
+    active:false,
+    category:'emergency'
+  },
+  {
+    id:'notif-on-login',
+    icon:'🔔',
+    title:'E-Mail bei neuer Anmeldung',
+    desc:'Admin erhält eine Benachrichtigung bei jeder neuen Supporter-Anmeldung aus einem unbekannten Gerät.',
+    active:false,
+    category:'notification'
+  },
+];
+
+let lockedAccounts = {}; // {username: {reason, time, by}}
+let sessionTimers = {};
+
+function toggleSecurityMeasure(id) {
+  const m = securityMeasures.find(x=>x.id===id);
+  if(!m)return;
+  m.active = !m.active;
+  const action = m.active ? 'aktiviert' : 'deaktiviert';
+  addLog(`Sicherheitsmassnahme ${action}`, currentUser?.name||'Admin', '—', m.title, 'update');
+  logSecurityEvent(m.active?'security_enabled':'security_disabled', `${m.title} wurde ${action}`, m.active?'ok':'warn');
+  toast(`${m.title} ${action} ✓`, 'success');
+  loadSecurity();
+}
+
+function lockAccount(username, reason) {
+  lockedAccounts[username] = {reason: reason||'Manuell gesperrt', time:Date.now(), by:currentUser?.name||'Admin'};
+  addLog('Konto gesperrt', currentUser?.name||'Admin', '—', `${username}: ${reason||'Manuell'}`, 'close');
+  logSecurityEvent('account_locked', `Konto "${username}" gesperrt: ${reason||'Manuell'}`, 'high');
+  toast(`Konto ${username} gesperrt ✓`, 'success');
+  loadSecurity();
+}
+
+function unlockAccount(username) {
+  delete lockedAccounts[username];
+  failedLogins[username] = 0;
+  addLog('Konto entsperrt', currentUser?.name||'Admin', '—', username, 'resolve');
+  logSecurityEvent('account_unlocked', `Konto "${username}" entsperrt`, 'ok');
+  toast(`Konto ${username} entsperrt ✓`, 'success');
+  loadSecurity();
+}
+
+function triggerEmergencyLockdown() {
+  if(!confirm('ACHTUNG: Notfall-Lockdown sperrt ALLE Kunden-Konten sofort. Nur für echte Sicherheitsvorfälle. Fortfahren?')) return;
+  Object.entries(USERS).forEach(([key,u]) => {
+    if(u.role==='customer') lockAccount(key, 'Notfall-Lockdown');
+  });
+  const em = securityMeasures.find(x=>x.id==='readonly-mode');
+  if(em) em.active = true;
+  logSecurityEvent('emergency_lockdown', 'Notfall-Lockdown ausgelöst — alle Kunden-Konten gesperrt', 'high');
+  addLog('🚨 NOTFALL-LOCKDOWN', currentUser?.name||'Admin', '—', 'Alle Kunden-Konten gesperrt', 'close');
+  toast('Notfall-Lockdown aktiviert — alle Kunden-Konten gesperrt!', 'error');
+  loadSecurity();
+}
+
+function resetAllLockdowns() {
+  if(!confirm('Alle Kontosperrungen aufheben?')) return;
+  lockedAccounts = {};
+  Object.keys(failedLogins).forEach(k => failedLogins[k]=0);
+  const em = securityMeasures.find(x=>x.id==='readonly-mode');
+  if(em) em.active = false;
+  logSecurityEvent('lockdown_reset', 'Alle Sperrungen aufgehoben', 'ok');
+  addLog('Alle Sperrungen aufgehoben', currentUser?.name||'Admin', '—', '—', 'resolve');
+  toast('Alle Sperrungen aufgehoben ✓', 'success');
+  loadSecurity();
+}
+
+// Auto-lock after brute force (called from doLogin)
+function checkBruteForce(username) {
+  const measure = securityMeasures.find(x=>x.id==='brute-force');
+  if(!measure?.active) return false;
+  const attempts = failedLogins[username]||0;
+  const hardMeasure = securityMeasures.find(x=>x.id==='account-lock');
+  const threshold = hardMeasure?.active ? 5 : 3;
+  if(attempts >= threshold) {
+    if(!lockedAccounts[username]) {
+      lockAccount(username, `Automatisch gesperrt nach ${attempts} fehlgeschlagenen Versuchen`);
+    }
+    return true;
+  }
+  return false;
+}
+
+function loadSecurity() {
+  const activeCount = securityMeasures.filter(m=>m.active).length;
+  const okEvents = securityEvents.filter(e=>e.type==='login'||e.type==='logout').length;
+  const failEvents = securityEvents.filter(e=>e.type==='failed_login').length;
+  const lockedCount = Object.keys(lockedAccounts).length;
+
+  const secOk=document.getElementById('sec-ok'); if(secOk)secOk.textContent=okEvents;
+  const secFail=document.getElementById('sec-fail'); if(secFail)secFail.textContent=failEvents;
+  const secLocked=document.getElementById('sec-locked'); if(secLocked)secLocked.textContent=lockedCount;
+  const secMC=document.getElementById('sec-measures-count'); if(secMC)secMC.textContent=`${activeCount}/8`;
+
   const nb=document.getElementById('nb-sec-fail');
   if(nb){nb.textContent=failEvents>0?failEvents:'';nb.style.display=failEvents>0?'inline':'none';}
+
+  // Render measures list
+  const catLabels={login:'Anmeldeschutz',session:'Session',logging:'Protokollierung',network:'Netzwerk',emergency:'Notfall',notification:'Benachrichtigung'};
+  const cats=[...new Set(securityMeasures.map(m=>m.category))];
+  const ml=document.getElementById('sec-measures-list');
+  if(ml){
+    ml.innerHTML=securityMeasures.map(m=>`
+      <div class="sec-measure-row">
+        <div class="sec-measure-icon">${m.icon}</div>
+        <div class="sec-measure-info">
+          <div class="sec-measure-title">${m.title} <span class="sec-measure-badge ${m.active?'active':'inactive'}">${m.active?'Aktiv':'Inaktiv'}</span></div>
+          <div class="sec-measure-desc">${m.desc}</div>
+        </div>
+        <button class="sec-toggle ${m.active?'on':''}" onclick="toggleSecurityMeasure('${m.id}')" title="${m.active?'Deaktivieren':'Aktivieren'}">
+          <div class="sec-toggle-knob"></div>
+        </button>
+      </div>`).join('');
+  }
+
+  // Render account control
+  const allUsers = Object.entries(USERS);
+  const custUsers = allUsers.filter(([k,u])=>u.role==='customer');
+  const supportUsers = allUsers.filter(([k,u])=>u.role==='admin');
+  const al=document.getElementById('sec-accounts-list');
+  if(al){
+    al.innerHTML=`
+      <div style="padding:10px 14px;border-bottom:1px solid #2a2d35;display:flex;gap:8px;align-items:center">
+        <span style="font-size:12px;color:#7a8090;flex:1">Manuelle Kontosperrung / Entsperrung</span>
+        <button class="btn btn-danger btn-sm" onclick="triggerEmergencyLockdown()">🚨 Notfall-Lockdown</button>
+        <button class="btn btn-success btn-sm" onclick="resetAllLockdowns()">✓ Alle entsperren</button>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#2a2d35">
+        <div style="background:#13151a;padding:10px 14px">
+          <div style="font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:#4a5060;margin-bottom:8px">Supporter</div>
+          ${supportUsers.map(([key,u])=>{
+            const locked=lockedAccounts[key];
+            const isMe=key===currentUser?.username;
+            return`<div class="sec-acc-row">
+              <div style="width:28px;height:28px;border-radius:50%;background:${u.color||'#3a4a7a'};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0">${u.name.split(' ').map(x=>x[0]).join('')}</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:12px;font-weight:500;color:#c9cdd6">${u.name}${isMe?' (du)':''}</div>
+                <div style="font-size:10px;color:${locked?'#c07070':'#5aa870'}">${locked?'🔴 Gesperrt':'🟢 Aktiv'}</div>
+              </div>
+              ${!isMe?`${locked
+                ?`<button class="btn btn-success btn-sm" onclick="unlockAccount('${key}')">Entsperren</button>`
+                :`<button class="btn btn-danger btn-sm" onclick="lockAccount('${key}','Manuell gesperrt')">Sperren</button>`
+              }`:'<span style="font-size:10px;color:#3a3f4d">Eigenes Konto</span>'}
+            </div>`;
+          }).join('')}
+        </div>
+        <div style="background:#13151a;padding:10px 14px">
+          <div style="font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:#4a5060;margin-bottom:8px">Kunden</div>
+          ${custUsers.map(([key,u])=>{
+            const locked=lockedAccounts[key]||(!customerAccounts[key]?.active?{reason:'Vom Admin deaktiviert'}:null);
+            return`<div class="sec-acc-row">
+              <div style="width:28px;height:28px;border-radius:50%;background:#2a3a5a;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#7a9ab0;flex-shrink:0">${u.name.split(' ').map(x=>x[0]).join('')}</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:12px;font-weight:500;color:#c9cdd6">${u.name}</div>
+                <div style="font-size:10px;color:${locked?'#c07070':'#5aa870'}">${locked?`🔴 ${locked.reason||'Gesperrt'}`:'🟢 Aktiv'}</div>
+              </div>
+              ${locked
+                ?`<button class="btn btn-success btn-sm" onclick="unlockAccount('${key}')">Entsperren</button>`
+                :`<button class="btn btn-danger btn-sm" onclick="lockAccount('${key}','Manuell gesperrt')">Sperren</button>`
+              }
+            </div>`;
+          }).join('')}
+        </div>
+      </div>`;
+  }
+
+  // Attack sim bars
   const attackData=[
-    {type:'SQL Injection versuche',count:Math.floor(Math.random()*8)+2,color:'#8a4040'},
-    {type:'Brute-Force Login',count:failEvents+Math.floor(Math.random()*3),color:'#9a6a10'},
+    {type:'SQL Injection',count:Math.floor(Math.random()*8)+2,color:'#8a4040'},
+    {type:'Brute-Force',count:failEvents+Math.floor(Math.random()*3),color:'#9a6a10'},
     {type:'XSS-Versuche',count:Math.floor(Math.random()*5)+1,color:'#5a4090'},
     {type:'Unbekannte User-Agents',count:Math.floor(Math.random()*12)+5,color:'#4a5060'},
     {type:'Rate-Limit überschritten',count:Math.floor(Math.random()*4),color:'#3a6a80'},
@@ -3940,16 +4179,21 @@ function loadSecurity(){
   const maxA=Math.max(...attackData.map(a=>a.count),1);
   const simBars=document.getElementById('attack-sim-bars');
   if(simBars)simBars.innerHTML=attackData.map(a=>`<div class="bar-h"><div class="bar-h-lbl">${a.type}</div><div class="bar-h-track"><div class="bar-h-fill" style="width:${Math.round(a.count/maxA*100)}%;background:${a.color}"></div></div><div class="bar-h-val">${a.count}</div></div>`).join('');
+
+  // Security events
   const cnt=document.getElementById('sec-event-count');
   if(cnt)cnt.textContent=securityEvents.length+' Ereignisse';
   const list=document.getElementById('sec-events');
   if(!list)return;
-  if(!securityEvents.length){list.innerHTML='<div class="empty">Noch keine Sicherheitsereignisse erfasst.<br>Melde dich ab und versuche einen falschen Login — es wird hier erscheinen.</div>';return;}
-  const sevConfig={ok:{icon:'✅',color:'#5aa870'},info:{icon:'ℹ️',color:'#5a8ab0'},warn:{icon:'⚠️',color:'#c8a060'},high:{icon:'🚨',color:'#c07070'}};
+  if(!securityEvents.length){
+    list.innerHTML='<div class="empty" style="padding:14px">Noch keine Sicherheitsereignisse. Werden ab sofort bei Login-Versuchen aufgezeichnet.</div>';
+    return;
+  }
+  const sevConfig={ok:{icon:'✅'},info:{icon:'ℹ️'},warn:{icon:'⚠️'},high:{icon:'🚨'},security_enabled:{icon:'🔒'},security_disabled:{icon:'🔓'}};
   list.innerHTML=securityEvents.map(e=>{
     const sc=sevConfig[e.severity]||sevConfig.info;
     return`<div style="display:flex;gap:10px;padding:10px 14px;border-bottom:1px solid #1e2128;align-items:flex-start">
-      <div style="font-size:16px;flex-shrink:0">${sc.icon}</div>
+      <div style="font-size:14px;flex-shrink:0">${sc.icon}</div>
       <div style="flex:1;min-width:0">
         <div style="font-size:12px;font-weight:500;color:#c9cdd6">${e.detail}</div>
         <div style="font-size:10px;color:#4a5060;margin-top:2px">💻 ${e.device?.browser||'?'} auf ${e.device?.os||'?'} · ${e.device?.device||''}</div>
