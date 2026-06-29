@@ -677,9 +677,9 @@ body.compact-mode tbody tr{font-size:11px}
     <div class="lp-wrap lp-nav-inner">
       <div class="lp-brand"><span class="lp-brand-mark"></span>ICT-Consulting AG</div>
       <div class="lp-nav-links">
-        <a href="#lp-produkt">Produkt</a>
-        <a href="#lp-rollen">Für wen</a>
-        <a href="#lp-sla">SLA-Modelle</a>
+        <a href="#lp-extern">Ohne Abo</a>
+        <a href="#lp-sla">SLA-Abonnements</a>
+        <a href="#lp-vorteile">Kunden-Vorteile</a>
         <a href="#lp-login">Anmelden</a>
       </div>
       <a href="#lp-login" class="lp-btn lp-btn-primary">Anmelden →</a>
@@ -688,12 +688,12 @@ body.compact-mode tbody tr{font-size:11px}
 
   <header class="lp-hero">
     <div class="lp-wrap">
-      <div class="lp-eyebrow">Gebaut für ICT-Consulting AG · Modul 437</div>
-      <h1 class="lp-h1">Ein Helpdesk, der<br>weiss, <em>wer gerade<br>antworten muss.</em></h1>
-      <p class="lp-hero-sub">Tickets landen in der richtigen Inbox, nicht in einer gemeinsamen Liste, die niemand prüft. 1st-, 2nd- und 3rd-Level-Eskalation, SLA-Verträge und Verrechnung für externe Anfragen — in einem System.</p>
+      <div class="lp-eyebrow">IT-Support · ICT-Consulting AG</div>
+      <h1 class="lp-h1">IT-Support,<br>wenn Sie ihn <em>brauchen.</em></h1>
+      <p class="lp-hero-sub">Einmalige Anfrage ohne Abo — oder garantierte Reaktionszeiten mit SLA-Vertrag. Sie wählen, was zu Ihnen passt.</p>
       <div class="lp-hero-actions">
-        <a href="#lp-login" class="lp-btn lp-btn-primary">Jetzt anmelden →</a>
-        <a href="#lp-produkt" class="lp-btn lp-btn-ghost">Wie es funktioniert</a>
+        <a href="#lp-sla" class="lp-btn lp-btn-primary">SLA-Abonnements →</a>
+        <button onclick="showGuestForm()" class="lp-btn lp-btn-ghost">Einmalige Anfrage</button>
       </div>
 
       <div class="lp-demo-frame">
@@ -751,141 +751,148 @@ body.compact-mode tbody tr{font-size:11px}
     </div>
   </div>
 
-  <section id="lp-produkt" class="lp-section">
+  <!-- OHNE ABO -->
+  <section id="lp-extern" class="lp-section">
     <div class="lp-wrap">
-      <div class="lp-eyebrow">Wie es funktioniert</div>
-      <h2 class="lp-section-title">Vier Prinzipien, die jeder Helpdesk braucht und die meisten vergessen.</h2>
-      <p class="lp-section-sub">Kein generisches Ticket-Board. Jede Funktion entstand aus einem konkreten Problem im Support-Alltag.</p>
+      <div class="lp-eyebrow">Ohne Abo</div>
+      <h2 class="lp-section-title">Einmalige Anfrage —<br>keine Verpflichtung.</h2>
+      <p class="lp-section-sub">Sie brauchen einmalig IT-Unterstützung, ohne einen laufenden Vertrag abschliessen zu wollen? Kein Problem — Sie reichen Ihre Anfrage direkt ein, wir bearbeiten sie und verrechnen den Aufwand transparent nach effektivem Zeit- und Materialaufwand.</p>
 
-      <div class="lp-feature-list">
-        <div class="lp-feature-row">
-          <div class="lp-feature-num">01</div>
-          <div class="lp-feature-name">Persönliche Inbox</div>
-          <div>
-            <div class="lp-feature-desc">Jeder Supporter sieht nur, was ihm zugewiesen ist. Ein blau leuchtender Rand markiert Tickets, die auf Antwort warten.</div>
-            <div class="lp-feature-tag">Echtzeit-Indikator</div>
+      <div style="margin-top:50px;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--lp-line);border:1px solid var(--lp-line);border-radius:6px;overflow:hidden">
+        <div style="background:var(--lp-paper);padding:32px 28px">
+          <div style="font-size:28px;margin-bottom:16px">📧</div>
+          <div style="font-family:var(--lp-display);font-size:18px;font-weight:600;color:var(--lp-ink);margin-bottom:10px">So funktioniert es</div>
+          <div style="font-size:13px;color:var(--lp-ink-dim);line-height:1.8">
+            1. Anfrage einreichen — Name, E-Mail, Telefon<br>
+            2. Problem beschreiben<br>
+            3. Sie erhalten eine Ticket-ID zur Nachverfolgung<br>
+            4. Unser Team meldet sich bei Ihnen<br>
+            5. Nach Erledigung erhalten Sie eine Rechnung
           </div>
         </div>
-        <div class="lp-feature-row">
-          <div class="lp-feature-num">02</div>
-          <div class="lp-feature-name">Eskalation mit Gedächtnis</div>
-          <div>
-            <div class="lp-feature-desc">1st Level → 2nd Level → 3rd Level extern. Jede Weiterleitung wird protokolliert, mit Zeitstempel und Begründung.</div>
-            <div class="lp-feature-tag">Vollständiger Verlauf</div>
+        <div style="background:var(--lp-panel);padding:32px 28px">
+          <div style="font-size:28px;margin-bottom:16px">💰</div>
+          <div style="font-family:var(--lp-display);font-size:18px;font-weight:600;color:var(--lp-ink);margin-bottom:10px">Verrechnung nach Aufwand</div>
+          <div style="font-size:13px;color:var(--lp-ink-dim);line-height:1.8">
+            Kein Fixpreis, keine Überraschungen. Sie erhalten vor Beginn eine Einschätzung des Aufwands und stimmen zu, bevor wir starten. Abgerechnet wird nur, was tatsächlich geleistet wurde.
           </div>
-        </div>
-        <div class="lp-feature-row">
-          <div class="lp-feature-num">03</div>
-          <div class="lp-feature-name">Gäste ohne Account</div>
-          <div>
-            <div class="lp-feature-desc">Externe Anfragen ohne SLA-Vertrag laufen über ein eigenes Formular — landet automatisch im Bereich "Externe Tickets".</div>
-            <div class="lp-feature-tag">Kein Login nötig</div>
-          </div>
-        </div>
-        <div class="lp-feature-row">
-          <div class="lp-feature-num">04</div>
-          <div class="lp-feature-name">Bearbeiten mit Absicht</div>
-          <div>
-            <div class="lp-feature-desc">Felder sind gesperrt, bis "Bearbeiten" aktiv geklickt wird. Änderungen erst nach explizitem Speichern.</div>
-            <div class="lp-feature-tag">Kein versehentliches Ändern</div>
-          </div>
+          <button class="lp-btn lp-btn-primary" style="margin-top:20px" onclick="showGuestForm()">Anfrage einreichen →</button>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="lp-rollen" class="lp-section" style="background:var(--lp-panel);border-top:1px solid var(--lp-line);border-bottom:1px solid var(--lp-line)">
+  <!-- MIT ABO -->
+  <section id="lp-sla" class="lp-section" style="background:var(--lp-panel);border-top:1px solid var(--lp-line);border-bottom:1px solid var(--lp-line)">
     <div class="lp-wrap">
-      <div class="lp-eyebrow">Drei Blickwinkel</div>
-      <h2 class="lp-section-title">Ein System, drei vollständig unterschiedliche Ansichten.</h2>
+      <div class="lp-eyebrow">Mit SLA-Abo</div>
+      <h2 class="lp-section-title">Planbare IT-Kosten.<br>Garantierte Reaktionszeiten.</h2>
+      <p class="lp-section-sub">Mit einem SLA-Abonnement erhalten Sie einen eigenen Kunden-Account, priorisierte Bearbeitung und garantierte Reaktionszeiten — für mehr Sicherheit im Alltag.</p>
 
-      <div class="lp-persona-grid">
-        <div class="lp-persona-card">
-          <div class="lp-persona-icon">⚙️</div>
-          <div class="lp-persona-title">Administrator</div>
-          <div class="lp-persona-desc">Vollständige Kontrolle über Inbox, Statistiken, Benutzerverwaltung und System-Logs.</div>
-        </div>
-        <div class="lp-persona-card">
-          <div class="lp-persona-icon">🏢</div>
-          <div class="lp-persona-title">SLA-Kunde</div>
-          <div class="lp-persona-desc">Eigener Account, eigener Vertrag. Sieht nur die eigenen Tickets, kein Zugriff auf Verwaltung.</div>
-        </div>
-        <div class="lp-persona-card">
-          <div class="lp-persona-icon">👤</div>
-          <div class="lp-persona-title">Gast / Extern</div>
-          <div class="lp-persona-desc">Kein Account nötig. Kontaktdaten reichen, Ticket-ID kommt sofort, Verrechnung nach Aufwand.</div>
-        </div>
-      </div>
-    </div>
-  </section>
+      <div style="margin-top:40px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
 
-  <section id="lp-sla" class="lp-section">
-    <div class="lp-wrap">
-      <div class="lp-eyebrow">Servicequalität & Preise</div>
-      <h2 class="lp-section-title">Drei SLA-Stufen, exakt nach Vertrag konfiguriert.</h2>
-      <p class="lp-section-sub">Alle Preise pro Monat, exkl. MwSt. Mindestlaufzeit 12 Monate.</p>
-
-      <div class="lp-pricing-grid">
+        <!-- Silver -->
         <div class="lp-price-card">
           <div class="lp-price-tier">Silver</div>
           <div class="lp-price-amount">CHF 290<span>/Mt.</span></div>
-          <div class="lp-price-desc">Basis-Betreuung während der Geschäftszeiten.</div>
+          <div class="lp-price-desc">Zuverlässige IT-Betreuung während der Geschäftszeiten.</div>
           <div class="lp-price-divider"></div>
-          <div class="lp-price-feat">✓ Mo–Fr, 08–17 Uhr</div>
-          <div class="lp-price-feat">✓ Reaktionszeit 4 Stunden</div>
-          <div class="lp-price-feat">✓ 95 % Verfügbarkeit</div>
-          <div class="lp-price-feat">✓ Monatliche Wartung</div>
+          <div style="font-size:12px;color:var(--lp-ink-dim);margin-bottom:6px;font-weight:600">Was Sie bekommen:</div>
+          <div class="lp-price-feat">✓ Eigener Kunden-Account</div>
+          <div class="lp-price-feat">✓ Eigenes Ticket-Portal</div>
+          <div class="lp-price-feat">✓ Reaktion innerhalb 4 Stunden</div>
+          <div class="lp-price-feat">✓ Betreuung Mo–Fr, 08–17 Uhr</div>
+          <div class="lp-price-feat">✓ 95% Verfügbarkeitsgarantie</div>
+          <div class="lp-price-feat">✓ Fixer Monatspreis — keine Überraschungen</div>
           <button class="lp-btn lp-btn-ghost" style="width:100%;justify-content:center;margin-top:20px" onclick="openSlaOrder('Silver','290')">Silver abonnieren</button>
         </div>
+
+        <!-- Gold -->
         <div class="lp-price-card lp-price-featured">
           <div class="lp-price-badge">Empfohlen</div>
           <div class="lp-price-tier">Gold</div>
           <div class="lp-price-amount">CHF 690<span>/Mt.</span></div>
-          <div class="lp-price-desc">Pikett-Bereitschaft und fester Ansprechpartner.</div>
+          <div class="lp-price-desc">Mehr Verfügbarkeit, schnellere Reaktion, persönlicher Ansprechpartner.</div>
           <div class="lp-price-divider"></div>
-          <div class="lp-price-feat">✓ Mo–Fr, 07–20 Uhr</div>
-          <div class="lp-price-feat">✓ Reaktionszeit 1 Stunde</div>
-          <div class="lp-price-feat">✓ 99 % Verfügbarkeit</div>
-          <div class="lp-price-feat">✓ Fester Ansprechpartner</div>
-          <div class="lp-price-feat">✓ Monatlicher Bericht</div>
+          <div style="font-size:12px;color:var(--lp-ink-dim);margin-bottom:6px;font-weight:600">Alles aus Silver, plus:</div>
+          <div class="lp-price-feat">✓ Reaktion innerhalb 1 Stunde</div>
+          <div class="lp-price-feat">✓ Betreuung Mo–Fr, 07–20 Uhr</div>
+          <div class="lp-price-feat">✓ 99% Verfügbarkeitsgarantie</div>
+          <div class="lp-price-feat">✓ Fester persönlicher Ansprechpartner</div>
+          <div class="lp-price-feat">✓ Pikett-Bereitschaft abends & Wochenende</div>
+          <div class="lp-price-feat">✓ Monatlicher Status-Bericht</div>
           <button class="lp-btn lp-btn-primary" style="width:100%;justify-content:center;margin-top:20px" onclick="openSlaOrder('Gold','690')">Gold abonnieren</button>
         </div>
+
+        <!-- Platinum -->
         <div class="lp-price-card">
           <div class="lp-price-tier">Platinum</div>
           <div class="lp-price-amount">CHF 1490<span>/Mt.</span></div>
-          <div class="lp-price-desc">24/7 Premium-Service mit Senior TAM.</div>
+          <div class="lp-price-desc">Maximale Verfügbarkeit rund um die Uhr, 365 Tage im Jahr.</div>
           <div class="lp-price-divider"></div>
-          <div class="lp-price-feat">✓ 24/7, 365 Tage</div>
-          <div class="lp-price-feat">✓ Reaktionszeit 30 Minuten</div>
-          <div class="lp-price-feat">✓ 99.9 % Verfügbarkeit</div>
+          <div style="font-size:12px;color:var(--lp-ink-dim);margin-bottom:6px;font-weight:600">Alles aus Gold, plus:</div>
+          <div class="lp-price-feat">✓ Reaktion innerhalb 30 Minuten</div>
+          <div class="lp-price-feat">✓ 24/7 Support, 365 Tage</div>
+          <div class="lp-price-feat">✓ 99.9% Verfügbarkeitsgarantie</div>
           <div class="lp-price-feat">✓ Senior Technical Account Manager</div>
+          <div class="lp-price-feat">✓ 24/7 Pikett-Bereitschaft</div>
           <div class="lp-price-feat">✓ Detaillierter Monatsbericht</div>
           <button class="lp-btn lp-btn-ghost" style="width:100%;justify-content:center;margin-top:20px" onclick="openSlaOrder('Platinum','1490')">Platinum abonnieren</button>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;padding:14px 18px;background:var(--lp-paper);border:1px solid var(--lp-line);border-radius:5px;font-size:12px;color:var(--lp-ink-faint)">
+        Alle Preise exkl. MwSt. · Mindestlaufzeit 12 Monate · Kündigung 3 Monate vor Ablauf · Preisanpassungen 1× jährlich
+      </div>
+    </div>
+  </section>
+
+  <!-- KUNDEN-VORTEILE -->
+  <section id="lp-vorteile" class="lp-section">
+    <div class="lp-wrap">
+      <div class="lp-eyebrow">Ihr Kunden-Account</div>
+      <h2 class="lp-section-title">Was Sie als SLA-Kunde erhalten.</h2>
+
+      <div style="margin-top:50px;display:grid;grid-template-columns:repeat(2,1fr);gap:14px">
+        <div style="background:var(--lp-panel);border:1px solid var(--lp-line);border-radius:8px;padding:26px 24px">
+          <div style="font-size:24px;margin-bottom:12px">🎫</div>
+          <div style="font-family:var(--lp-display);font-size:16px;font-weight:600;color:var(--lp-ink);margin-bottom:8px">Eigenes Ticket-Portal</div>
+          <div style="font-size:13px;color:var(--lp-ink-dim);line-height:1.7">Reichen Sie Anfragen jederzeit online ein und verfolgen Sie den Status in Echtzeit — ohne Telefon oder E-Mail.</div>
+        </div>
+        <div style="background:var(--lp-panel);border:1px solid var(--lp-line);border-radius:8px;padding:26px 24px">
+          <div style="font-size:24px;margin-bottom:12px">📊</div>
+          <div style="font-family:var(--lp-display);font-size:16px;font-weight:600;color:var(--lp-ink);margin-bottom:8px">Transparente Übersicht</div>
+          <div style="font-size:13px;color:var(--lp-ink-dim);line-height:1.7">Sehen Sie alle Ihre Tickets, deren Status und die Reaktionszeiten — jederzeit und von überall.</div>
+        </div>
+        <div style="background:var(--lp-panel);border:1px solid var(--lp-line);border-radius:8px;padding:26px 24px">
+          <div style="font-size:24px;margin-bottom:12px">⚡</div>
+          <div style="font-family:var(--lp-display);font-size:16px;font-weight:600;color:var(--lp-ink);margin-bottom:8px">Priorisierte Bearbeitung</div>
+          <div style="font-size:13px;color:var(--lp-ink-dim);line-height:1.7">Ihre Anfragen werden gegenüber externen Einzel-Anfragen bevorzugt bearbeitet — garantiert innerhalb Ihrer SLA-Reaktionszeit.</div>
+        </div>
+        <div style="background:var(--lp-panel);border:1px solid var(--lp-line);border-radius:8px;padding:26px 24px">
+          <div style="font-size:24px;margin-bottom:12px">💡</div>
+          <div style="font-family:var(--lp-display);font-size:16px;font-weight:600;color:var(--lp-ink);margin-bottom:8px">Selbsthilfe-Portal</div>
+          <div style="font-size:13px;color:var(--lp-ink-dim);line-height:1.7">Zugang zu häufigen Lösungen, Anleitungen und einem KI-Assistenten — lösen Sie einfache Probleme direkt selbst.</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- AUSZUBILDENDE / LEHRLINGE -->
+  <!-- TEAM -->
   <section id="lp-team" class="lp-section" style="background:var(--lp-panel);border-top:1px solid var(--lp-line);border-bottom:1px solid var(--lp-line)">
     <div class="lp-wrap">
       <div class="lp-eyebrow">Unser Team</div>
-      <h2 class="lp-section-title">Die Lernenden hinter dem Projekt.</h2>
-      <p class="lp-section-sub">Modul 437 wurde im Rahmen der ICT-Ausbildung an der TBZ Zürich umgesetzt.</p>
-
-      <div class="lp-team-grid">
+      <h2 class="lp-section-title">ICT-Consulting AG — Zürich.</h2>
+      <p class="lp-section-sub">Lernende der Klasse ICT 25b, TBZ Zürich. Modul 437.</p>
+      <div class="lp-team-grid" style="margin-top:40px">
         <div class="lp-team-card">
-          <div class="lp-team-photo">
-            <div class="lp-team-photo-fallback">NM</div>
-          </div>
+          <div class="lp-team-photo"><div class="lp-team-photo-fallback">NM</div></div>
           <div class="lp-team-name">Nils Müller</div>
           <div class="lp-team-role">CIO / Projektleiter</div>
           <div class="lp-team-class">Klasse ICT 25b</div>
         </div>
         <div class="lp-team-card">
-          <div class="lp-team-photo">
-            <div class="lp-team-photo-fallback">LF</div>
-          </div>
+          <div class="lp-team-photo"><div class="lp-team-photo-fallback">LF</div></div>
           <div class="lp-team-name">Levi Frischknecht</div>
           <div class="lp-team-role">Stv. IT-Leiter</div>
           <div class="lp-team-class">Klasse ICT 25b</div>
@@ -1651,20 +1658,21 @@ body.compact-mode tbody tr{font-size:11px}
           <div style="margin-bottom:12px;display:flex;align-items:center;gap:10px">
             <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#4a3a8a,#2a5a8e);display:flex;align-items:center;justify-content:center;font-size:16px">✨</div>
             <div>
-              <div style="font-size:13px;font-weight:600;color:#e2e4e9">Claude KI-Assistent</div>
-              <div style="font-size:11px;color:#4a5060">Fragen zum Ticketsystem, Analysen, Hilfe beim Verfassen von Antworten</div>
+              <div style="font-size:13px;font-weight:600;color:#e2e4e9">Helpdesk KI-Assistent</div>
+              <div style="font-size:11px;color:#4a5060">Basiert auf eurer Wissensdatenbank · Kostenlos</div>
             </div>
           </div>
           <div id="ai-messages" style="flex:1;overflow-y:auto;background:#13151a;border:1px solid #2a2d35;border-radius:6px;padding:14px;margin-bottom:10px;display:flex;flex-direction:column;gap:10px">
             <div style="display:flex;gap:8px;align-items:flex-start">
               <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#4a3a8a,#2a5a8e);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0">✨</div>
               <div style="background:#1e2128;border-radius:6px;padding:9px 12px;font-size:13px;color:#c9cdd6;max-width:85%;line-height:1.5">
-                Hallo! Ich bin Claude, der KI-Assistent des ICT Helpdesk Ticketsystems.<br><br>
+                Hallo! Ich bin der Helpdesk KI-Assistent der ICT-Consulting AG.<br><br>
                 Ich kann Ihnen helfen bei:<br>
-                • <strong>Ticket-Antworten</strong> formulieren<br>
-                • <strong>Analysen</strong> der aktuellen Ticket-Situation<br>
-                • <strong>SLA-Fragen</strong> beantworten<br>
-                • <strong>Allgemeinen IT-Support-Fragen</strong>
+                • <strong>Passwort</strong> zurücksetzen<br>
+                • <strong>VPN</strong>-Verbindungsprobleme<br>
+                • <strong>SLA</strong>-Informationen<br>
+                • <strong>Wissensdatenbank</strong>-Suche<br>
+                • <strong>Ticket-Analysen</strong> (für Supporter)
               </div>
             </div>
           </div>
@@ -3832,13 +3840,12 @@ function getKnowledgeContext(userRole){
 }
 
 // ============================================================
-// CLAUDE AI ASSISTANT
+// HELPDESK KI-ASSISTENT (kostenlos — Wissensdatenbank-basiert)
 // ============================================================
 let aiMessages=[];
 let aiLoading=false;
 
 function initAI(){
-  if(aiMessages.length>0)return;
   aiMessages=[];
 }
 
@@ -3859,45 +3866,114 @@ async function sendAI(){
   addAIMessage(msg,'user');
   const typingId='typing-'+Date.now();
   addAITyping(typingId);
+
+  // Simulate thinking delay
+  await new Promise(r=>setTimeout(r,600+Math.random()*400));
+  removeAITyping(typingId);
+
   try{
-    const tickets=await api('/api/tickets');
-    const stats=await api('/api/stats');
-    const isAdmin=currentUser?.role==='admin';
-    const knowledgeCtx=getKnowledgeContext(currentUser?.role||'customer');
-    const context=`Du bist der interne KI-Assistent des Helpdesk-Ticketsystems der ICT-Consulting AG (Zürich).
-Benutzer: ${currentUser?.name||'Benutzer'} (${isAdmin?'Supporter':'Kunde · SLA '+currentUser?.sla})
-${isAdmin?`Tickets: ${stats.total} total, ${stats.open} offen, ${stats.critical} kritisch. Letzte: ${tickets.slice(0,4).map(t=>`${t.id}:${t.title}(${t.status})`).join(', ')}`:''}${knowledgeCtx}
-Regeln: Antworte auf Deutsch, professionell. Nutze Wissensdatenbank als Hauptquelle. Schrittweise Anleitungen nummerieren. Bei unbekannten Themen ehrlich sagen.`;
-    const response=await fetch('/api/ai',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-6',
-        max_tokens:1000,
-        system:context,
-        messages:[...aiMessages.filter(m=>m.role).map(m=>({role:m.role,content:m.content})),{role:'user',content:msg}]
-      })
-    });
-    const data=await response.json();
-    removeAITyping(typingId);
-    if(data.error){
-      const errMsg=data.error==='Parse error'||data.error?.includes?.('auth')
-        ?'KI nicht verfügbar — API-Key fehlt auf dem Server. Bitte in Railway unter Variables "ANTHROPIC_API_KEY" setzen.'
-        :'Fehler: '+data.error;
-      addAIMessage(errMsg,'assistant');
-      return;
-    }
-    const reply=data.content?.[0]?.text||'Entschuldigung, keine Antwort verfügbar.';
+    const reply=await generateLocalReply(msg);
     addAIMessage(reply,'assistant');
     aiMessages.push({role:'user',content:msg},{role:'assistant',content:reply});
     if(aiMessages.length>20)aiMessages=aiMessages.slice(-20);
   }catch(e){
-    removeAITyping(typingId);
-    addAIMessage('Verbindungsfehler. Bitte erneut versuchen.','assistant');
+    addAIMessage('Fehler bei der Verarbeitung. Bitte erneut versuchen.','assistant');
   }
   aiLoading=false;
   if(sendBtn)sendBtn.disabled=false;
 }
+
+async function generateLocalReply(msg){
+  const q=msg.toLowerCase();
+  const isAdmin=currentUser?.role==='admin';
+  const userRole=currentUser?.role||'customer';
+
+  // 1. Search knowledge base
+  const relevant=knowledgeBase.filter(e=>{
+    if(e.audience==='admin'&&userRole!=='admin')return false;
+    if(e.audience==='customer'&&userRole==='admin')return false; // admins see all
+    const searchText=(e.title+' '+e.content+' '+e.tags).toLowerCase();
+    const words=q.split(/\s+/).filter(w=>w.length>2);
+    return words.some(w=>searchText.includes(w));
+  });
+
+  // 2. Check for ticket queries (admin only)
+  if(isAdmin){
+    const tickets=await api('/api/tickets');
+    const stats=await api('/api/stats');
+
+    if(q.includes('offen')||q.includes('offene')||q.includes('wie viele')){
+      const open=tickets.filter(t=>t.status==='Offen'||t.status==='In Bearbeitung');
+      return`📊 **Aktuelle Ticket-Übersicht:**\n\n• Offen: **${stats.open}** Tickets\n• In Bearbeitung: **${stats.inProgress}** Tickets\n• Gelöst: **${stats.resolved}** Tickets\n• Kritisch offen: **${stats.critical}** Tickets\n• Total: **${stats.total}** Tickets`;
+    }
+
+    if(q.includes('kritisch')||q.includes('priorität')||q.includes('dringend')){
+      const crit=tickets.filter(t=>t.priority==='Critical'&&t.status!=='Geschlossen');
+      if(!crit.length)return'✅ Aktuell keine kritischen offenen Tickets.';
+      return`🚨 **Kritische Tickets (${crit.length}):**\n\n`+crit.map(t=>`• **${t.id}** — ${t.title} (${t.status}, ${t.assign})`).join('\n');
+    }
+
+    if(q.includes('analyse')||q.includes('übersicht')||q.includes('zusammenfassung')){
+      const open=tickets.filter(t=>t.status==='Offen');
+      const inProg=tickets.filter(t=>t.status==='In Bearbeitung');
+      const crit=tickets.filter(t=>t.priority==='Critical'&&t.status!=='Geschlossen');
+      return`📋 **Ticket-Analyse:**\n\n**Status:**\n• ${open.length} Tickets warten auf Bearbeitung\n• ${inProg.length} Tickets in Bearbeitung\n• ${crit.length} kritische Tickets\n\n**Älteste offene Tickets:**\n${open.slice(0,3).map(t=>`• ${t.id}: ${t.title} (${t.sla} SLA)`).join('\n')||'Keine'}`;
+    }
+
+    if(q.includes('ticket')){
+      const recent=tickets.slice(0,5);
+      return`🎫 **Letzte 5 Tickets:**\n\n`+recent.map(t=>`• **${t.id}** — ${t.title}\n  ${t.status} · ${t.priority} · ${t.assign}`).join('\n\n');
+    }
+  }
+
+  // 3. SLA queries
+  if(q.includes('sla')||q.includes('reaktionszeit')||q.includes('verfügbarkeit')){
+    const slaInfo=`📋 **SLA-Übersicht:**\n\n**Silver** (CHF 290/Mt.)\n• Mo–Fr 08–17 Uhr · Reaktion: 4h · Verfügbarkeit: 95%\n\n**Gold** (CHF 690/Mt.)\n• Mo–Fr 07–20 Uhr · Reaktion: 1h · Verfügbarkeit: 99%\n\n**Platinum** (CHF 1490/Mt.)\n• 24/7 · Reaktion: 30 Min · Verfügbarkeit: 99.9%`;
+    if(relevant.length>0){
+      return slaInfo+'\n\n'+relevant[0].content;
+    }
+    return slaInfo;
+  }
+
+  // 4. Passwort
+  if(q.includes('passwort')||q.includes('password')||q.includes('login')||q.includes('anmeld')){
+    return`🔑 **Passwort-Hilfe:**\n\n**Passwort vergessen:**\n1. Windows-Anmeldemaske öffnen\n2. "Passwort vergessen" klicken\n3. Benutzernamen eingeben\n4. Anweisungen folgen\n\noder: Support-Ticket erstellen → 1st Level setzt es zurück.\n\n**Passwort-Anforderungen:** Min. 8 Zeichen, Gross/Kleinbuchstaben, Zahl, alle 90 Tage ändern.`;
+  }
+
+  // 5. VPN
+  if(q.includes('vpn')||q.includes('verbindung')||q.includes('netzwerk')||q.includes('network')){
+    return`🌐 **VPN-Hilfe:**\n\n**VPN funktioniert nicht?**\n1. Internetverbindung prüfen\n2. VPN-Client neu starten\n3. Server: vpn.ict-consulting.ch\n4. Firewall: Port 500/4500 prüfen\n5. VPN-Client aktualisieren\n\nWeiterhin Probleme? → Ticket erstellen, 2nd Level Network kümmert sich darum.`;
+  }
+
+  // 6. Drucker
+  if(q.includes('drucker')||q.includes('drucken')||q.includes('print')){
+    return`🖨️ **Drucker-Hilfe:**\n\n1. Drucker eingeschaltet?\n2. Windows → Einstellungen → Drucker & Scanner\n3. "Drucker hinzufügen" → IP-Adresse des Druckers eingeben\n4. Treiber nicht gefunden → Ticket mit Drucker-Modell erstellen\n\nDer 1st Level Support hilft bei der Einrichtung.`;
+  }
+
+  // 7. E-Mail
+  if(q.includes('mail')||q.includes('outlook')||q.includes('e-mail')){
+    return`📧 **E-Mail-Hilfe:**\n\n1. Outlook neu starten\n2. Internetverbindung prüfen\n3. Postfach voll? → Alte E-Mails archivieren\n4. Outlook → Datei → Konto-Einstellungen → Verbindung testen\n\nBei anhaltenden Problemen: Ticket erstellen.`;
+  }
+
+  // 8. Knowledge base results
+  if(relevant.length>0){
+    const top=relevant[0];
+    let reply=`💡 **${top.title}**\n\n${top.content}`;
+    if(relevant.length>1){
+      reply+=`\n\n**Weitere relevante Einträge:**\n${relevant.slice(1,3).map(e=>`• ${e.title}`).join('\n')}`;
+    }
+    return reply;
+  }
+
+  // 9. Ticket erstellen Hinweis
+  if(q.includes('hilfe')||q.includes('problem')||q.includes('fehler')||q.includes('funktioniert nicht')){
+    return`🎫 **Support-Ticket erstellen**\n\nIch konnte keine spezifische Lösung in der Wissensdatenbank finden.\n\nBitte erstelle ein **Support-Ticket** — unser Team hilft dir:\n• 1st Level: Allgemeine Anfragen, Passwörter, Drucker\n• 2nd Level: Netzwerk, Server, komplexe Probleme\n• SLA Silver: Reaktion innerhalb 4 Stunden\n• SLA Gold/Platinum: Reaktion innerhalb 1h / 30 Min.`;
+  }
+
+  // 10. Default
+  return`🤖 **Helpdesk KI-Assistent**\n\nIch bin der interne Assistent der ICT-Consulting AG. Ich kann helfen bei:\n\n• **Passwort** zurücksetzen\n• **VPN**-Verbindungsprobleme\n• **Drucker** einrichten\n• **E-Mail**-Probleme\n• **SLA**-Informationen\n${isAdmin?'• **Ticket-Analysen** und Übersichten':''}\n\nOder stell mir eine konkrete Frage!`;
+}
+
 
 function addAIMessage(text,role){
   const container=document.getElementById('ai-messages');
