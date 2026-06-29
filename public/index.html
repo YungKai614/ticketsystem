@@ -1621,6 +1621,30 @@ body.compact-mode tbody tr{font-size:11px}
         </div>
       </div>
 
+      <!-- KI-WISSENSDATENBANK (Admin) -->
+      <div class="view" id="view-ai-knowledge">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <h2 style="font-size:14px;font-weight:600;color:#e2e4e9;flex:1">🧠 KI-Wissensdatenbank</h2>
+          <button class="btn btn-primary btn-sm" onclick="addKnowledgeEntry()">+ Eintrag hinzufügen</button>
+        </div>
+
+        <div style="background:#1a2535;border:1px solid #2a3545;border-radius:6px;padding:12px 14px;margin-bottom:14px;font-size:12px;color:#5a8ab0;line-height:1.6">
+          <strong style="color:#6a9ec0">So funktioniert es:</strong> Füge hier Wissen hinzu — Prozesse, häufige Probleme, interne Infos, SLA-Details. Der KI-Assistent liest diese Einträge automatisch und antwortet damit auf Fragen von Kunden und Supportern.
+        </div>
+
+        <!-- Kategorien Tabs -->
+        <div class="view-tabs" style="margin-bottom:14px">
+          <button class="vt active" onclick="switchKBTab('all',this)">Alle Einträge <span id="kb-tab-all-cnt" style="font-size:10px;color:#5a6070"></span></button>
+          <button class="vt" onclick="switchKBTab('process',this)">Prozesse</button>
+          <button class="vt" onclick="switchKBTab('faq',this)">FAQ</button>
+          <button class="vt" onclick="switchKBTab('sla',this)">SLA & Verträge</button>
+          <button class="vt" onclick="switchKBTab('technical',this)">Technisch</button>
+          <button class="vt" onclick="switchKBTab('internal',this)">Intern</button>
+        </div>
+
+        <div id="knowledge-list"></div>
+      </div>
+
       <!-- CLAUDE AI -->
       <div class="view" id="view-ai">
         <div style="display:flex;flex-direction:column;height:calc(100vh - 120px);max-height:700px">
@@ -1739,6 +1763,44 @@ body.compact-mode tbody tr{font-size:11px}
 <!-- MODAL: Save Filter -->
 <!-- MODAL: Settings -->
 <!-- MODAL: Neue Ankündigung -->
+<!-- MODAL: KI-Wissenseintrag -->
+<div class="modal-bg" id="m-knowledge">
+  <div class="modal" style="width:580px">
+    <div class="modal-hd"><h3 id="km-title">Neuer Wissenseintrag</h3><button class="modal-close" onclick="closeModal('m-knowledge')">×</button></div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="fgg"><label>Titel / Frage *</label><input type="text" id="km-title-input" placeholder="z.B. Wie setze ich ein Passwort zurück?"></div>
+        <div class="fgg"><label>Kategorie</label>
+          <select id="km-cat">
+            <option value="faq">FAQ</option>
+            <option value="process">Prozess</option>
+            <option value="sla">SLA & Verträge</option>
+            <option value="technical">Technisch</option>
+            <option value="internal">Intern</option>
+          </select>
+        </div>
+      </div>
+      <div class="fgg"><label>Antwort / Inhalt *</label>
+        <textarea id="km-content" placeholder="Hier den Inhalt eingeben — z.B. Schritt-für-Schritt Anleitung, Antwort auf die Frage, Prozessbeschreibung..." style="min-height:130px"></textarea>
+      </div>
+      <div class="fgg"><label>Stichworte (für bessere KI-Suche, kommagetrennt)</label>
+        <input type="text" id="km-tags" placeholder="z.B. Passwort, Login, Active Directory, Reset">
+      </div>
+      <div class="fgg"><label>Sichtbar für</label>
+        <select id="km-audience">
+          <option value="all">Alle (Kunden + Supporter)</option>
+          <option value="admin">Nur Supporter</option>
+          <option value="customer">Nur Kunden</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-ft" style="justify-content:flex-end">
+      <button class="btn btn-secondary" onclick="closeModal('m-knowledge')">Abbrechen</button>
+      <button class="btn btn-primary" onclick="saveKnowledgeEntry()">Speichern</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-bg" id="m-announcement">
   <div class="modal" style="width:500px">
     <div class="modal-hd"><h3>Neue Ankündigung</h3><button class="modal-close" onclick="closeModal('m-announcement')">×</button></div>
@@ -2067,13 +2129,17 @@ function buildNav(){
       <button class="ni" onclick="nav('users',this)">👥 Benutzer</button>
       <button class="ni" onclick="nav('customers',this)">🏢 Kunden-Konten <span class="ni-badge amber" id="nb-sla-pending">…</span></button>
       <button class="ni" onclick="nav('sla',this)">📋 SLA-Modelle</button>
-      <button class="ni" onclick="nav('logs',this)">📋 System-Logs</button>`;
+      <button class="ni" onclick="nav('logs',this)">📋 System-Logs</button>
+      <div class="nav-sec">KI-Assistent</div>
+      <button class="ni" onclick="nav('ai',this)">✨ KI-Assistent</button>
+      <button class="ni" onclick="nav('ai-knowledge',this)">🧠 Wissensdatenbank</button>`;
   } else {
     document.getElementById('sidebar-nav').innerHTML=`
       <div class="nav-sec">Mein Support</div>
       <button class="ni active" onclick="nav('portal',this)">🎫 Meine Tickets</button>
       <button class="ni" onclick="nav('new-ticket',this)">＋ Ticket erstellen</button>
       <button class="ni" onclick="nav('selfservice',this)">💡 Hilfe zur Selbsthilfe</button>
+      <button class="ni" onclick="nav('ai',this)">✨ KI-Assistent</button>
       <div class="nav-sec">Info</div>
       <button class="ni" onclick="nav('sla',this)">📋 SLA-Modelle</button>`;
   }
@@ -2106,7 +2172,7 @@ function toast(msg,type=''){const t=document.getElementById('toast');t.textConte
 function nav(view,btn){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+view)?.classList.add('active');
-  const titles={dashboard:'Dashboard',stats:'Statistiken',inbox:'Inbox — Anfragen',tickets:'Alle Tickets','extern-tickets':'Externe Tickets',portal:'Meine Tickets','new-ticket':'Ticket erstellen',users:'Benutzerverwaltung',customers:'Kunden-Konten',sla:'SLA-Modelle',logs:'System-Logs',profile:'Mein Profil',ai:'Claude KI-Assistent',announcements:'Ankündigungen & Systemstatus',selfservice:'Hilfe zur Selbsthilfe',security:'Sicherheitsübersicht'};
+  const titles={dashboard:'Dashboard',stats:'Statistiken',inbox:'Inbox — Anfragen',tickets:'Alle Tickets','extern-tickets':'Externe Tickets',portal:'Meine Tickets','new-ticket':'Ticket erstellen',users:'Benutzerverwaltung',customers:'Kunden-Konten',sla:'SLA-Modelle',logs:'System-Logs',profile:'Mein Profil',ai:'KI-Assistent',announcements:'Ankündigungen & Systemstatus',selfservice:'Hilfe zur Selbsthilfe',security:'Sicherheitsübersicht','ai-knowledge':'KI-Wissensdatenbank'};
   document.getElementById('topbar-title').textContent=titles[view]||view;
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
   if(btn)btn.classList.add('active');
@@ -2119,6 +2185,7 @@ function nav(view,btn){
   if(view==='logs')loadLogs();
   if(view==='profile')loadProfile();
   if(view==='ai')initAI();
+  if(view==='ai-knowledge')loadKnowledgeBase();
   if(view==='portal')loadMyTickets();
   if(view==='sla')loadSlaView();
   if(view==='customers')loadCustomers();
@@ -3658,13 +3725,120 @@ function saveProfile(){
 
 
 // ============================================================
+// KI-WISSENSDATENBANK
+// ============================================================
+let knowledgeBase=[
+  {id:'kb-1',title:'SLA Silver — Reaktionszeiten',category:'sla',content:'Silver SLA: Servicezeiten Mo–Fr 08–17 Uhr, Reaktionszeit 4 Stunden, Verfügbarkeit 95%, kein Pikett, CHF 290/Monat, Gutschrift CHF 50 pro Vorfall.',tags:'silver,sla,reaktionszeit',audience:'all',by:'System',time:Date.now()},
+  {id:'kb-2',title:'SLA Gold — Reaktionszeiten',category:'sla',content:'Gold SLA: Servicezeiten Mo–Fr 07–20 Uhr, Reaktionszeit 1 Stunde, Verfügbarkeit 99%, Teilzeit-Pikett, fester Ansprechpartner, CHF 690/Monat.',tags:'gold,sla,pikett',audience:'all',by:'System',time:Date.now()},
+  {id:'kb-3',title:'SLA Platinum — Reaktionszeiten',category:'sla',content:'Platinum SLA: 24/7 Service 365 Tage, Reaktionszeit 30 Minuten, Verfügbarkeit 99.9%, 24/7 Pikett, Senior TAM, CHF 1490/Monat.',tags:'platinum,sla,24/7,tam',audience:'all',by:'System',time:Date.now()},
+  {id:'kb-4',title:'1st Level Support Zuständigkeiten',category:'process',content:'1st Level (SPOC): Alle Tickets entgegennehmen, klassifizieren, priorisieren. Ziel 40% Erstlösungsquote. Zuständig für: Passwort-Resets, einfache Software, Drucker, Standard-Anfragen. Weiterleitung an 2nd Level bei komplexen Problemen.',tags:'1st level,spoc,erstlösung',audience:'admin',by:'System',time:Date.now()},
+  {id:'kb-5',title:'Ticket-Eskalation Prozess',category:'process',content:'1st zu 2nd Level: Wenn SLA-Reaktionszeit nicht eingehalten oder Spezialwissen nötig. 2nd zu 3rd Level (Hersteller): Bei unbekannten Fehlern. Jede Eskalation im Ticket dokumentieren mit Grund und Zeitstempel.',tags:'eskalation,prozess,2nd level',audience:'admin',by:'System',time:Date.now()},
+];
+let kbEditId=null;
+let kbFilterCat='all';
+
+function switchKBTab(cat,btn){
+  kbFilterCat=cat;
+  document.querySelectorAll('.vt').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  loadKnowledgeBase();
+}
+
+function loadKnowledgeBase(){
+  const cnt=document.getElementById('kb-tab-all-cnt');
+  if(cnt)cnt.textContent=`(${knowledgeBase.length})`;
+  const filtered=kbFilterCat==='all'?knowledgeBase:knowledgeBase.filter(e=>e.category===kbFilterCat);
+  const list=document.getElementById('knowledge-list');
+  if(!list)return;
+  if(!filtered.length){list.innerHTML=`<div class="empty">Keine Einträge.<br><button class="btn btn-primary btn-sm" style="margin-top:10px" onclick="addKnowledgeEntry()">+ Ersten Eintrag erstellen</button></div>`;return;}
+  const catColors={faq:'#3a5a80',process:'#3a6a4a',sla:'#7a5030',technical:'#5a4080',internal:'#5a6070'};
+  const catLabels={faq:'FAQ',process:'Prozess',sla:'SLA & Verträge',technical:'Technisch',internal:'Intern'};
+  const audLabels={all:'Alle',admin:'Nur Supporter',customer:'Nur Kunden'};
+  list.innerHTML=filtered.map(e=>`
+    <div class="card" style="margin-bottom:10px">
+      <div class="card-hd">
+        <div style="width:8px;height:8px;border-radius:50%;background:${catColors[e.category]||'#5a6070'};flex-shrink:0"></div>
+        <h3 style="text-transform:none;font-size:13px;letter-spacing:0">${e.title}</h3>
+        <span style="font-size:10px;background:${catColors[e.category]||'#5a6070'}22;color:${catColors[e.category]||'#5a6070'};padding:1px 7px;border-radius:10px;border:1px solid ${catColors[e.category]||'#5a6070'}44">${catLabels[e.category]||e.category}</span>
+        <span style="font-size:10px;color:#4a5060">${audLabels[e.audience]||'Alle'}</span>
+        <button class="btn btn-secondary btn-sm" onclick="editKnowledgeEntry('${e.id}')">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteKnowledgeEntry('${e.id}')">×</button>
+      </div>
+      <div style="padding:11px 14px">
+        <div style="font-size:12px;color:#c9cdd6;line-height:1.6;margin-bottom:7px">${e.content}</div>
+        ${e.tags?`<div style="display:flex;gap:4px;flex-wrap:wrap">${e.tags.split(',').map(t=>`<span style="font-size:10px;background:#1e2128;border:1px solid #2a2d35;color:#5a6070;padding:1px 7px;border-radius:10px">${t.trim()}</span>`).join('')}</div>`:''}
+        <div style="font-size:10px;color:#3a3f4d;margin-top:5px">von ${e.by} · ${fmtDate(new Date(e.time).toISOString())}</div>
+      </div>
+    </div>`).join('');
+}
+
+function addKnowledgeEntry(){
+  kbEditId=null;
+  document.getElementById('km-title').textContent='Neuer Wissenseintrag';
+  ['km-title-input','km-content','km-tags'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  if(document.getElementById('km-cat'))document.getElementById('km-cat').value='faq';
+  if(document.getElementById('km-audience'))document.getElementById('km-audience').value='all';
+  document.getElementById('m-knowledge').classList.add('open');
+}
+
+function editKnowledgeEntry(id){
+  const e=knowledgeBase.find(x=>x.id===id);
+  if(!e)return;
+  kbEditId=id;
+  document.getElementById('km-title').textContent='Eintrag bearbeiten';
+  document.getElementById('km-title-input').value=e.title;
+  document.getElementById('km-content').value=e.content;
+  document.getElementById('km-tags').value=e.tags||'';
+  document.getElementById('km-cat').value=e.category||'faq';
+  document.getElementById('km-audience').value=e.audience||'all';
+  document.getElementById('m-knowledge').classList.add('open');
+}
+
+function saveKnowledgeEntry(){
+  const title=document.getElementById('km-title-input')?.value.trim();
+  const content=document.getElementById('km-content')?.value.trim();
+  if(!title||!content){toast('Bitte Titel und Inhalt ausfüllen.','error');return;}
+  const entry={title,content,
+    tags:document.getElementById('km-tags')?.value||'',
+    category:document.getElementById('km-cat')?.value||'faq',
+    audience:document.getElementById('km-audience')?.value||'all',
+    by:currentUser?.name||'Admin',time:Date.now()
+  };
+  if(kbEditId){
+    const idx=knowledgeBase.findIndex(x=>x.id===kbEditId);
+    if(idx>-1)knowledgeBase[idx]={...knowledgeBase[idx],...entry};
+    toast('Eintrag aktualisiert ✓','success');
+  } else {
+    knowledgeBase.push({id:'kb-'+Date.now(),...entry});
+    toast('Eintrag gespeichert ✓','success');
+  }
+  addLog(kbEditId?'KB bearbeitet':'KB Eintrag erstellt',currentUser?.name||'Admin','—',title,'update');
+  closeModal('m-knowledge');
+  loadKnowledgeBase();
+}
+
+function deleteKnowledgeEntry(id){
+  const e=knowledgeBase.find(x=>x.id===id);
+  if(!e||!confirm(`"${e.title}" löschen?`))return;
+  knowledgeBase=knowledgeBase.filter(x=>x.id!==id);
+  toast('Gelöscht','success');
+  loadKnowledgeBase();
+}
+
+function getKnowledgeContext(userRole){
+  const relevant=knowledgeBase.filter(e=>e.audience==='all'||(userRole==='admin'&&e.audience==='admin')||(userRole!=='admin'&&e.audience==='customer'));
+  if(!relevant.length)return '';
+  return '\n\nINTERNE WISSENSDATENBANK (verwende diese als Primärquelle):\n'+relevant.map(e=>`[${e.title}]: ${e.content}`).join('\n');
+}
+
+// ============================================================
 // CLAUDE AI ASSISTANT
 // ============================================================
 let aiMessages=[];
 let aiLoading=false;
 
 function initAI(){
-  if(aiMessages.length>0)return; // Already initialized
+  if(aiMessages.length>0)return;
   aiMessages=[];
 }
 
@@ -3680,24 +3854,20 @@ async function sendAI(){
   if(!msg)return;
   input.value='';
   aiLoading=true;
-  
-  // Add user message
+  const sendBtn=document.getElementById('ai-send-btn');
+  if(sendBtn)sendBtn.disabled=true;
   addAIMessage(msg,'user');
-  
-  // Show typing indicator
   const typingId='typing-'+Date.now();
   addAITyping(typingId);
-  
   try{
-    // Get ticket context
     const tickets=await api('/api/tickets');
     const stats=await api('/api/stats');
-    const context=`Du bist der KI-Assistent des ICT Helpdesk Ticketsystems der ICT-Consulting AG.
-Aktueller Benutzer: ${currentUser?.name||'Administrator'} (${currentUser?.dept||'Admin'})
-Ticket-Übersicht: ${stats.total} total, ${stats.open} offen, ${stats.inProgress} in Bearbeitung, ${stats.resolved} gelöst, ${stats.critical} kritisch.
-Letzte 5 Tickets: ${tickets.slice(0,5).map(t=>`${t.id}: "${t.title}" (${t.status}, ${t.priority}, ${t.sla})`).join('; ')}
-Antworte auf Deutsch, professionell und präzise. Formatiere wichtige Punkte mit Markdown.`;
-
+    const isAdmin=currentUser?.role==='admin';
+    const knowledgeCtx=getKnowledgeContext(currentUser?.role||'customer');
+    const context=`Du bist der interne KI-Assistent des Helpdesk-Ticketsystems der ICT-Consulting AG (Zürich).
+Benutzer: ${currentUser?.name||'Benutzer'} (${isAdmin?'Supporter':'Kunde · SLA '+currentUser?.sla})
+${isAdmin?`Tickets: ${stats.total} total, ${stats.open} offen, ${stats.critical} kritisch. Letzte: ${tickets.slice(0,4).map(t=>`${t.id}:${t.title}(${t.status})`).join(', ')}`:''}${knowledgeCtx}
+Regeln: Antworte auf Deutsch, professionell. Nutze Wissensdatenbank als Hauptquelle. Schrittweise Anleitungen nummerieren. Bei unbekannten Themen ehrlich sagen.`;
     const response=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
@@ -3705,23 +3875,21 @@ Antworte auf Deutsch, professionell und präzise. Formatiere wichtige Punkte mit
         model:'claude-sonnet-4-6',
         max_tokens:1000,
         system:context,
-        messages:[
-          ...aiMessages.filter(m=>m.role).map(m=>({role:m.role,content:m.content})),
-          {role:'user',content:msg}
-        ]
+        messages:[...aiMessages.filter(m=>m.role).map(m=>({role:m.role,content:m.content})),{role:'user',content:msg}]
       })
     });
     const data=await response.json();
     removeAITyping(typingId);
-    const reply=data.content?.[0]?.text||'Entschuldigung, ich konnte keine Antwort generieren.';
+    const reply=data.content?.[0]?.text||'Entschuldigung, keine Antwort verfügbar.';
     addAIMessage(reply,'assistant');
     aiMessages.push({role:'user',content:msg},{role:'assistant',content:reply});
     if(aiMessages.length>20)aiMessages=aiMessages.slice(-20);
   }catch(e){
     removeAITyping(typingId);
-    addAIMessage('Fehler beim Verbinden mit Claude. Bitte versuchen Sie es erneut.','assistant');
+    addAIMessage('Verbindungsfehler. Bitte erneut versuchen.','assistant');
   }
   aiLoading=false;
+  if(sendBtn)sendBtn.disabled=false;
 }
 
 function addAIMessage(text,role){
