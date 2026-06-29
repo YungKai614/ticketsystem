@@ -754,7 +754,7 @@ body.compact-mode tbody tr{font-size:11px}
         <a href="javascript:void(0)" onclick="showPage('reviews')">Kundenstimmen</a>
       </div>
       <div style="display:flex;gap:8px;align-items:center">
-        <a href="#lp-login" class="lp-btn lp-btn-primary">Anmelden →</a>
+        <button onclick="goToLogin()" class="lp-btn lp-btn-primary">Anmelden →</button>
         <button class="lp-burger" onclick="openMobileMenu()" aria-label="Menü">
           <span></span><span></span><span></span>
         </button>
@@ -1274,7 +1274,7 @@ body.compact-mode tbody tr{font-size:11px}
         <div>
           <div class="lp-footer-col-title">Zugang</div>
           <div class="lp-footer-col-links">
-            <a href="#lp-login">Kunden-Login</a>
+            <a href="javascript:void(0)" onclick="goToLogin()">Kunden-Login</a>
             <a href="javascript:void(0)" onclick="showGuestForm()">Externe Anfrage</a>
             <a href="javascript:void(0)" onclick="showPage('process')">Datenschutz</a>
             <a href="javascript:void(0)" onclick="showPage('process')">AGB</a>
@@ -3557,6 +3557,13 @@ function showPage(page){
   document.querySelectorAll('.lp-subpage').forEach(p=>p.classList.remove('active'));
   const el=document.getElementById('lp-page-'+page);
   if(el){el.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+}
+function goToLogin(){
+  showPage('home');
+  setTimeout(()=>{
+    const el=document.getElementById('lp-login');
+    if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+  },80);
 }
 function openMobileMenu(){document.getElementById('lp-mobile-menu').classList.add('open');}
 function closeMobileMenu(){document.getElementById('lp-mobile-menu').classList.remove('open');}
