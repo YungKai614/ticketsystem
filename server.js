@@ -82,12 +82,13 @@ app.get('/api/tickets/:id', (req, res) => {
 // POST create ticket
 app.post('/api/tickets', (req, res) => {
   const db = readDB();
-  const { title, desc, category, priority, sla, level, assign, reporter } = req.body;
+  const { title, desc, category, priority, sla, level, assign, reporter, guestEmail, guestPhone, guestName, note } = req.body;
   if (!title) return res.status(400).json({ error: 'Title required' });
   const id = 'T-' + String(db.nextId).padStart(4, '0');
   db.nextId++;
   const now = new Date().toISOString();
-  const ticket = { id, title, desc: desc||'', category: category||'User & App', priority: priority||'Medium', status: 'Offen', level: level||'1st', sla: sla||'Silver', assign: assign||'1st Level – SPOC', reporter: reporter||'Unbekannt', created: now, log: [{time:now,who:'System',note:'Ticket eröffnet.',type:'open'}] };
+  const openNote = guestEmail ? `Gast-Ticket eingereicht · E-Mail: ${guestEmail} · Tel: ${guestPhone||'—'}` : (note||'Ticket eröffnet.');
+  const ticket = { id, title, desc: desc||'', category: category||'Sonstiges', priority: priority||'Medium', status: 'Offen', level: level||'1st', sla: sla||'Silver', assign: assign||'1st Level – SPOC', reporter: reporter||'Unbekannt', guestEmail: guestEmail||null, guestPhone: guestPhone||null, guestName: guestName||null, created: now, log: [{time:now,who:'System',note:openNote,type:'open'}] };
   db.tickets.unshift(ticket);
   writeDB(db);
   res.json(ticket);
@@ -119,6 +120,18 @@ app.patch('/api/tickets/:id', (req, res) => {
     logNote = logNote || 'Ticket geschlossen.';
     logType = 'close';
   }
+  // Store invoice data
+  const { invoice } = req.body;
+  if (invoice) { t.invoice = invoice; }
+  // Store customer feedback
+  const { feedback } = req.body;
+  if (feedback) { t.feedback = feedback; }
+  // Store reporter if changed
+  const { reporter: newReporter, category: newCat, priority: newPrio, level: newLevel } = req.body;
+  if (newReporter) t.reporter = newReporter;
+  if (newCat) t.category = newCat;
+  if (newPrio) t.priority = newPrio;
+  if (newLevel) t.level = newLevel;
   if (action === 'escalate') {
     const levels = ['1st','2nd','3rd'];
     const ci = levels.indexOf(t.level);
@@ -179,12 +192,49 @@ app.get('/api/users', (req, res) => {
   res.json(db.users);
 });
 
+// POST AI proxy — forwards to Anthropic API server-side
+app.post('/api/ai', async (req, res) => {
+  try {
+    const https = require('https');
+    const body = JSON.stringify({
+      model: req.body.model || 'claude-sonnet-4-6',
+      max_tokens: req.body.max_tokens || 1000,
+      system: req.body.system || '',
+      messages: req.body.messages || []
+    });
+    const options = {
+      hostname: 'api.anthropic.com',
+      path: '/v1/messages',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.ANTHROPIC_API_KEY || '',
+        'anthropic-version': '2023-06-01',
+        'Content-Length': Buffer.byteLength(body)
+      }
+    };
+    const apiReq = https.request(options, (apiRes) => {
+      let data = '';
+      apiRes.on('data', chunk => data += chunk);
+      apiRes.on('end', () => {
+        try { res.json(JSON.parse(data)); }
+        catch(e) { res.status(500).json({ error: 'Parse error', raw: data.slice(0,200) }); }
+      });
+    });
+    apiReq.on('error', e => res.status(500).json({ error: e.message }));
+    apiReq.write(body);
+    apiReq.end();
+  } catch(e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 // Serve frontend for all other routes
 app.get('/{*path}', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`ICT Helpdesk Ticketsystem läuft auf http://localhost:${PORT}`);
   readDB(); // initialize DB if not exists
