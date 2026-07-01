@@ -1950,7 +1950,29 @@ body.compact-mode tbody tr{font-size:11px}
       </div>
 
       <!-- PROFIL -->
-      <div class="view" id="view-profile">
+      <!-- HILFE & ANLEITUNG (Supporter) -->
+      <div class="view" id="view-help">
+        <div style="max-width:800px">
+          <div style="margin-bottom:20px">
+            <h2 style="font-size:16px;font-weight:600;color:#e2e4e9;margin-bottom:4px">Hilfe & Anleitung</h2>
+            <p style="font-size:12px;color:#5a6070">Schnellreferenz fuer den Supporter-Alltag. Klicke auf ein Thema um die Anleitung aufzuklappen.</p>
+          </div>
+          <div class="lp-accordion" style="background:#13151a">
+            <div class="lp-acc-item"><button class="lp-acc-trigger" onclick="toggleAcc(this)" style="background:#13151a;color:#c9cdd6">Inbox oeffnen und eigene Tickets sehen<span class="lp-acc-arrow">+</span></button><div class="lp-acc-body" style="color:#9a9fad">1. Seitenleiste: Inbox klicken<br>2. Dropdown "Inbox fuer" -- Deinen Namen waehlen<br>3. Du siehst nur Tickets die Dir zugewiesen sind<br>4. Tab "Offen" zeigt neue Tickets die auf Bearbeitung warten</div></div>
+            <div class="lp-acc-item"><button class="lp-acc-trigger" onclick="toggleAcc(this)" style="background:#13151a;color:#c9cdd6">Ticket annehmen und bearbeiten<span class="lp-acc-arrow">+</span></button><div class="lp-acc-body" style="color:#9a9fad">1. Ticket in der Inbox anklicken<br>2. Button "Bearbeiten" klicken (oben rechts)<br>3. "Zugewiesen an" -- Deinen Namen waehlen<br>4. Status auf "In Bearbeitung" setzen<br>5. "Aenderungen speichern" klicken<br><br>Blauer Balken links = Kunde wartet auf Antwort! Zuerst diese bearbeiten.</div></div>
+            <div class="lp-acc-item"><button class="lp-acc-trigger" onclick="toggleAcc(this)" style="background:#13151a;color:#c9cdd6">Auf Ticket antworten<span class="lp-acc-arrow">+</span></button><div class="lp-acc-body" style="color:#9a9fad">1. Ticket oeffnen<br>2. Button "Antworten" unten links<br>3. Antworttext eingeben<br>4. "Senden" klicken<br><br>Der blaue Balken verschwindet nach dem Antworten automatisch.</div></div>
+            <div class="lp-acc-item"><button class="lp-acc-trigger" onclick="toggleAcc(this)" style="background:#13151a;color:#c9cdd6">Ticket eskalieren (weiterleiten)<span class="lp-acc-arrow">+</span></button><div class="lp-acc-body" style="color:#9a9fad">Wann eskalieren?<br>- Netzwerk/VPN/Firewall -- 2nd Level Network Engineer<br>- Server/AD/Backup -- 2nd Level System Engineer<br>- Hersteller-Fehler -- 3rd Level Extern<br>- Sicherheitsvorfall -- sofort Nils Mueller informieren<br><br>So eskalieren:<br>1. Ticket oeffnen -- "Bearbeiten"<br>2. Level aendern: 1st -- 2nd oder 3rd<br>3. "Zugewiesen an": Kollegen auswaehlen<br>4. "Antworten" -- kurze Begruendung schreiben (WARUM?)<br>5. "Aenderungen speichern"</div></div>
+            <div class="lp-acc-item"><button class="lp-acc-trigger" onclick="toggleAcc(this)" style="background:#13151a;color:#c9cdd6">Externes Ticket verrechnen<span class="lp-acc-arrow">+</span></button><div class="lp-acc-body" style="color:#9a9fad">1. Seitenleiste: Externe Tickets<br>2. Ticket oeffnen -- "Bearbeiten"<br>3. Button "Verrechnen" erscheint unten<br>4. Beschreibung + Menge + CHF/Einheit eingeben<br>5. "+ Hinzufuegen" -- Total berechnet sich automatisch<br>6. "Verrechnung speichern"<br>7. "Geloest" klicken<br><br>Tipp: Ohne Verrechnung erscheint eine Warnung beim Abschliessen.</div></div>
+            <div class="lp-acc-item"><button class="lp-acc-trigger" onclick="toggleAcc(this)" style="background:#13151a;color:#c9cdd6">Gespeicherte Filter erstellen<span class="lp-acc-arrow">+</span></button><div class="lp-acc-body" style="color:#9a9fad">1. Seitenleiste: Alle Tickets<br>2. Filter-Dropdowns auswaehlen (Status, SLA, Prioritaet)<br>3. "+ Filter speichern" klicken<br>4. Namen eingeben (z. B. "Kritisch und Offen")<br>5. Filter erscheint als Schaltflaeche mit Live-Anzahl<br><br>Gespeicherte Filter sind nur fuer Dich sichtbar.</div></div>
+            <div class="lp-acc-item"><button class="lp-acc-trigger" onclick="toggleAcc(this)" style="background:#13151a;color:#c9cdd6">SLA-Modelle -- was ist wo enthalten?<span class="lp-acc-arrow">+</span></button><div class="lp-acc-body" style="color:#9a9fad"><strong style="color:#c9cdd6">Silver (CHF 290/Mt.):</strong> Mo-Fr 08-17 Uhr, Reaktion 4 Stunden, 95% Verfuegbarkeit, kein Pikett<br><br><strong style="color:#c9cdd6">Gold (CHF 690/Mt.):</strong> Mo-Fr 07-20 Uhr, Reaktion 1 Stunde, 99% Verfuegbarkeit, Pikett abends+WE, fester Ansprechpartner<br><br><strong style="color:#c9cdd6">Platinum (CHF 1490/Mt.):</strong> 24/7, 365 Tage, Reaktion 30 Min., 99.9%, Senior TAM, 24/7 Pikett<br><br>Gutschrift pro Vorfall (bei SLA-Verletzung): CHF 50</div></div>
+            <div class="lp-acc-item"><button class="lp-acc-trigger" onclick="toggleAcc(this)" style="background:#13151a;color:#c9cdd6">Kunden-Konto sperren oder SLA aendern<span class="lp-acc-arrow">+</span></button><div class="lp-acc-body" style="color:#9a9fad">Seitenleiste: Kunden-Konten<br><br>SLA aendern: SLA-Dropdown beim Kunden anklicken -- neue Stufe waehlen<br>Konto sperren: "Sperren" beim Kunden klicken<br>Konto entsperren: "Entsperren" klicken<br><br>Abo-Aenderungsanfragen vom Kunden erscheinen oben als oranger Hinweis.</div></div>
+            <div class="lp-acc-item"><button class="lp-acc-trigger" onclick="toggleAcc(this)" style="background:#13151a;color:#c9ccd6">Ankuendigung / Systemstatus setzen<span class="lp-acc-arrow">+</span></button><div class="lp-acc-body" style="color:#9a9fad">Seitenleiste: Ankuendigungen<br><br>Status: Dropdown oben -- Gruen / Gelb / Rot / Blau waehlen<br>Kunden sehen den Status sofort in ihrem Bereich.<br><br>Neue Ankuendigung: "+ Neue Ankuendigung" -- Titel + Nachricht + Typ + Zielgruppe -- "Veroeffentlichen"</div></div>
+            <div class="lp-acc-item"><button class="lp-acc-trigger" onclick="toggleAcc(this)" style="background:#13151a;color:#c9cdd6">Notfall-Lockdown (Sicherheit)<span class="lp-acc-arrow">+</span></button><div class="lp-acc-body" style="color:#9a9fad">Seitenleiste: Sicherheit<br><br>Lockdown: Button "Notfall-Lockdown" -- sperrt ALLE Kunden sofort.<br>Nur im echten Notfall verwenden! Danach Nils Mueller informieren.<br><br>Entsperren: "Alle entsperren" hebt alle Sperrungen auf.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROFIL -->
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
           <div>
             <div class="card">
@@ -2515,7 +2537,8 @@ function buildNav(){
       <button class="ni" onclick="nav('logs',this)">📋 System-Logs</button>
       <div class="nav-sec">KI-Assistent</div>
       <button class="ni" onclick="nav('ai',this)">✨ KI-Assistent</button>
-      <button class="ni" onclick="nav('ai-knowledge',this)">🧠 Wissensdatenbank</button>`;
+      <button class="ni" onclick="nav('ai-knowledge',this)">🧠 Wissensdatenbank</button>
+      <button class="ni" onclick="nav('help',this)">📖 Hilfe & Anleitung</button>`;
   } else {
     document.getElementById('sidebar-nav').innerHTML=`
       <div class="nav-sec">Mein Support</div>
@@ -2555,7 +2578,7 @@ function toast(msg,type=''){const t=document.getElementById('toast');t.textConte
 function nav(view,btn){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+view)?.classList.add('active');
-  const titles={dashboard:'Dashboard',stats:'Statistiken',inbox:'Inbox — Anfragen',tickets:'Alle Tickets','extern-tickets':'Externe Tickets',portal:'Meine Tickets','new-ticket':'Ticket erstellen',users:'Benutzerverwaltung',customers:'Kunden-Konten',sla:'SLA-Modelle',logs:'System-Logs',profile:'Mein Profil',ai:'KI-Assistent',announcements:'Ankündigungen & Systemstatus',selfservice:'Hilfe zur Selbsthilfe',security:'Sicherheitsübersicht','ai-knowledge':'KI-Wissensdatenbank'};
+  const titles={dashboard:'Dashboard',stats:'Statistiken',inbox:'Inbox — Anfragen',tickets:'Alle Tickets','extern-tickets':'Externe Tickets',portal:'Meine Tickets','new-ticket':'Ticket erstellen',users:'Benutzerverwaltung',customers:'Kunden-Konten',sla:'SLA-Modelle',logs:'System-Logs',profile:'Mein Profil',ai:'KI-Assistent',announcements:'Ankündigungen & Systemstatus',selfservice:'Hilfe zur Selbsthilfe',security:'Sicherheitsübersicht','ai-knowledge':'KI-Wissensdatenbank',help:'Hilfe & Anleitung'};
   document.getElementById('topbar-title').textContent=titles[view]||view;
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
   if(btn)btn.classList.add('active');
