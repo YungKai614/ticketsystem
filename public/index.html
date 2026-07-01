@@ -1521,6 +1521,66 @@ body.compact-mode tbody tr{font-size:11px}
     </div>
     <div class="content">
 
+      <!-- HOTLINE & PIKETT -->
+      <div class="view" id="view-hotline">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+
+          <!-- PIKETT-DIENST -->
+          <div class="card">
+            <div class="card-hd" style="background:#1a2d20;border-bottom-color:#2a3d2a">
+              <h3 style="color:#5aa870">🔴 Pikett-Dienst (24/7)</h3>
+              <span style="font-size:11px;color:#3a6a4a">Direkt erreichbar — auch ausserhalb Bürozeiten</span>
+            </div>
+            <div style="padding:14px">
+              <div style="background:#1a2d20;border:1px solid #2a3d2a;border-radius:6px;padding:14px;margin-bottom:14px">
+                <div style="font-size:11px;color:#3a6a4a;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Aktueller Pikett-Dienst</div>
+                <div id="pikett-current-name" style="font-size:18px;font-weight:600;color:#e2e4e9">—</div>
+                <div id="pikett-current-phone" style="font-size:22px;font-weight:700;color:#5aa870;margin-top:6px;font-family:'Courier New',monospace">—</div>
+                <div id="pikett-current-sla" style="font-size:11px;color:#3a6a4a;margin-top:4px"></div>
+              </div>
+              <div style="font-size:12px;color:#5a6070;margin-bottom:10px">Pikett-Nummern verwalten:</div>
+              <div id="pikett-list" style="display:flex;flex-direction:column;gap:8px"></div>
+              <button class="btn btn-success btn-sm" style="margin-top:12px;width:100%;justify-content:center" onclick="openAddPikett()">+ Pikett-Nummer hinzufügen</button>
+            </div>
+          </div>
+
+          <!-- NORMALE HOTLINE -->
+          <div class="card">
+            <div class="card-hd" style="background:#1a2535;border-bottom-color:#2a3545">
+              <h3 style="color:#5a8ab0">📞 Hotline (Mo–Fr 08–17 Uhr)</h3>
+              <span style="font-size:11px;color:#3a5a80">Angemeldete Supporter in der Warteschlange</span>
+            </div>
+            <div style="padding:14px">
+              <div style="background:#1a2535;border:1px solid #2a3545;border-radius:6px;padding:12px;margin-bottom:14px">
+                <div style="font-size:11px;color:#3a5a80;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Warteschlange heute</div>
+                <div id="hotline-queue-count" style="font-size:28px;font-weight:700;color:#5a8ab0">0</div>
+                <div style="font-size:11px;color:#3a5a80">Supporter angemeldet</div>
+              </div>
+              <div style="font-size:12px;color:#5a6070;margin-bottom:10px">Angemeldete Supporter:</div>
+              <div id="hotline-queue-list" style="display:flex;flex-direction:column;gap:8px"></div>
+              <div style="margin-top:14px;padding-top:12px;border-top:1px solid #2a2d35">
+                <div style="font-size:12px;color:#5a6070;margin-bottom:8px">Dein Status für die Hotline:</div>
+                <div style="display:flex;gap:8px">
+                  <button class="btn btn-success btn-sm" style="flex:1;justify-content:center" onclick="hotlineLogin()" id="hotline-login-btn">✓ Anmelden</button>
+                  <button class="btn btn-secondary btn-sm" style="flex:1;justify-content:center" onclick="hotlineLogout()" id="hotline-logout-btn">× Abmelden</button>
+                </div>
+                <div id="hotline-my-status" style="font-size:11px;color:#4a5060;margin-top:8px;text-align:center"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- HOTLINE STATISTIKEN -->
+        <div class="card">
+          <div class="card-hd"><h3>📋 Protokoll — Heutige Anrufe</h3>
+            <button class="btn btn-primary btn-sm" onclick="openLogCall()">+ Anruf protokollieren</button>
+          </div>
+          <div id="call-log-list">
+            <div class="empty">Noch keine Anrufe protokolliert. Klicke auf «+ Anruf protokollieren» um einen Anruf zu erfassen.</div>
+          </div>
+        </div>
+      </div>
+
       <!-- DASHBOARD -->
       <div class="view" id="view-dashboard">
         <div class="kpi-row kpi-row-4">
@@ -1900,6 +1960,7 @@ body.compact-mode tbody tr{font-size:11px}
         <!-- GESPERRTE KONTEN -->
         <div class="card" style="margin-bottom:14px">
           <div class="card-hd"><h3>🚫 Zugriffskontrolle</h3></div>
+          <div id="sla-pending-box"></div>
           <div id="sec-accounts-list" style="padding:0"></div>
         </div>
 
@@ -1966,7 +2027,7 @@ body.compact-mode tbody tr{font-size:11px}
             <div class="lp-acc-item"><button class="lp-acc-trigger" onclick="toggleAcc(this)" style="background:#13151a;color:#c9cdd6">Externes Ticket verrechnen<span class="lp-acc-arrow">+</span></button><div class="lp-acc-body" style="color:#9a9fad">1. Seitenleiste: Externe Tickets<br>2. Ticket öffnen → «Bearbeiten»<br>3. Button «Verrechnen» erscheint unten<br>4. Beschreibung + Menge + CHF/Einheit eingeben<br>5. «+ Hinzufügen» → Total berechnet sich automatisch<br>6. «Verrechnung speichern»<br>7. «Gelöst» klicken<br><br>Tipp: Ohne Verrechnung erscheint eine Warnung beim Abschliessen.</div></div>
             <div class="lp-acc-item"><button class="lp-acc-trigger" onclick="toggleAcc(this)" style="background:#13151a;color:#c9cdd6">Gespeicherte Filter erstellen<span class="lp-acc-arrow">+</span></button><div class="lp-acc-body" style="color:#9a9fad">1. Seitenleiste: Alle Tickets<br>2. Filter-Dropdowns auswählen (Status, SLA, Priorität)<br>3. «+ Filter speichern» klicken<br>4. Namen eingeben (z. B. «Kritisch und Offen»)<br>5. Filter erscheint als Schaltfläche mit Live-Anzahl<br><br>Gespeicherte Filter sind nur für Dich sichtbar.</div></div>
             <div class="lp-acc-item"><button class="lp-acc-trigger" onclick="toggleAcc(this)" style="background:#13151a;color:#c9cdd6">SLA-Modelle — was ist enthalten?<span class="lp-acc-arrow">+</span></button><div class="lp-acc-body" style="color:#9a9fad"><strong style="color:#c9cdd6">Silver (CHF 290/Mt.):</strong> Mo–Fr 08–17 Uhr, Reaktion 4 Stunden, 95% Verfügbarkeit, kein Pikett<br><br><strong style="color:#c9cdd6">Gold (CHF 690/Mt.):</strong> Mo–Fr 07–20 Uhr, Reaktion 1 Stunde, 99% Verfügbarkeit, Pikett abends+WE, fester Ansprechpartner<br><br><strong style="color:#c9cdd6">Platinum (CHF 1490/Mt.):</strong> 24/7, 365 Tage, Reaktion 30 Min., 99.9%, Senior TAM, 24/7 Pikett<br><br>Gutschrift pro Vorfall (bei SLA-Verletzung): CHF 50</div></div>
-            <div class="lp-acc-item"><button class="lp-acc-trigger" onclick="toggleAcc(this)" style="background:#13151a;color:#c9cdd6">Kunden-Konto sperren oder SLA ändern<span class="lp-acc-arrow">+</span></button><div class="lp-acc-body" style="color:#9a9fad">Seitenleiste: Kunden-Konten<br><br>SLA ändern: SLA-Dropdown beim Kunden anklicken → neue Stufe wählen<br>Konto sperren: «Sperren» beim Kunden klicken<br>Konto entsperren: «Entsperren» klicken<br><br>Abo-Änderungsanfragen vom Kunden erscheinen oben als oranger Hinweis.</div></div>
+            <div class="lp-acc-item"><button class="lp-acc-trigger" onclick="toggleAcc(this)" style="background:#13151a;color:#c9cdd6">Kunden-Konto sperren oder SLA ändern<span class="lp-acc-arrow">+</span></button><div class="lp-acc-body" style="color:#9a9fad">Seitenleiste: Sicherheit<br><br>Konto sperren: «Sperren» beim Kunden klicken<br>Konto entsperren: «Entsperren» klicken<br><br>SLA ändern: Direkt im Sicherheitsbereich per Dropdown.</div></div>
             <div class="lp-acc-item"><button class="lp-acc-trigger" onclick="toggleAcc(this)" style="background:#13151a;color:#c9cdd6">Ankündigung / Systemstatus setzen<span class="lp-acc-arrow">+</span></button><div class="lp-acc-body" style="color:#9a9fad">Seitenleiste: Ankündigungen<br><br>Status: Dropdown oben → Grün / Gelb / Rot / Blau wählen<br>Kunden sehen den Status sofort in ihrem Bereich.<br><br>Neue Ankündigung: «+ Neue Ankündigung» → Titel + Nachricht + Typ + Zielgruppe → «Veröffentlichen»</div></div>
             <div class="lp-acc-item"><button class="lp-acc-trigger" onclick="toggleAcc(this)" style="background:#13151a;color:#c9cdd6">Notfall-Lockdown (Sicherheit)<span class="lp-acc-arrow">+</span></button><div class="lp-acc-body" style="color:#9a9fad">Seitenleiste: Sicherheit<br><br>Lockdown: Button «Notfall-Lockdown» → sperrt ALLE Kunden sofort.<br>Nur im echten Notfall verwenden! Danach Nils Müller informieren.<br><br>Entsperren: «Alle entsperren» hebt alle Sperrungen auf.</div></div>
           </div>
@@ -2223,6 +2284,83 @@ body.compact-mode tbody tr{font-size:11px}
     <div class="modal-ft" style="justify-content:flex-end">
       <button class="btn btn-secondary" onclick="closeModal('m-announcement')">Abbrechen</button>
       <button class="btn btn-primary" onclick="submitAnnouncement()">Veröffentlichen</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Pikett hinzufügen -->
+<div class="modal-bg" id="m-pikett">
+  <div class="modal" style="width:420px">
+    <div class="modal-hd"><h3 id="m-pikett-title">Pikett-Nummer</h3><button class="modal-close" onclick="closeModal('m-pikett')">×</button></div>
+    <div class="modal-body">
+      <div class="fgg"><label>Supporter *</label>
+        <select id="pikett-sel-user">
+          <option value="">Bitte wählen...</option>
+        </select>
+      </div>
+      <div class="fgg"><label>Mobile-Nummer *</label><input type="text" id="pikett-phone" placeholder="+41 79 123 45 67"></div>
+      <div class="fgg"><label>SLA-Stufe (ab wann erreichbar)</label>
+        <select id="pikett-sla">
+          <option value="Gold">Gold & Platinum (ab 17 Uhr, WE)</option>
+          <option value="Platinum">Nur Platinum (24/7, 30 Min.)</option>
+          <option value="all">Alle Kunden</option>
+        </select>
+      </div>
+      <div class="fgg"><label>Aktiv von</label>
+        <div style="display:flex;gap:8px">
+          <input type="time" id="pikett-from" value="17:00" style="flex:1">
+          <span style="line-height:34px;color:#5a6070">bis</span>
+          <input type="time" id="pikett-to" value="08:00" style="flex:1">
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
+        <input type="checkbox" id="pikett-active" checked>
+        <label for="pikett-active" style="font-size:12px;color:#c9cdd6">Jetzt aktiv (als aktueller Pikett-Dienst setzen)</label>
+      </div>
+    </div>
+    <div class="modal-ft" style="justify-content:flex-end">
+      <button class="btn btn-secondary" onclick="closeModal('m-pikett')">Abbrechen</button>
+      <button class="btn btn-primary" onclick="savePikett()">Speichern</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Anruf protokollieren -->
+<div class="modal-bg" id="m-calllog">
+  <div class="modal" style="width:460px">
+    <div class="modal-hd"><h3>Anruf protokollieren</h3><button class="modal-close" onclick="closeModal('m-calllog')">×</button></div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="fgg"><label>Anrufer / Firma</label><input type="text" id="call-caller" placeholder="Max Mustermann / Firma AG"></div>
+        <div class="fgg"><label>Telefonnummer</label><input type="text" id="call-phone" placeholder="+41 44 123 45 67"></div>
+      </div>
+      <div class="fgg"><label>Anliegen *</label><input type="text" id="call-topic" placeholder="Kurze Beschreibung des Problems"></div>
+      <div class="form-row">
+        <div class="fgg"><label>SLA-Stufe</label>
+          <select id="call-sla">
+            <option>Silver</option><option>Gold</option><option>Platinum</option><option>Extern</option><option>Unbekannt</option>
+          </select>
+        </div>
+        <div class="fgg"><label>Weiterleitung an</label>
+          <select id="call-forward">
+            <option value="">Selbst bearbeitet</option>
+          </select>
+        </div>
+      </div>
+      <div class="fgg"><label>Ergebnis</label>
+        <select id="call-result">
+          <option value="solved">Direkt gelöst</option>
+          <option value="ticket">Ticket erstellt</option>
+          <option value="forwarded">Weitergeleitet</option>
+          <option value="callback">Rückruf vereinbart</option>
+          <option value="noAnswer">Kein Anschluss</option>
+        </select>
+      </div>
+      <div class="fgg"><label>Notizen</label><textarea id="call-notes" placeholder="Weitere Infos zum Gespräch..." style="min-height:60px"></textarea></div>
+    </div>
+    <div class="modal-ft" style="justify-content:flex-end">
+      <button class="btn btn-secondary" onclick="closeModal('m-calllog')">Abbrechen</button>
+      <button class="btn btn-primary" onclick="saveCallLog()">Protokollieren</button>
     </div>
   </div>
 </div>
@@ -2525,6 +2663,7 @@ function buildNav(){
       <div class="nav-sec">Übersicht</div>
       <button class="ni active" onclick="nav('dashboard',this)">📊 Dashboard</button>
       <button class="ni" onclick="nav('stats',this)">📈 Statistiken</button>
+      <button class="ni" onclick="nav('hotline',this)">📞 Hotline & Pikett <span class="ni-badge" id="nb-hotline" style="background:#2a3d2a;color:#5aa870"></span></button>
       <div class="nav-sec">Support</div>
       <button class="ni" onclick="nav('inbox',this)">📥 Inbox <span class="ni-badge red" id="nb-inbox">…</span></button>
       <button class="ni" onclick="nav('tickets',this)">🎫 Alle Tickets <span class="ni-badge blue" id="nb-open">…</span></button>
@@ -2534,7 +2673,7 @@ function buildNav(){
       <button class="ni" onclick="nav('announcements',this)">📢 Ankündigungen <span class="ni-badge red" id="nb-ann">…</span></button>
       <button class="ni" onclick="nav('security',this)">🛡️ Sicherheit <span class="ni-badge red" id="nb-sec-fail"></span></button>
       <button class="ni" onclick="nav('users',this)">👥 Benutzer</button>
-      <button class="ni" onclick="nav('customers',this)">🏢 Kunden-Konten <span class="ni-badge amber" id="nb-sla-pending">…</span></button>
+
       <button class="ni" onclick="nav('sla',this)">📋 SLA-Modelle</button>
       <button class="ni" onclick="nav('logs',this)">📋 System-Logs</button>
       <div class="nav-sec">KI-Assistent</div>
@@ -2585,7 +2724,7 @@ function toast(msg,type=''){const t=document.getElementById('toast');t.textConte
 function nav(view,btn){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+view)?.classList.add('active');
-  const titles={dashboard:'Dashboard',stats:'Statistiken',inbox:'Inbox — Anfragen',tickets:'Alle Tickets','extern-tickets':'Externe Tickets',portal:'Meine Tickets','new-ticket':'Ticket erstellen',users:'Benutzerverwaltung',customers:'Kunden-Konten',sla:'SLA-Modelle',logs:'System-Logs',profile:'Mein Profil',ai:'KI-Assistent',announcements:'Ankündigungen & Systemstatus',selfservice:'Hilfe zur Selbsthilfe',security:'Sicherheitsübersicht','ai-knowledge':'KI-Wissensdatenbank',help:'Hilfe & Anleitung'};
+  const titles={dashboard:'Dashboard',stats:'Statistiken',inbox:'Inbox — Anfragen',tickets:'Alle Tickets','extern-tickets':'Externe Tickets',portal:'Meine Tickets','new-ticket':'Ticket erstellen',users:'Benutzerverwaltung',sla:'SLA-Modelle',logs:'System-Logs',profile:'Mein Profil',ai:'KI-Assistent',announcements:'Ankündigungen & Systemstatus',selfservice:'Hilfe zur Selbsthilfe',security:'Sicherheitsübersicht','ai-knowledge':'KI-Wissensdatenbank',help:'Hilfe & Anleitung',hotline:'Hotline & Pikett-Dienst'};
   document.getElementById('topbar-title').textContent=titles[view]||view;
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
   if(btn)btn.classList.add('active');
@@ -2608,6 +2747,7 @@ function nav(view,btn){
   if(view==='announcements')loadAnnouncements();
   if(view==='selfservice')loadSelfService();
   if(view==='security')loadSecurity();
+  if(view==='hotline')loadHotline();
 }
 
 function loadSlaView(){
@@ -4261,6 +4401,241 @@ function searchFAQ(){
     document.getElementById('faq-content').innerHTML=`<p style="color:#7a8090">Kein FAQ-Eintrag für "<strong>${q}</strong>" gefunden.</p><p style="margin-top:10px">Bitte erstelle ein <button class="btn btn-primary btn-sm" onclick="nav('new-ticket',null)">Support-Ticket →</button></p>`;
     document.getElementById('faq-answer').style.display='block';
   }
+}
+
+// ============================================================
+// HOTLINE & PIKETT-DIENST
+// ============================================================
+let pikettEntries = []; // [{id, username, name, phone, sla, from, to, active}]
+let hotlineQueue  = []; // [{username, name, phone, loginTime}]
+let callLogs      = []; // [{id, caller, phone, topic, sla, forward, result, notes, time, by}]
+
+function loadHotline(){
+  renderPikettList();
+  renderHotlineQueue();
+  renderCallLogs();
+  // Populate selects
+  const userSel = document.getElementById('pikett-sel-user');
+  const fwdSel  = document.getElementById('call-forward');
+  if(userSel && STAFF){
+    userSel.innerHTML = '<option value="">Bitte wählen...</option>' +
+      STAFF.map(s=>`<option value="${s.initials}">${s.name}</option>`).join('');
+  }
+  if(fwdSel && STAFF){
+    fwdSel.innerHTML = '<option value="">Selbst bearbeitet</option>' +
+      STAFF.map(s=>`<option value="${s.name}">${s.name}</option>`).join('');
+  }
+  // Update sidebar badge
+  const nb = document.getElementById('nb-hotline');
+  if(nb){
+    const onDuty = pikettEntries.filter(p=>p.active).length;
+    nb.textContent = onDuty ? onDuty + ' aktiv' : '';
+  }
+}
+
+function renderPikettList(){
+  const el = document.getElementById('pikett-list');
+  if(!el) return;
+  const current = pikettEntries.find(p=>p.active);
+  const cnEl = document.getElementById('pikett-current-name');
+  const cpEl = document.getElementById('pikett-current-phone');
+  const csEl = document.getElementById('pikett-current-sla');
+  if(current){
+    if(cnEl) cnEl.textContent = current.name;
+    if(cpEl) cpEl.textContent = current.phone;
+    if(csEl) csEl.textContent = `Erreichbar für: ${current.sla} · ${current.from} – ${current.to} Uhr`;
+  } else {
+    if(cnEl) cnEl.textContent = 'Niemand im Pikett';
+    if(cpEl) cpEl.textContent = '—';
+    if(csEl) csEl.textContent = '';
+  }
+  if(!pikettEntries.length){
+    el.innerHTML = '<div class="empty" style="font-size:11px">Noch keine Pikett-Nummern hinterlegt.</div>';
+    return;
+  }
+  el.innerHTML = pikettEntries.map(p=>`
+    <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:${p.active?'#1a2d20':'#1a1d23'};border:1px solid ${p.active?'#2a3d2a':'#2a2d35'};border-radius:5px">
+      <div style="width:8px;height:8px;border-radius:50%;background:${p.active?'#5aa870':'#3a3f4d'};flex-shrink:0"></div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:12px;font-weight:600;color:#c9cdd6">${p.name}</div>
+        <div style="font-size:13px;color:${p.active?'#5aa870':'#7a8090'};font-family:'Courier New',monospace;font-weight:700">${p.phone}</div>
+        <div style="font-size:10px;color:#4a5060">${p.sla} · ${p.from}–${p.to}</div>
+      </div>
+      <div style="display:flex;gap:5px">
+        <button class="btn btn-${p.active?'secondary':'success'} btn-sm" onclick="togglePikettActive('${p.id}')">${p.active?'Deaktivieren':'Aktivieren'}</button>
+        <button class="btn btn-danger btn-sm" onclick="deletePikett('${p.id}')">×</button>
+      </div>
+    </div>`).join('');
+}
+
+function renderHotlineQueue(){
+  const el   = document.getElementById('hotline-queue-list');
+  const cnt  = document.getElementById('hotline-queue-count');
+  const myStatus = document.getElementById('hotline-my-status');
+  const loginBtn  = document.getElementById('hotline-login-btn');
+  const logoutBtn = document.getElementById('hotline-logout-btn');
+  if(cnt) cnt.textContent = hotlineQueue.length;
+  const amI = hotlineQueue.find(q=>q.username===currentUser?.username);
+  if(myStatus) myStatus.textContent = amI
+    ? `Du bist angemeldet seit ${fmtTime(amI.loginTime)}`
+    : 'Du bist nicht in der Warteschlange.';
+  if(loginBtn)  loginBtn.style.opacity  = amI ? '0.4' : '1';
+  if(logoutBtn) logoutBtn.style.opacity = amI ? '1'   : '0.4';
+  if(!el) return;
+  if(!hotlineQueue.length){
+    el.innerHTML = '<div class="empty" style="font-size:11px">Keine Supporter angemeldet.</div>';
+    return;
+  }
+  el.innerHTML = hotlineQueue.map((q,i)=>`
+    <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:${i===0?'#1a2535':'#1a1d23'};border:1px solid ${i===0?'#2a3545':'#2a2d35'};border-radius:5px">
+      <div style="font-size:11px;font-weight:700;color:#3a5a80;width:18px;text-align:center">${i+1}</div>
+      <div style="flex:1">
+        <div style="font-size:12px;font-weight:600;color:#c9cdd6">${q.name} ${q.username===currentUser?.username?'<span style="font-size:10px;color:#5a8ab0">(Du)</span>':''}</div>
+        <div style="font-size:11px;color:#5a7090;font-family:'Courier New',monospace">${q.phone||'—'}</div>
+        <div style="font-size:10px;color:#3a5060">Seit ${fmtTime(q.loginTime)}</div>
+      </div>
+      ${i===0?'<span style="font-size:10px;background:#1a3a5a;color:#5a8ab0;padding:2px 8px;border-radius:10px">Nächste</span>':''}
+    </div>`).join('');
+}
+
+function renderCallLogs(){
+  const el = document.getElementById('call-log-list');
+  if(!el) return;
+  if(!callLogs.length){
+    el.innerHTML = '<div class="empty">Noch keine Anrufe protokolliert. Klicke auf «+ Anruf protokollieren» um einen Anruf zu erfassen.</div>';
+    return;
+  }
+  const resultLabels = {solved:'Direkt gelöst',ticket:'Ticket erstellt',forwarded:'Weitergeleitet',callback:'Rückruf vereinbart',noAnswer:'Kein Anschluss'};
+  const resultColors = {solved:'#5aa870',ticket:'#5a8ab0',forwarded:'#c8a060',callback:'#7a6ab0',noAnswer:'#7a6070'};
+  el.innerHTML = `<table><thead><tr><th>Zeit</th><th>Anrufer</th><th>Anliegen</th><th>SLA</th><th>Ergebnis</th><th>Bearbeitet von</th></tr></thead><tbody>
+    ${callLogs.map(c=>`<tr>
+      <td style="font-size:11px;color:#5a6070;white-space:nowrap">${fmtTime(c.time)}</td>
+      <td><div style="font-size:12px;font-weight:500;color:#c9cdd6">${c.caller||'Unbekannt'}</div>${c.phone?`<div style="font-size:10px;color:#5a6070;font-family:'Courier New',monospace">${c.phone}</div>`:''}</td>
+      <td style="font-size:12px;color:#9a9fad;max-width:200px">${c.topic}</td>
+      <td>${slab(c.sla)}</td>
+      <td><span style="font-size:11px;color:${resultColors[c.result]||'#9a9fad'}">${resultLabels[c.result]||c.result}</span></td>
+      <td style="font-size:11px;color:#5a6070">${c.by}</td>
+    </tr>`).join('')}
+  </tbody></table>`;
+}
+
+function openAddPikett(){
+  document.getElementById('m-pikett-title').textContent = 'Pikett-Nummer hinzufügen';
+  ['pikett-phone'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('pikett-active').checked = true;
+  document.getElementById('pikett-from').value = '17:00';
+  document.getElementById('pikett-to').value   = '08:00';
+  // Populate supporter list
+  const sel = document.getElementById('pikett-sel-user');
+  if(sel && STAFF) sel.innerHTML = '<option value="">Bitte wählen...</option>' + STAFF.map(s=>`<option value="${s.name}">${s.name}</option>`).join('');
+  document.getElementById('m-pikett').classList.add('open');
+}
+
+function savePikett(){
+  const name  = document.getElementById('pikett-sel-user')?.value;
+  const phone = document.getElementById('pikett-phone')?.value.trim();
+  if(!name||!phone){toast('Bitte Supporter und Telefonnummer angeben.','error');return;}
+  const active = document.getElementById('pikett-active').checked;
+  // Deactivate others if this one is set active
+  if(active) pikettEntries.forEach(p=>p.active=false);
+  pikettEntries.push({
+    id:'pk-'+Date.now(), name, phone,
+    sla:  document.getElementById('pikett-sla')?.value||'Gold',
+    from: document.getElementById('pikett-from')?.value||'17:00',
+    to:   document.getElementById('pikett-to')?.value||'08:00',
+    active
+  });
+  addLog('Pikett-Nummer gesetzt', currentUser?.name||'Admin', '—', `${name}: ${phone}`, 'update');
+  toast(`Pikett-Dienst: ${name} (${phone}) gespeichert ✓`, 'success');
+  closeModal('m-pikett');
+  loadHotline();
+}
+
+function togglePikettActive(id){
+  const p = pikettEntries.find(x=>x.id===id);
+  if(!p) return;
+  if(!p.active){
+    pikettEntries.forEach(x=>x.active=false);
+    p.active = true;
+    toast(`${p.name} ist jetzt aktiver Pikett-Dienst ✓`, 'success');
+    addLog('Pikett aktiviert', currentUser?.name, '—', `${p.name}: ${p.phone}`, 'update');
+  } else {
+    p.active = false;
+    toast('Pikett deaktiviert', 'success');
+  }
+  loadHotline();
+}
+
+function deletePikett(id){
+  const p = pikettEntries.find(x=>x.id===id);
+  if(!p||!confirm(`${p.name} aus Pikett-Liste entfernen?`)) return;
+  pikettEntries = pikettEntries.filter(x=>x.id!==id);
+  toast('Entfernt ✓', 'success');
+  loadHotline();
+}
+
+function hotlineLogin(){
+  if(hotlineQueue.find(q=>q.username===currentUser?.username)){
+    toast('Du bist bereits angemeldet.','error'); return;
+  }
+  const p = userProfiles[currentUser?.username];
+  hotlineQueue.push({
+    username: currentUser.username,
+    name: currentUser.name,
+    phone: p?.phone||'—',
+    loginTime: Date.now()
+  });
+  addLog('Hotline angemeldet', currentUser.name, '—', 'In Warteschlange eingereiht', 'assign');
+  toast(`Du bist jetzt in der Hotline-Warteschlange (Position ${hotlineQueue.length}) ✓`, 'success');
+  loadHotline();
+}
+
+function hotlineLogout(){
+  hotlineQueue = hotlineQueue.filter(q=>q.username!==currentUser?.username);
+  addLog('Hotline abgemeldet', currentUser.name, '—', 'Aus Warteschlange ausgetragen', 'close');
+  toast('Du bist aus der Hotline-Warteschlange abgemeldet.', 'success');
+  loadHotline();
+}
+
+function openLogCall(){
+  ['call-caller','call-phone','call-topic','call-notes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  const fwdSel = document.getElementById('call-forward');
+  if(fwdSel && STAFF) fwdSel.innerHTML = '<option value="">Selbst bearbeitet</option>' + STAFF.map(s=>`<option value="${s.name}">${s.name}</option>`).join('');
+  document.getElementById('m-calllog').classList.add('open');
+}
+
+function saveCallLog(){
+  const topic = document.getElementById('call-topic')?.value.trim();
+  if(!topic){toast('Bitte Anliegen eingeben.','error');return;}
+  const result = document.getElementById('call-result')?.value||'solved';
+  const forward = document.getElementById('call-forward')?.value||'';
+  const log = {
+    id: 'cl-'+Date.now(),
+    caller: document.getElementById('call-caller')?.value.trim()||'Unbekannt',
+    phone:  document.getElementById('call-phone')?.value.trim()||'',
+    topic,
+    sla:    document.getElementById('call-sla')?.value||'Unbekannt',
+    forward,
+    result,
+    notes:  document.getElementById('call-notes')?.value.trim()||'',
+    time:   Date.now(),
+    by:     currentUser?.name||'?'
+  };
+  callLogs.unshift(log);
+  // If ticket should be created from call
+  if(result==='ticket'){
+    toast(`Anruf protokolliert ✓ — Bitte Ticket manuell erstellen für: ${topic}`, 'success');
+  } else {
+    toast('Anruf protokolliert ✓', 'success');
+  }
+  addLog('Anruf protokolliert', currentUser?.name, '—', `${log.caller}: ${topic} → ${result}`, 'update');
+  closeModal('m-calllog');
+  renderCallLogs();
+}
+
+function fmtTime(ts){
+  const d=new Date(ts);
+  return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0');
 }
 
 // ============================================================
