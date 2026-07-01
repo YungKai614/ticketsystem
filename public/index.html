@@ -344,127 +344,277 @@ td{padding:7px 11px;vertical-align:middle}
 .ai-quick-btn:hover{background:#252830;color:#c9cdd6}
 
 /* ============================================================
-   LIGHT MODE — proper color overrides, applies to #app only
+   LIGHT MODE — vollständige Überschreibungen
+   App + Landingpage + alle neuen Bereiche
    ============================================================ */
-body.light-mode #app{background:#f4f5f7}
-body.light-mode .sb{background:#ffffff;border-right-color:#e3e5e9}
-body.light-mode .sb-brand{border-bottom-color:#e3e5e9}
-body.light-mode .sb-lbl{color:#a8acb8}
+/* Basis */
+body.light-mode{background:#f0f2f5}
+body.light-mode #app{background:#f0f2f5}
+/* Sidebar */
+body.light-mode .sb{background:#ffffff;border-right-color:#dde0e8}
+body.light-mode .sb-brand{border-bottom-color:#dde0e8}
+body.light-mode .sb-lbl,.sb-name{color:#a0a4b0}
 body.light-mode .sb-name{color:#1a1d23}
-body.light-mode .nav-sec{color:#b8bcc8}
-body.light-mode .ni{color:#5a6070}
-body.light-mode .ni:hover{background:#f0f1f4;color:#1a1d23}
-body.light-mode .ni.active{background:#eaf0fa;color:#1a4d80}
-body.light-mode .ni-badge.blue{background:#deebff;color:#1a5a9e}
-body.light-mode .ni-badge.red{background:#ffe5e5;color:#b03030}
-body.light-mode .ni-badge.amber{background:#fff3da;color:#9a6a10}
-body.light-mode .sb-footer{border-top-color:#e3e5e9}
-body.light-mode .u-name{color:#3a4050}
-body.light-mode .u-role{color:#a8acb8}
-body.light-mode #profile-menu-trigger:hover{background:#f0f1f4}
-body.light-mode .topbar{background:#ffffff;border-bottom-color:#e3e5e9}
+body.light-mode .nav-sec{color:#b0b4c0}
+body.light-mode .ni{color:#4a5060}
+body.light-mode .ni:hover{background:#edf0f7;color:#1a1d23}
+body.light-mode .ni.active{background:#e2eaf8;border-left-color:#2a5a9e;color:#1a4d80}
+body.light-mode .ni-badge{color:#fff}
+body.light-mode .ni-badge.blue{background:#3a7ab0;color:#fff}
+body.light-mode .ni-badge.red{background:#c03030;color:#fff}
+body.light-mode .ni-badge.amber{background:#b07010;color:#fff}
+body.light-mode .sb-footer{border-top-color:#dde0e8;background:#ffffff}
+body.light-mode .u-name{color:#2a2d35}
+body.light-mode .u-role{color:#8a8fa0}
+body.light-mode #profile-menu-trigger:hover{background:#edf0f7}
+body.light-mode #profile-menu{background:#ffffff;border-color:#dde0e8;box-shadow:0 -8px 24px rgba(0,0,0,.1)}
+body.light-mode .pm-item{color:#4a5060}
+body.light-mode .pm-item:hover{background:#edf0f7;color:#1a1d23}
+body.light-mode .pm-theme-btn{background:#f0f2f5;border-color:#dde0e8;color:#5a6070}
+body.light-mode .pm-theme-btn.active{background:#e2eaf8;border-color:#3a7ab0;color:#1a4d80}
+/* Topbar */
+body.light-mode .topbar{background:#ffffff;border-bottom-color:#dde0e8}
 body.light-mode .topbar-title{color:#1a1d23}
-body.light-mode .btn-secondary{background:#f0f1f4;color:#5a6070;border-color:#dcdfe5}
-body.light-mode .btn-secondary:hover{background:#e6e8ec}
-body.light-mode .card{background:#ffffff;border-color:#e3e5e9}
-body.light-mode .card-hd{background:#fafbfc;border-bottom-color:#e3e5e9;color:#5a6070}
-body.light-mode .kpi-card{background:#ffffff;border-color:#e3e5e9}
+/* Buttons */
+body.light-mode .btn-secondary{background:#edf0f7;color:#4a5060;border-color:#cdd0da}
+body.light-mode .btn-secondary:hover{background:#e0e3ec}
+/* Cards & Panels */
+body.light-mode .card{background:#ffffff;border-color:#dde0e8;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+body.light-mode .card-hd{background:#f7f8fb;border-bottom-color:#dde0e8;color:#4a5060}
+body.light-mode .card-hd h3{color:#2a2d35}
+body.light-mode .kpi-card{background:#ffffff;border-color:#dde0e8;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+body.light-mode .kpi-card.blue{background:#e8f0fb;border-color:#b8d0f0}
+body.light-mode .kpi-card.green{background:#e8f5ee;border-color:#b0dcc0}
+body.light-mode .kpi-card.amber{background:#fef7e6;border-color:#f0d890}
+body.light-mode .kpi-card.red{background:#fde8e8;border-color:#f0b0b0}
+body.light-mode .kpi-card.purple{background:#f0e8f8;border-color:#d0b0f0}
 body.light-mode .kpi-val{color:#1a1d23}
-body.light-mode .kpi-lbl{color:#a8acb8}
-body.light-mode .kpi-sub{color:#c0c4ce}
-body.light-mode input[type=text],body.light-mode input[type=number],body.light-mode select,body.light-mode textarea{background:#f7f8fa;border-color:#dcdfe5;color:#1a1d23}
+body.light-mode .kpi-lbl{color:#8a8fa0}
+body.light-mode .kpi-sub{color:#b0b4c0}
+/* Inputs */
+body.light-mode input[type=text],body.light-mode input[type=number],body.light-mode input[type=email],body.light-mode input[type=password],body.light-mode input[type=time],body.light-mode select,body.light-mode textarea{background:#f7f8fb;border-color:#cdd0da;color:#1a1d23}
 body.light-mode select option{background:#ffffff;color:#1a1d23}
-body.light-mode table{color:#3a4050}
-body.light-mode thead th{background:#fafbfc;border-bottom-color:#e3e5e9;color:#a8acb8}
-body.light-mode tbody tr{border-bottom-color:#eef0f3}
-body.light-mode tbody tr:hover{background:#f5f7fa}
+body.light-mode .fgg label{color:#4a5060}
+/* Tables */
+body.light-mode table{color:#2a2d35}
+body.light-mode thead th{background:#f0f2f5;border-bottom-color:#dde0e8;color:#8a8fa0}
+body.light-mode tbody tr{border-bottom-color:#eaecf0}
+body.light-mode tbody tr:hover{background:#f5f7fb}
 body.light-mode .td-title{color:#1a1d23}
-body.light-mode .td-sub{color:#a8acb8}
-body.light-mode .td-id{color:#3a7ab0}
-body.light-mode .filter-bar{border-bottom-color:#e3e5e9}
-body.light-mode .modal{background:#ffffff;border-color:#e3e5e9}
-body.light-mode .modal-hd{border-bottom-color:#e3e5e9}
+body.light-mode .td-sub{color:#8a8fa0}
+body.light-mode .td-id{color:#2a5a9e}
+body.light-mode .filter-bar{border-bottom-color:#dde0e8;background:#f7f8fb}
+/* Modals */
+body.light-mode .modal-bg{background:rgba(0,0,0,.4)}
+body.light-mode .modal{background:#ffffff;border-color:#dde0e8;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+body.light-mode .modal-hd{border-bottom-color:#dde0e8;background:#f7f8fb}
 body.light-mode .modal-hd h3{color:#1a1d23}
-body.light-mode .modal-ft{background:#fafbfc;border-top-color:#e3e5e9}
-body.light-mode .modal-close{color:#a8acb8}
-body.light-mode .modal-close:hover{background:#f0f1f4;color:#1a1d23}
-body.light-mode .fgg label{color:#5a6070}
-body.light-mode .meta-box{background:#f7f8fa;border-color:#e3e5e9}
-body.light-mode .meta-lbl{color:#a8acb8}
+body.light-mode .modal-ft{background:#f7f8fb;border-top-color:#dde0e8}
+body.light-mode .modal-close{color:#8a8fa0}
+body.light-mode .modal-close:hover{background:#edf0f7;color:#1a1d23}
+/* Ticket detail */
+body.light-mode .meta-box{background:#f7f8fb;border-color:#dde0e8}
+body.light-mode .meta-lbl{color:#8a8fa0}
 body.light-mode .meta-val{color:#1a1d23}
-body.light-mode .det-desc{background:#f7f8fa;border-color:#e3e5e9;color:#5a6070}
-body.light-mode .section-lbl{color:#a8acb8}
-body.light-mode .tl-note{background:#f7f8fa;border-left-color:#dcdfe5;color:#5a6070}
+body.light-mode .det-desc{background:#f7f8fb;border-color:#dde0e8;color:#4a5060}
+body.light-mode .section-lbl{color:#8a8fa0;border-bottom-color:#dde0e8}
+body.light-mode .tl-note{background:#f7f8fb;border-left-color:#cdd0da;color:#4a5060}
 body.light-mode .tl-who{color:#1a1d23}
-body.light-mode .tl-time{color:#b8bcc8}
-body.light-mode .tl-item::before{background:#e3e5e9}
-body.light-mode .sla-card{background:#ffffff;border-color:#e3e5e9}
-body.light-mode .sla-hd{background:#fafbfc;border-bottom-color:#e3e5e9}
-body.light-mode .sla-card.feat .sla-hd{background:#eaf0fa}
+body.light-mode .tl-time{color:#a0a4b0}
+body.light-mode .tl-item::before{background:#dde0e8}
+/* SLA cards */
+body.light-mode .sla-card{background:#ffffff;border-color:#dde0e8}
+body.light-mode .sla-hd{background:#f7f8fb;border-bottom-color:#dde0e8}
+body.light-mode .sla-card.feat{border-color:#3a7ab0}
+body.light-mode .sla-card.feat .sla-hd{background:#e2eaf8}
 body.light-mode .sla-name{color:#1a1d23}
-body.light-mode .sla-desc{color:#a8acb8}
-body.light-mode .sla-row{border-bottom-color:#eef0f3}
-body.light-mode .sla-k{color:#a8acb8}
+body.light-mode .sla-desc{color:#8a8fa0}
+body.light-mode .sla-row{border-bottom-color:#eaecf0}
+body.light-mode .sla-k{color:#8a8fa0}
 body.light-mode .sla-v{color:#1a1d23}
-body.light-mode .bar-track,body.light-mode .bar-h-track{background:#eef0f3}
-body.light-mode .bar-hd,body.light-mode .bar-h-lbl,body.light-mode .bar-h-val{color:#5a6070}
-body.light-mode .stat-section-hd{border-bottom-color:#e3e5e9}
-body.light-mode .stat-section-num{color:#dcdfe5}
+/* Charts */
+body.light-mode .bar-track,.bar-h-track{background:#eaecf0}
+body.light-mode .bar-hd,.bar-h-lbl,.bar-h-val{color:#4a5060}
+body.light-mode .stat-section-hd{border-bottom-color:#dde0e8}
+body.light-mode .stat-section-num{color:#cdd0da}
 body.light-mode .stat-section-title{color:#1a1d23}
-body.light-mode .stat-section-sub{color:#a8acb8}
-body.light-mode .stats-scroll::-webkit-scrollbar-thumb{background:#dcdfe5}
-body.light-mode .donut-legend-item{color:#5a6070}
+body.light-mode .stat-section-sub{color:#8a8fa0}
+body.light-mode .stats-scroll::-webkit-scrollbar-thumb{background:#cdd0da}
+body.light-mode .donut-legend-item{color:#4a5060}
 body.light-mode .donut-legend-val{color:#1a1d23}
-body.light-mode .sla-ring-lbl{color:#5a6070}
+body.light-mode .sla-ring-lbl{color:#4a5060}
 body.light-mode .sla-ring-pct{color:#1a1d23}
-body.light-mode .empty,body.light-mode .loading{color:#c0c4ce}
-body.light-mode .pagi{color:#a8acb8;border-top-color:#e3e5e9}
-body.light-mode .user-card{background:#ffffff;border-color:#e3e5e9}
-body.light-mode .skill-tag{background:#eaf0fa;border-color:#cfe0f5;color:#3a7ab0}
-body.light-mode .view-tabs{border-bottom-color:#e3e5e9}
-body.light-mode .vt{color:#a8acb8}
-body.light-mode .vt.active{color:#1a1d23}
+body.light-mode .timeline-svg-wrap text{fill:#4a5060}
+/* Misc */
+body.light-mode .empty,.loading{color:#b0b4c0}
+body.light-mode .pagi{color:#8a8fa0;border-top-color:#dde0e8}
+body.light-mode .view-tabs{border-bottom-color:#dde0e8}
+body.light-mode .vt{color:#8a8fa0}
+body.light-mode .vt.active{color:#1a1d23;border-bottom-color:#2a5a9e}
 body.light-mode .vt:hover{color:#1a1d23}
-body.light-mode .inbox-item{border-bottom-color:#eef0f3}
-body.light-mode .inbox-item:hover{background:#f5f7fa}
+body.light-mode .inbox-item{border-bottom-color:#eaecf0}
+body.light-mode .inbox-item:hover{background:#f5f7fb}
 body.light-mode .inbox-title{color:#1a1d23}
-body.light-mode .inbox-preview{color:#a8acb8}
-body.light-mode .inbox-meta{color:#c0c4ce}
-body.light-mode .assignee-badge{background:#eaf0fa;border-color:#cfe0f5;color:#3a7ab0}
-body.light-mode .take-btn{background:#eaf0fa;border-color:#cfe0f5;color:#3a7ab0}
-body.light-mode .badge.b-open{background:#deebff;color:#1a5a9e;border-color:#b8d6f5}
-body.light-mode .badge.b-progress{background:#fff3da;color:#9a6a10;border-color:#f0d9a0}
-body.light-mode .badge.b-warten{background:#f0e5fa;color:#7a3aa0;border-color:#e0c8f0}
-body.light-mode .badge.b-resolved{background:#dff5e6;color:#1a7a3a;border-color:#b8e8c8}
-body.light-mode .badge.b-closed{background:#eef0f3;color:#5a6070;border-color:#dcdfe5}
-body.light-mode .badge.b-critical{background:#ffe0e0;color:#b02020;border-color:#f0b8b8}
-body.light-mode .badge.b-high{background:#fff3da;color:#9a6a10;border-color:#f0d9a0}
-body.light-mode .badge.b-medium{background:#deebff;color:#1a5a9e;border-color:#b8d6f5}
-body.light-mode .badge.b-low{background:#eef0f3;color:#5a6070;border-color:#dcdfe5}
-body.light-mode .badge.b-silver{background:#eef0f3;color:#5a6070;border-color:#dcdfe5}
-body.light-mode .badge.b-gold{background:#fff3da;color:#9a6a10;border-color:#f0d9a0}
-body.light-mode .badge.b-platinum{background:#f0e5fa;color:#7a3aa0;border-color:#e0c8f0}
-body.light-mode .badge.b-extern{background:#f0e5fa;color:#7a3aa0;border-color:#e0c8f0}
-body.light-mode .badge.b-1st{background:#deebff;color:#1a5a9e;border-color:#b8d6f5}
-body.light-mode .badge.b-2nd{background:#fff3da;color:#9a6a10;border-color:#f0d9a0}
-body.light-mode .badge.b-3rd{background:#ffe0e0;color:#b02020;border-color:#f0b8b8}
-body.light-mode .filter-chip{background:#ffffff;border-color:#dcdfe5;color:#5a6070}
-body.light-mode .filter-chip:hover{border-color:#b8bcc8;color:#1a1d23}
-body.light-mode .filter-chip.active{background:#eaf0fa;border-color:#3a7ab0;color:#1a5a9e}
-body.light-mode .filter-chip-count{background:#eef0f3;color:#5a6070}
-body.light-mode .toast{background:#ffffff;color:#1a1d23;border-color:#e3e5e9;box-shadow:0 4px 16px rgba(0,0,0,.12)}
-body.light-mode .toast.success{background:#dff5e6;color:#1a7a3a;border-color:#b8e8c8}
-body.light-mode .toast.error{background:#ffe0e0;color:#b02020;border-color:#f0b8b8}
-body.light-mode .settings-row{border-bottom-color:#eef0f3}
+body.light-mode .inbox-preview{color:#8a8fa0}
+body.light-mode .inbox-meta{color:#b0b4c0}
+body.light-mode .assignee-badge{background:#e2eaf8;border-color:#b8d0f0;color:#2a5a9e}
+body.light-mode .take-btn{background:#e2eaf8;border-color:#b8d0f0;color:#2a5a9e}
+/* Badges */
+body.light-mode .badge.b-open{background:#dbeeff;color:#1a5a9e;border-color:#a8d0f0}
+body.light-mode .badge.b-progress{background:#fef3d8;color:#906010;border-color:#e8d080}
+body.light-mode .badge.b-warten{background:#efe8fa;color:#6a30a0;border-color:#d0b8e8}
+body.light-mode .badge.b-resolved{background:#daf5e4;color:#1a7030;border-color:#a0d8b0}
+body.light-mode .badge.b-closed{background:#eaecf0;color:#4a5060;border-color:#cdd0da}
+body.light-mode .badge.b-critical{background:#fde0e0;color:#a01818;border-color:#e8a0a0}
+body.light-mode .badge.b-high{background:#fef3d8;color:#906010;border-color:#e8d080}
+body.light-mode .badge.b-medium{background:#dbeeff;color:#1a5a9e;border-color:#a8d0f0}
+body.light-mode .badge.b-low{background:#eaecf0;color:#4a5060;border-color:#cdd0da}
+body.light-mode .badge.b-silver{background:#eaecf0;color:#4a5060;border-color:#cdd0da}
+body.light-mode .badge.b-gold{background:#fef3d8;color:#906010;border-color:#e8d080}
+body.light-mode .badge.b-platinum{background:#efe8fa;color:#6a30a0;border-color:#d0b8e8}
+body.light-mode .badge.b-extern{background:#efe8fa;color:#6a30a0;border-color:#d0b8e8}
+body.light-mode .badge.b-1st{background:#dbeeff;color:#1a5a9e;border-color:#a8d0f0}
+body.light-mode .badge.b-2nd{background:#fef3d8;color:#906010;border-color:#e8d080}
+body.light-mode .badge.b-3rd{background:#fde0e0;color:#a01818;border-color:#e8a0a0}
+/* Filter chips */
+body.light-mode .filter-chip{background:#ffffff;border-color:#cdd0da;color:#4a5060}
+body.light-mode .filter-chip:hover{border-color:#a0a4b0;color:#1a1d23}
+body.light-mode .filter-chip.active{background:#e2eaf8;border-color:#3a7ab0;color:#1a4d80}
+body.light-mode .filter-chip-count{background:#eaecf0;color:#4a5060}
+/* Toasts */
+body.light-mode .toast{background:#ffffff;color:#1a1d23;border-color:#dde0e8;box-shadow:0 4px 16px rgba(0,0,0,.1)}
+body.light-mode .toast.success{background:#daf5e4;color:#1a7030;border-color:#a0d8b0}
+body.light-mode .toast.error{background:#fde0e0;color:#a01818;border-color:#e8a0a0}
+/* Settings */
+body.light-mode .settings-row{border-bottom-color:#eaecf0}
 body.light-mode .settings-label{color:#1a1d23}
-body.light-mode .settings-desc{color:#a8acb8}
-body.light-mode .pm-item{color:#5a6070}
-body.light-mode .pm-item:hover{background:#f5f7fa;color:#1a1d23}
-body.light-mode #profile-menu{background:#ffffff;border-color:#e3e5e9;box-shadow:0 -8px 24px rgba(0,0,0,.12)}
-body.light-mode .login-hint{background:#f7f8fa;color:#a8acb8}
-body.light-mode .invoice-panel{background:#f9f5fc;border-color:#e0c8f0}
-body.light-mode .invoice-total{color:#7a3aa0;border-top-color:#e0c8f0}
+body.light-mode .settings-desc{color:#8a8fa0}
+body.light-mode .toggle-switch{background:#cdd0da}
+body.light-mode .toggle-switch.on{background:#2a5a9e}
+/* Login */
+body.light-mode .login-box{background:#ffffff;border-color:#dde0e8}
+body.light-mode .login-hint{background:#f0f2f5;color:#8a8fa0;border-color:#dde0e8}
+body.light-mode .login-title{color:#1a1d23}
+body.light-mode .login-sub{color:#8a8fa0}
+body.light-mode .login-tabs{background:#f0f2f5;border-color:#dde0e8}
+body.light-mode .login-tab{color:#4a5060}
+body.light-mode .login-tab.active{background:#ffffff;color:#1a1d23}
+/* Invoice */
+body.light-mode .invoice-panel{background:#f5f0fc;border-color:#d0b8e8}
+body.light-mode .invoice-total{color:#6a30a0;border-top-color:#d0b8e8}
+/* Security */
+body.light-mode .sec-measure-row{border-bottom-color:#eaecf0}
+body.light-mode .sec-measure-row:hover{background:#f5f7fb}
+body.light-mode .sec-measure-title{color:#1a1d23}
+body.light-mode .sec-measure-desc{color:#8a8fa0}
+body.light-mode .sec-status-row.sec-status-ok{background:#daf5e4;border-color:#a0d8b0}
+body.light-mode .sec-status-row.sec-status-warn{background:#fef3d8;border-color:#e8d080}
+body.light-mode .sec-status-row.sec-status-err{background:#fde0e0;border-color:#e8a0a0}
+body.light-mode .sec-acc-row{border-bottom-color:#eaecf0}
+/* Accordion */
+body.light-mode .lp-acc-trigger{background:#f7f8fb;color:#1a1d23;border-bottom-color:#dde0e8}
+body.light-mode .lp-acc-trigger:hover{background:#edf0f7}
+body.light-mode .lp-acc-arrow{color:#8a8fa0}
+body.light-mode .lp-acc-body{color:#4a5060;background:#fafbfd;border-bottom-color:#dde0e8}
+body.light-mode .lp-accordion{border-color:#dde0e8}
+body.light-mode .lp-acc-item{border-bottom-color:#dde0e8}
+/* Announcements */
+body.light-mode .ann-card{border-bottom-color:#eaecf0}
+body.light-mode .ann-card-title{color:#1a1d23}
+body.light-mode .ann-card-msg{color:#4a5060}
+body.light-mode .ann-card-systems{color:#8a8fa0}
+body.light-mode .ann-banner-ok{background:#daf5e4;border-color:#a0d8b0;color:#1a7030}
+body.light-mode .ann-banner-warn{background:#fef3d8;border-color:#e8d080;color:#906010}
+body.light-mode .ann-banner-down{background:#fde0e0;border-color:#e8a0a0;color:#a01818}
+body.light-mode .ann-banner-info{background:#dbeeff;border-color:#a8d0f0;color:#1a5a9e}
+body.light-mode .ann-banner-maintenance{background:#eee8fa;border-color:#c8b0e8;color:#6a30a0}
+/* Hotline */
+body.light-mode .sec-measure-badge.active{background:#daf5e4;color:#1a7030;border-color:#a0d8b0}
+body.light-mode .sec-measure-badge.inactive{background:#fde0e0;color:#a01818;border-color:#e8a0a0}
+/* User cards */
+body.light-mode .skill-tag{background:#e2eaf8;border-color:#b8d0f0;color:#2a5a9e}
+/* Landing page — helle Variablen überschreiben */
+body.light-mode #login-screen{background:#f0f2f5;color:#1a1d23}
+body.light-mode #login-screen .lp-nav{background:rgba(240,242,245,.92);border-bottom-color:#dde0e8}
+body.light-mode #login-screen .lp-brand{color:#1a1d23}
+body.light-mode #login-screen .lp-nav-links a{color:#4a5060}
+body.light-mode #login-screen .lp-nav-links a:hover{color:#1a1d23}
+body.light-mode #login-screen .lp-ticker{background:#ffffff;border-bottom-color:#dde0e8}
+body.light-mode #login-screen .lp-ticker-track{color:#8a8fa0}
+body.light-mode #login-screen .lp-h1{color:#1a1d23}
+body.light-mode #login-screen .lp-h1 em{color:#2a5a9e}
+body.light-mode #login-screen .lp-eyebrow{color:#2a5a9e}
+body.light-mode #login-screen .lp-eyebrow::before{background:#2a5a9e}
+body.light-mode #login-screen .lp-hero-sub{color:#4a5060}
+body.light-mode #login-screen .lp-btn-ghost{border-color:#cdd0da;color:#4a5060}
+body.light-mode #login-screen .lp-btn-ghost:hover{border-color:#8a8fa0;color:#1a1d23}
+body.light-mode #login-screen .lp-brand-mark{background:#2a5a9e;box-shadow:0 0 10px #2a5a9e}
+body.light-mode #login-screen .lp-stats-strip{background:#ffffff;border-color:#dde0e8}
+body.light-mode #login-screen .lp-stat-cell{border-right-color:#dde0e8}
+body.light-mode #login-screen .lp-stat-num{color:#1a1d23}
+body.light-mode #login-screen .lp-stat-lbl{color:#8a8fa0}
+body.light-mode #login-screen .lp-section{color:#1a1d23}
+body.light-mode #login-screen .lp-section-title{color:#1a1d23}
+body.light-mode #login-screen .lp-section-sub{color:#4a5060}
+body.light-mode #login-screen .lp-section[style*="background:var(--lp-panel)"]{background:#f7f8fb!important}
+body.light-mode #login-screen .lp-price-card{background:#ffffff;border-color:#dde0e8}
+body.light-mode #login-screen .lp-price-featured{border-color:#2a5a9e;background:linear-gradient(180deg,#e8f0fb 0%,#ffffff 100%)}
+body.light-mode #login-screen .lp-price-tier{color:#8a8fa0}
+body.light-mode #login-screen .lp-price-amount{color:#1a1d23}
+body.light-mode #login-screen .lp-price-amount span{color:#8a8fa0}
+body.light-mode #login-screen .lp-price-desc{color:#4a5060}
+body.light-mode #login-screen .lp-price-divider{background:#dde0e8}
+body.light-mode #login-screen .lp-price-feat{color:#4a5060}
+body.light-mode #login-screen .lp-persona-card{background:#f0f2f5}
+body.light-mode #login-screen .lp-persona-title{color:#1a1d23}
+body.light-mode #login-screen .lp-persona-desc{color:#4a5060}
+body.light-mode #login-screen .lp-persona-icon{background:#ffffff;border-color:#dde0e8}
+body.light-mode #login-screen .lp-persona-grid{background:#dde0e8}
+body.light-mode #login-screen .lp-demo-frame{border-color:#dde0e8;box-shadow:0 20px 60px rgba(0,0,0,.08)}
+body.light-mode #login-screen .lp-demo-bar{background:#f0f2f5;border-bottom-color:#dde0e8}
+body.light-mode #login-screen .lp-demo-side{background:#f7f8fb;border-right-color:#dde0e8}
+body.light-mode #login-screen .lp-demo-side-item{color:#8a8fa0}
+body.light-mode #login-screen .lp-demo-side-item.active{background:#ffffff;color:#1a1d23;border-left-color:#2a5a9e}
+body.light-mode #login-screen .lp-demo-main{background:#ffffff}
+body.light-mode #login-screen .lp-demo-row{border-bottom-color:#eaecf0}
+body.light-mode #login-screen .lp-demo-title{color:#1a1d23}
+body.light-mode #login-screen .lp-feature-row{border-top-color:#dde0e8}
+body.light-mode #login-screen .lp-feature-name{color:#1a1d23}
+body.light-mode #login-screen .lp-feature-num{color:#cdd0da}
+body.light-mode #login-screen .lp-feature-desc{color:#4a5060}
+body.light-mode #login-screen .lp-team-card .lp-team-name{color:#1a1d23}
+body.light-mode #login-screen .lp-team-photo-fallback{background:#edf0f7;color:#4a5060}
+body.light-mode #login-screen .lp-sla-strip{border-color:#dde0e8}
+body.light-mode #login-screen .lp-sla-row{border-bottom-color:#dde0e8}
+body.light-mode #login-screen .lp-sla-header{background:#f7f8fb}
+body.light-mode #login-screen .lp-sla-cell{color:#1a1d23;border-right-color:#dde0e8}
+body.light-mode #login-screen .lp-footer{border-top-color:#dde0e8}
+body.light-mode #login-screen .lp-footer-brand{color:#1a1d23}
+body.light-mode #login-screen .lp-footer-meta{color:#8a8fa0}
+body.light-mode #login-screen .lp-footer-col-links a{color:#4a5060}
+body.light-mode #login-screen .lp-footer-col-title{color:#8a8fa0}
+body.light-mode #login-screen .lp-footer-bottom{border-top-color:#dde0e8}
+body.light-mode #login-screen .lp-footer-bottom-left{color:#8a8fa0}
+body.light-mode #login-screen .lp-mobile-menu{background:rgba(240,242,245,.98)}
+body.light-mode #login-screen .lp-mobile-nav-link{color:#1a1d23;border-bottom-color:#dde0e8}
+body.light-mode #login-screen .lp-job-card{background:#ffffff;border-color:#dde0e8}
+body.light-mode #login-screen .lp-job-icon{background:#f0f2f5;border-color:#dde0e8}
+body.light-mode #login-screen .lp-job-title{color:#1a1d23}
+body.light-mode #login-screen .lp-job-meta{color:#8a8fa0}
+body.light-mode #login-screen .lp-job-tag{background:#f0f2f5;border-color:#dde0e8;color:#8a8fa0}
+body.light-mode #login-screen .lp-testimonial{background:#ffffff;border-color:#dde0e8}
+body.light-mode #login-screen .lp-testimonial-text{color:#4a5060}
+body.light-mode #login-screen .lp-testimonial-author{color:#8a8fa0}
+body.light-mode #login-screen .lp-timeline::before{background:#dde0e8}
+body.light-mode #login-screen .lp-tl-title{color:#1a1d23}
+body.light-mode #login-screen .lp-tl-desc{color:#4a5060}
+body.light-mode #login-screen .lp-acc-trigger{color:#1a1d23;background:#ffffff;border-bottom-color:#dde0e8}
+body.light-mode #login-screen .lp-acc-trigger:hover{background:#edf0f7}
+body.light-mode #login-screen .lp-acc-body{color:#4a5060;background:#fafbfd}
+body.light-mode #login-screen .lp-accordion{border-color:#dde0e8}
+body.light-mode #login-screen .lp-acc-item{border-bottom-color:#dde0e8}
 
+/* FAQ TILES */
 /* FAQ TILES */
 .faq-tile{background:#13151a;border:1px solid #2a2d35;border-radius:6px;padding:12px 14px;font-size:12px;font-weight:500;color:#c9cdd6;cursor:pointer;text-align:left;font-family:inherit;transition:all .15s}
 .faq-tile:hover{background:#1e2128;border-color:#3a3f4d;color:#e2e4e9;transform:translateY(-1px)}
@@ -1041,7 +1191,7 @@ body.compact-mode tbody tr{font-size:11px}
             <button class="login-tab active" onclick="switchTab('admin',this)">Administrator</button>
             <button class="login-tab" onclick="switchTab('customer',this)">Kunde</button>
           </div>
-          <div id="hint-admin" class="login-hint"><span>Admin:</span> nils.mueller / admin123 &nbsp;·&nbsp; calisto.marcello / admin123 &nbsp;·&nbsp; levi.frischknecht / admin123</div>
+          <div id="hint-admin" class="login-hint"><span>Management:</span> nils.mueller / admin123 &nbsp;·&nbsp; calisto.marcello / admin123<br><span>Supporter:</span> hans.meier · sandra.keller · patrick.baumann · levi.frischknecht · thomas.braun · yuki.tanaka · marco.schaefer · lisa.wagner · reto.huber · daniela.frei &nbsp;/ alle: supporter123</div>
           <div id="hint-customer" class="login-hint" style="display:none"><span>Kunden:</span> kunde1 / kunde123 (Silver) &nbsp;·&nbsp; kunde2 / kunde123 (Gold) &nbsp;·&nbsp; kunde3 / kunde123 (Platinum) &nbsp;·&nbsp; extern1 / extern123</div>
           <div class="fgg"><label>Benutzername</label><input type="text" id="l-user" placeholder="Benutzername" onkeydown="if(event.key==='Enter')doLogin()"></div>
           <div class="fgg"><label>Passwort</label><input type="password" id="l-pass" placeholder="Passwort" onkeydown="if(event.key==='Enter')doLogin()"></div>
@@ -2460,12 +2610,26 @@ body.compact-mode tbody tr{font-size:11px}
 // DATA
 // ============================================================
 const USERS={
-  'nils.mueller':{pass:'admin123',role:'admin',name:'Nils Müller',dept:'CIO · Administrator',color:'#3a4a7a'},
-  'calisto.marcello':{pass:'admin123',role:'admin',name:'Calisto Marcello',dept:'CBO · Administrator',color:'#3a6a4a'},
-  'levi.frischknecht':{pass:'admin123',role:'admin',name:'Levi Frischknecht',dept:'Stv. · Administrator',color:'#4a5a7a'},
-  'kunde1':{pass:'kunde123',role:'customer',name:'Müller AG',dept:'Silver-Kunde',sla:'Silver',color:'#4a5060'},
-  'kunde2':{pass:'kunde123',role:'customer',name:'Schmidt GmbH',dept:'Gold-Kunde',sla:'Gold',color:'#6a5030'},
-  'kunde3':{pass:'kunde123',role:'customer',name:'Weber Holding',dept:'Platinum-Kunde',sla:'Platinum',color:'#4a4070'},
+  // Management
+  'nils.mueller':      {pass:'admin123',role:'admin',name:'Nils Müller',      dept:'CIO · Administrator',              color:'#3a4a7a'},
+  'calisto.marcello':  {pass:'admin123',role:'admin',name:'Calisto Marcello',  dept:'CBO · Administrator',              color:'#3a6a4a'},
+  'levi.frischknecht': {pass:'supporter123',role:'admin',name:'Levi Frischknecht',dept:'Win/OS Junior Engineer · 1st Level',color:'#4a5a7a'},
+  // 1st Level
+  'hans.meier':        {pass:'supporter123',role:'admin',name:'Hans Meier',        dept:'User & App Junior · 1st Level',    color:'#2a4a6a'},
+  'sandra.keller':     {pass:'supporter123',role:'admin',name:'Sandra Keller',     dept:'User & App Jr. Tech. · 1st Level', color:'#2a4a6a'},
+  'patrick.baumann':   {pass:'supporter123',role:'admin',name:'Patrick Baumann',   dept:'Network Junior Engineer · 1st Level',color:'#2a4a6a'},
+  // 2nd Level
+  'thomas.braun':      {pass:'supporter123',role:'admin',name:'Thomas Braun',      dept:'Network Senior Analyst · 2nd Level',color:'#2a5a3a'},
+  'yuki.tanaka':       {pass:'supporter123',role:'admin',name:'Yuki Tanaka',       dept:'Unix Senior Engineer · 2nd Level', color:'#2a5a3a'},
+  'marco.schaefer':    {pass:'supporter123',role:'admin',name:'Marco Schäfer',     dept:'Windows Senior Engineer · 2nd Level',color:'#2a5a3a'},
+  'lisa.wagner':       {pass:'supporter123',role:'admin',name:'Lisa Wagner',       dept:'User & App Senior · 2nd Level',   color:'#2a5a3a'},
+  // Onsite
+  'reto.huber':        {pass:'supporter123',role:'admin',name:'Reto Huber',        dept:'Onsite Senior Engineer',           color:'#5a4a20'},
+  'daniela.frei':      {pass:'supporter123',role:'admin',name:'Daniela Frei',      dept:'Onsite Junior Engineer',           color:'#5a4a20'},
+  // Kunden
+  'kunde1':{pass:'kunde123',role:'customer',name:'Müller AG',       dept:'Silver-Kunde',sla:'Silver',color:'#4a5060'},
+  'kunde2':{pass:'kunde123',role:'customer',name:'Schmidt GmbH',    dept:'Gold-Kunde',  sla:'Gold',  color:'#6a5030'},
+  'kunde3':{pass:'kunde123',role:'customer',name:'Weber Holding',   dept:'Platinum-Kunde',sla:'Platinum',color:'#4a4070'},
   'extern1':{pass:'extern123',role:'customer',name:'Externe Firma AG',dept:'Extern (kein SLA)',sla:'Extern',color:'#4a2a5a'},
 };
 const AGENTS=[
@@ -2521,9 +2685,42 @@ function initCustomerAccounts(){
   });
 }
 let userProfiles={
-  'nils.mueller':{status:'active',bio:'CIO und Projektleiter bei ICT-Consulting AG. Verantwortlich für die Reorganisation der Support-Abteilung und Einführung des neuen Ticketsystems.',phone:'+41 44 123 45 67',email:'nils.mueller@ict-consulting.ch',location:'Zürich, Büro 3.01',linkedin:'https://linkedin.com/in/nilsmueller',github:'',skills:'Projektmanagement, ITIL, Cloud Infrastructure, Windows Server'},
-  'calisto.marcello':{status:'active',bio:'CBO bei ICT-Consulting AG. Verantwortlich für Geschäftsentwicklung und Kundenbeziehungen.',phone:'+41 44 123 45 68',email:'calisto.marcello@ict-consulting.ch',location:'Zürich, Büro 3.02',linkedin:'',github:'',skills:'Business Development, SLA-Management, Kundenbeziehungen'},
-  'levi.frischknecht':{status:'active',bio:'Stellvertretender IT-Leiter. Spezialisiert auf Windows/OS Systeme und 1st Level Support.',phone:'+41 44 123 45 69',email:'levi.frischknecht@ict-consulting.ch',location:'Zürich, Büro 2.05',linkedin:'',github:'',skills:'Windows OS, Active Directory, 1st Level Support'},
+  'nils.mueller':{status:'active',
+    bio:'CIO und Projektleiter bei ICT-Consulting AG.\n\nAnmeldedaten:\nBenutzername: nils.mueller\nPasswort: admin123',
+    phone:'+41 44 123 45 67',email:'nils.mueller@ict-consulting.ch',location:'Zürich, Büro 3.01',linkedin:'https://linkedin.com/in/nilsmueller',github:'',skills:'Projektmanagement, ITIL, Cloud Infrastructure, Windows Server'},
+  'calisto.marcello':{status:'active',
+    bio:'CBO bei ICT-Consulting AG. Verantwortlich für Geschäftsentwicklung und Kundenbeziehungen.\n\nAnmeldedaten:\nBenutzername: calisto.marcello\nPasswort: admin123',
+    phone:'+41 44 123 45 68',email:'calisto.marcello@ict-consulting.ch',location:'Zürich, Büro 3.02',linkedin:'',github:'',skills:'Business Development, SLA-Management, Kundenbeziehungen'},
+  'levi.frischknecht':{status:'active',
+    bio:'Stellvertretender IT-Leiter. Spezialisiert auf Windows/OS Systeme und 1st Level Support.\n\nAnmeldedaten:\nBenutzername: levi.frischknecht\nPasswort: supporter123',
+    phone:'+41 44 123 45 69',email:'levi.frischknecht@ict-consulting.ch',location:'Zürich, Büro 2.05',linkedin:'',github:'',skills:'Windows OS, Active Directory, 1st Level Support'},
+  'hans.meier':{status:'active',
+    bio:'1st Level Support Spezialist. Zuständig für Benutzeranfragen, Software und App-Probleme.\n\nAnmeldedaten:\nBenutzername: hans.meier\nPasswort: supporter123',
+    phone:'+41 44 123 45 70',email:'hans.meier@ict-consulting.ch',location:'Zürich, Büro 2.01',linkedin:'',github:'',skills:'User Support, App-Troubleshooting, Windows, Office 365'},
+  'sandra.keller':{status:'active',
+    bio:'1st Level Support Technikerin. Spezialisiert auf Benutzeranfragen und technischen Erstkontakt.\n\nAnmeldedaten:\nBenutzername: sandra.keller\nPasswort: supporter123',
+    phone:'+41 44 123 45 71',email:'sandra.keller@ict-consulting.ch',location:'Zürich, Büro 2.02',linkedin:'',github:'',skills:'User Support, Ticket-Triage, Office 365, Hardware'},
+  'patrick.baumann':{status:'active',
+    bio:'1st Level Network Engineer. Bearbeitet Netzwerk-Erstanfragen und einfache Konnektivitätsprobleme.\n\nAnmeldedaten:\nBenutzername: patrick.baumann\nPasswort: supporter123',
+    phone:'+41 44 123 45 72',email:'patrick.baumann@ict-consulting.ch',location:'Zürich, Büro 2.03',linkedin:'',github:'',skills:'Netzwerk-Grundlagen, TCP/IP, VPN, Drucker'},
+  'thomas.braun':{status:'active',
+    bio:'2nd Level Network Senior Analyst. Spezialist für komplexe Netzwerk- und Firewall-Probleme.\n\nAnmeldedaten:\nBenutzername: thomas.braun\nPasswort: supporter123',
+    phone:'+41 44 123 45 73',email:'thomas.braun@ict-consulting.ch',location:'Zürich, Büro 2.10',linkedin:'',github:'',skills:'Cisco, Firewall, VPN, Routing, Switching, WAN'},
+  'yuki.tanaka':{status:'active',
+    bio:'2nd Level Unix/Linux Senior Engineer. Verantwortlich für Linux-Server, Skripte und Systemadministration.\n\nAnmeldedaten:\nBenutzername: yuki.tanaka\nPasswort: supporter123',
+    phone:'+41 44 123 45 74',email:'yuki.tanaka@ict-consulting.ch',location:'Zürich, Büro 2.11',linkedin:'',github:'',skills:'Linux, Bash, Python, Docker, Server-Administration'},
+  'marco.schaefer':{status:'active',
+    bio:'2nd Level Windows Senior Engineer. Spezialist für Windows Server, Active Directory und Microsoft-Infrastruktur.\n\nAnmeldedaten:\nBenutzername: marco.schaefer\nPasswort: supporter123',
+    phone:'+41 44 123 45 75',email:'marco.schaefer@ict-consulting.ch',location:'Zürich, Büro 2.12',linkedin:'',github:'',skills:'Windows Server, Active Directory, Group Policy, Exchange, SCCM'},
+  'lisa.wagner':{status:'active',
+    bio:'2nd Level User & App Senior Analyst. Spezialistin für komplexe Applikationsprobleme und Benutzer-Management.\n\nAnmeldedaten:\nBenutzername: lisa.wagner\nPasswort: supporter123',
+    phone:'+41 44 123 45 76',email:'lisa.wagner@ict-consulting.ch',location:'Zürich, Büro 2.13',linkedin:'',github:'',skills:'SAP, Office 365, Lizenz-Management, User Provisioning'},
+  'reto.huber':{status:'active',
+    bio:'Onsite Senior Engineer. Vor-Ort-Support bei Kunden und im Büro für Hardware und Infrastruktur.\n\nAnmeldedaten:\nBenutzername: reto.huber\nPasswort: supporter123',
+    phone:'+41 44 123 45 77',email:'reto.huber@ict-consulting.ch',location:'Zürich, Mobil',linkedin:'',github:'',skills:'Hardware, Netzwerk-Verkabelung, Drucker, Onsite-Support'},
+  'daniela.frei':{status:'active',
+    bio:'Onsite Junior Engineer. Unterstützt Onsite-Einsätze und bearbeitet einfache Hardware-Anfragen vor Ort.\n\nAnmeldedaten:\nBenutzername: daniela.frei\nPasswort: supporter123',
+    phone:'+41 44 123 45 78',email:'daniela.frei@ict-consulting.ch',location:'Zürich, Mobil',linkedin:'',github:'',skills:'Hardware-Installation, PC-Setup, Drucker, Kabelmanagement'},
 };
 let systemLogs=[];
 function addLog(action,who,ticketId,note,type){
@@ -4420,6 +4617,15 @@ let hotlineQueue  = []; // [{username, name, phone, loginTime}]
 let callLogs      = []; // [{id, caller, phone, topic, sla, forward, result, notes, time, by}]
 let hotlineNumber = ''; // feste Hotline-Nummer
 
+async function syncHotline(){
+  try {
+    await api('/api/hotline', {
+      method: 'POST',
+      body: JSON.stringify({ pikettEntries, hotlineQueue, hotlineNumber })
+    });
+  } catch(e) {}
+}
+
 function saveHotlineNumber(){
   const input = document.getElementById('hotline-number-input');
   const val = input?.value.trim();
@@ -4428,14 +4634,25 @@ function saveHotlineNumber(){
   const display = document.getElementById('hotline-number-display');
   if(display) display.textContent = hotlineNumber;
   if(input) input.value = '';
+  syncHotline();
   addLog('Hotline-Nummer gesetzt', currentUser?.name||'Admin', '—', hotlineNumber, 'update');
   toast(`Hotline-Nummer gesetzt: ${hotlineNumber} ✓`, 'success');
 }
 
-function loadHotline(){
+async function loadHotline(){
+  // Lade Hotline-State vom Server
+  try {
+    const state = await api('/api/hotline');
+    if(state.pikettEntries) pikettEntries = state.pikettEntries;
+    if(state.hotlineQueue)  hotlineQueue  = state.hotlineQueue;
+    if(state.hotlineNumber) hotlineNumber = state.hotlineNumber;
+  } catch(e) {}
+
   // Gespeicherte Hotline-Nummer anzeigen
   const display = document.getElementById('hotline-number-display');
   if(display) display.textContent = hotlineNumber || '—';
+  // Lade Call Logs vom Server
+  try { callLogs = await api('/api/calllogs'); } catch(e) {}
   renderPikettList();
   renderHotlineQueue();
   renderCallLogs();
@@ -4573,6 +4790,7 @@ function savePikett(){
   addLog('Pikett-Nummer gesetzt', currentUser?.name||'Admin', '—', `${name}: ${phone}`, 'update');
   toast(`Pikett-Dienst: ${name} (${phone}) gespeichert ✓`, 'success');
   closeModal('m-pikett');
+  syncHotline();
   loadHotline();
 }
 
@@ -4588,6 +4806,7 @@ function togglePikettActive(id){
     p.active = false;
     toast('Pikett deaktiviert', 'success');
   }
+  syncHotline();
   loadHotline();
 }
 
@@ -4596,6 +4815,7 @@ function deletePikett(id){
   if(!p||!confirm(`${p.name} aus Pikett-Liste entfernen?`)) return;
   pikettEntries = pikettEntries.filter(x=>x.id!==id);
   toast('Entfernt ✓', 'success');
+  syncHotline();
   loadHotline();
 }
 
@@ -4612,6 +4832,7 @@ function hotlineLogin(){
   });
   addLog('Hotline angemeldet', currentUser.name, '—', 'In Warteschlange eingereiht', 'assign');
   toast(`Du bist jetzt in der Hotline-Warteschlange (Position ${hotlineQueue.length}) ✓`, 'success');
+  syncHotline();
   loadHotline();
 }
 
@@ -4619,6 +4840,7 @@ function hotlineLogout(){
   hotlineQueue = hotlineQueue.filter(q=>q.username!==currentUser?.username);
   addLog('Hotline abgemeldet', currentUser.name, '—', 'Aus Warteschlange ausgetragen', 'close');
   toast('Du bist aus der Hotline-Warteschlange abgemeldet.', 'success');
+  syncHotline();
   loadHotline();
 }
 
@@ -4629,31 +4851,38 @@ function openLogCall(){
   document.getElementById('m-calllog').classList.add('open');
 }
 
-function saveCallLog(){
+async function saveCallLog(){
   const topic = document.getElementById('call-topic')?.value.trim();
   if(!topic){toast('Bitte Anliegen eingeben.','error');return;}
   const result = document.getElementById('call-result')?.value||'solved';
   const forward = document.getElementById('call-forward')?.value||'';
-  const log = {
-    id: 'cl-'+Date.now(),
-    caller: document.getElementById('call-caller')?.value.trim()||'Unbekannt',
-    phone:  document.getElementById('call-phone')?.value.trim()||'',
+  const entry = {
+    caller:  document.getElementById('call-caller')?.value.trim()||'Unbekannt',
+    phone:   document.getElementById('call-phone')?.value.trim()||'',
     topic,
-    sla:    document.getElementById('call-sla')?.value||'Unbekannt',
+    sla:     document.getElementById('call-sla')?.value||'Unbekannt',
     forward,
     result,
-    notes:  document.getElementById('call-notes')?.value.trim()||'',
-    time:   Date.now(),
-    by:     currentUser?.name||'?'
+    notes:   document.getElementById('call-notes')?.value.trim()||'',
+    by:      currentUser?.name||'?'
   };
-  callLogs.unshift(log);
-  // If ticket should be created from call
+  try {
+    const saved = await api('/api/calllogs', {
+      method: 'POST',
+      body: JSON.stringify(entry)
+    });
+    callLogs.unshift(saved);
+  } catch(e) {
+    // Fallback: local only
+    callLogs.unshift({id:'cl-'+Date.now(),...entry,time:Date.now()});
+  }
+  const resultLabels = {solved:'Direkt gelöst',ticket:'Ticket erstellt',forwarded:'Weitergeleitet',callback:'Rückruf vereinbart',noAnswer:'Kein Anschluss'};
   if(result==='ticket'){
     toast(`Anruf protokolliert ✓ — Bitte Ticket manuell erstellen für: ${topic}`, 'success');
   } else {
     toast('Anruf protokolliert ✓', 'success');
   }
-  addLog('Anruf protokolliert', currentUser?.name, '—', `${log.caller}: ${topic} → ${result}`, 'update');
+  addLog('Anruf protokolliert', currentUser?.name, '—', `${entry.caller}: ${topic} → ${resultLabels[result]||result}`, 'update');
   closeModal('m-calllog');
   renderCallLogs();
 }
