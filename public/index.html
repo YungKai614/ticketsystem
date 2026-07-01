@@ -1551,6 +1551,15 @@ body.compact-mode tbody tr{font-size:11px}
               <span style="font-size:11px;color:#3a5a80">Angemeldete Supporter in der Warteschlange</span>
             </div>
             <div style="padding:14px">
+              <!-- FESTE HOTLINE-NUMMER -->
+              <div style="background:#1a2535;border:1px solid #2a3545;border-radius:6px;padding:14px;margin-bottom:14px">
+                <div style="font-size:11px;color:#3a5a80;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Hotline-Nummer</div>
+                <div id="hotline-number-display" style="font-size:26px;font-weight:700;color:#5a8ab0;font-family:'Courier New',monospace;letter-spacing:.04em">—</div>
+                <div style="display:flex;gap:6px;margin-top:10px">
+                  <input type="text" id="hotline-number-input" placeholder="+41 44 123 45 00" style="flex:1;font-size:13px;padding:6px 10px;border-radius:4px">
+                  <button class="btn btn-primary btn-sm" onclick="saveHotlineNumber()">Speichern</button>
+                </div>
+              </div>
               <div style="background:#1a2535;border:1px solid #2a3545;border-radius:6px;padding:12px;margin-bottom:14px">
                 <div style="font-size:11px;color:#3a5a80;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Warteschlange heute</div>
                 <div id="hotline-queue-count" style="font-size:28px;font-weight:700;color:#5a8ab0">0</div>
@@ -4409,8 +4418,24 @@ function searchFAQ(){
 let pikettEntries = []; // [{id, username, name, phone, sla, from, to, active}]
 let hotlineQueue  = []; // [{username, name, phone, loginTime}]
 let callLogs      = []; // [{id, caller, phone, topic, sla, forward, result, notes, time, by}]
+let hotlineNumber = ''; // feste Hotline-Nummer
+
+function saveHotlineNumber(){
+  const input = document.getElementById('hotline-number-input');
+  const val = input?.value.trim();
+  if(!val){toast('Bitte Nummer eingeben.','error');return;}
+  hotlineNumber = val;
+  const display = document.getElementById('hotline-number-display');
+  if(display) display.textContent = hotlineNumber;
+  if(input) input.value = '';
+  addLog('Hotline-Nummer gesetzt', currentUser?.name||'Admin', '—', hotlineNumber, 'update');
+  toast(`Hotline-Nummer gesetzt: ${hotlineNumber} ✓`, 'success');
+}
 
 function loadHotline(){
+  // Gespeicherte Hotline-Nummer anzeigen
+  const display = document.getElementById('hotline-number-display');
+  if(display) display.textContent = hotlineNumber || '—';
   renderPikettList();
   renderHotlineQueue();
   renderCallLogs();
