@@ -1951,7 +1951,6 @@ body.compact-mode tbody tr{font-size:11px}
         </div>
       </div>
 
-      <!-- PROFIL -->
       <!-- HILFE & ANLEITUNG (Supporter) -->
       <div class="view" id="view-help">
         <div style="max-width:800px">
@@ -1975,6 +1974,7 @@ body.compact-mode tbody tr{font-size:11px}
       </div>
 
       <!-- PROFIL -->
+      <div class="view" id="view-profile">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
           <div>
             <div class="card">
@@ -4839,6 +4839,21 @@ let notifOpen=false;
 function startNotifPoll(){
   checkNotifs();
   setInterval(checkNotifs,15000);
+  // Auto-Aktualisierung alle 30 Sekunden
+  setInterval(()=>{
+    if(!appSettings.autorefresh)return;
+    const views=['tickets','inbox','portal','stats','dashboard'];
+    views.forEach(v=>{
+      const el=document.getElementById('view-'+v);
+      if(el&&el.classList.contains('active')){
+        if(v==='tickets')loadTickets();
+        else if(v==='inbox')loadInbox();
+        else if(v==='portal')loadMyTickets();
+        else if(v==='stats')loadStats();
+        else if(v==='dashboard')loadDashboard();
+      }
+    });
+  },30000);
 }
 
 async function checkNotifs(){
