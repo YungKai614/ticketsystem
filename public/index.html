@@ -1653,6 +1653,7 @@ body.compact-mode tbody tr{font-size:11px}
 
   <div class="main">
     <div class="topbar">
+      <button id="mobile-menu-btn" onclick="toggleMobileNav()" style="display:none"><span></span><span></span><span></span></button>
       <div class="topbar-title" id="topbar-title">Dashboard</div>
       <div id="topbar-actions"></div>
       <div style="position:relative;margin-left:6px" id="notif-wrap">
@@ -2563,6 +2564,14 @@ body.compact-mode tbody tr{font-size:11px}
         </div>
         <div class="toggle-switch on" id="toggle-autorefresh" onclick="toggleAutorefresh()"><div class="toggle-switch-knob"></div></div>
       </div>
+      <div class="settings-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+        <div class="settings-label">Passwort ändern</div>
+        <div style="display:flex;flex-direction:column;gap:6px;width:100%">
+          <input type="password" id="pw-current" placeholder="Aktuelles Passwort" style="font-size:12px">
+          <input type="password" id="pw-new" placeholder="Neues Passwort (min. 6 Zeichen)" style="font-size:12px">
+          <button class="btn btn-primary btn-sm" onclick="changePassword()">Passwort ändern</button>
+        </div>
+      </div>
     </div>
     <div class="modal-ft" style="justify-content:flex-end">
       <button class="btn btn-secondary" onclick="closeModal('m-settings')">Fertig</button>
@@ -2609,29 +2618,8 @@ body.compact-mode tbody tr{font-size:11px}
 // ============================================================
 // DATA
 // ============================================================
-const USERS={
-  // Management
-  'nils.mueller':      {pass:'admin123',role:'admin',name:'Nils Müller',      dept:'CIO · Administrator',              color:'#3a4a7a'},
-  'calisto.marcello':  {pass:'admin123',role:'admin',name:'Calisto Marcello',  dept:'CBO · Administrator',              color:'#3a6a4a'},
-  'levi.frischknecht': {pass:'supporter123',role:'admin',name:'Levi Frischknecht',dept:'Win/OS Junior Engineer · 1st Level',color:'#4a5a7a'},
-  // 1st Level
-  'hans.meier':        {pass:'supporter123',role:'admin',name:'Hans Meier',        dept:'User & App Junior · 1st Level',    color:'#2a4a6a'},
-  'sandra.keller':     {pass:'supporter123',role:'admin',name:'Sandra Keller',     dept:'User & App Jr. Tech. · 1st Level', color:'#2a4a6a'},
-  'patrick.baumann':   {pass:'supporter123',role:'admin',name:'Patrick Baumann',   dept:'Network Junior Engineer · 1st Level',color:'#2a4a6a'},
-  // 2nd Level
-  'thomas.braun':      {pass:'supporter123',role:'admin',name:'Thomas Braun',      dept:'Network Senior Analyst · 2nd Level',color:'#2a5a3a'},
-  'yuki.tanaka':       {pass:'supporter123',role:'admin',name:'Yuki Tanaka',       dept:'Unix Senior Engineer · 2nd Level', color:'#2a5a3a'},
-  'marco.schaefer':    {pass:'supporter123',role:'admin',name:'Marco Schäfer',     dept:'Windows Senior Engineer · 2nd Level',color:'#2a5a3a'},
-  'lisa.wagner':       {pass:'supporter123',role:'admin',name:'Lisa Wagner',       dept:'User & App Senior · 2nd Level',   color:'#2a5a3a'},
-  // Onsite
-  'reto.huber':        {pass:'supporter123',role:'admin',name:'Reto Huber',        dept:'Onsite Senior Engineer',           color:'#5a4a20'},
-  'daniela.frei':      {pass:'supporter123',role:'admin',name:'Daniela Frei',      dept:'Onsite Junior Engineer',           color:'#5a4a20'},
-  // Kunden
-  'kunde1':{pass:'kunde123',role:'customer',name:'Müller AG',       dept:'Silver-Kunde',sla:'Silver',color:'#4a5060'},
-  'kunde2':{pass:'kunde123',role:'customer',name:'Schmidt GmbH',    dept:'Gold-Kunde',  sla:'Gold',  color:'#6a5030'},
-  'kunde3':{pass:'kunde123',role:'customer',name:'Weber Holding',   dept:'Platinum-Kunde',sla:'Platinum',color:'#4a4070'},
-  'extern1':{pass:'extern123',role:'customer',name:'Externe Firma AG',dept:'Extern (kein SLA)',sla:'Extern',color:'#4a2a5a'},
-};
+const USERS={}; // Benutzer werden vom Server verwaltet - keine Passwörter im Frontend
+
 const AGENTS=[
   {value:'Nils Müller',      label:'Nils Müller',       role:'CIO / Projektleiter',    group:'Management'},
   {value:'Calisto Marcello', label:'Calisto Marcello',  role:'CBO / Entscheider',      group:'Management'},
@@ -2771,7 +2759,42 @@ function logSecurityEvent(type,detail,severity='info'){
   if(securityEvents.length>200)securityEvents=securityEvents.slice(0,200);
 }
 
-function doLogin(){
+async function doLogin(){
+  const u=document.getElementById('l-user').value.trim().toLowerCase();
+  const p=document.getElementById('l-pass').value;
+  const err=document.getElementById('login-err');
+  const dev=getDeviceInfo();
+  const btn=document.querySelector('.btn-login');
+  if(btn){btn.disabled=true;btn.textContent='Anmelden...';}
+  err.style.display='none';
+  try{
+    const r=await fetch('/api/auth/login',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({username:u,password:p,role:loginTab})
+    });
+    const data=await r.json();
+    if(!r.ok){
+      err.style.display='block';
+      err.textContent=data.locked
+        ?`Konto gesperrt (${data.attempts} Fehlversuche). Bitte 15 Min. warten.`
+        :(data.error||'Benutzername oder Passwort falsch.');
+      logSecurityEvent('failed_login',`Fehlgeschlagener Login: "${u}" — ${dev.browser}/${dev.os}`,data.attempts>=3?'high':'warn');
+      return;
+    }
+    sessionToken=data.token;
+    currentUser={...data.user,loginDevice:dev,loginTime:Date.now()};
+    err.style.display='none';
+    addLog('Anmeldung',data.user.name,'—',`${dev.browser} auf ${dev.os} · ${dev.device}`,'assign');
+    logSecurityEvent('login',`Anmeldung: ${data.user.name} — ${dev.browser}/${dev.os}`,'ok');
+    startApp();
+  }catch(e){
+    err.style.display='block';
+    err.textContent='Verbindungsfehler. Bitte Seite neu laden.';
+  }finally{
+    if(btn){btn.disabled=false;btn.textContent='Anmelden';}
+  }
+}function doLogin(){
   const u=document.getElementById('l-user').value.trim().toLowerCase();
   const p=document.getElementById('l-pass').value;
   const err=document.getElementById('login-err');
@@ -2820,11 +2843,13 @@ function doLogin(){
   logSecurityEvent('login',`Erfolgreiche Anmeldung: ${user.name} — ${dev.browser} auf ${dev.os}`,'ok');
   startApp();
 }
-function doLogout(){
+async function doLogout(){
   if(currentUser){
     addLog('Abmeldung',currentUser.name,'—',`Session beendet nach ${Math.round((Date.now()-currentUser.loginTime)/60000)} Min.`,'close');
     logSecurityEvent('logout',`${currentUser.name} hat sich abgemeldet`,'ok');
+    try { await fetch('/api/auth/logout',{method:'POST',headers:{'x-session-token':sessionToken}}); } catch(e){}
   }
+  sessionToken='';
   currentUser=null;
   document.getElementById('app').classList.remove('show');
   document.getElementById('login-screen').style.display='block';
@@ -2908,8 +2933,15 @@ function buildNav(){
 // ============================================================
 // API + HELPERS
 // ============================================================
-const API='';
-function api(p,o={}){return fetch(API+p,{headers:{'Content-Type':'application/json'},...o}).then(r=>r.json());}
+
+let sessionToken='';
+async function api(p,o={}){
+  const h={'Content-Type':'application/json'};
+  if(sessionToken)h['x-session-token']=sessionToken;
+  const r=await fetch(p,{headers:h,...o});
+  if(r.status===401){doLogout();return {};}
+  return r.json();
+}
 function badge(s){
   const m={Offen:'open','In Bearbeitung':'progress','Warten auf Kunde':'warten',Gelöst:'resolved',Geschlossen:'closed',Extern:'extern'};
   return`<span class="badge b-${m[s]||'open'}">${s}</span>`;
@@ -5589,6 +5621,10 @@ document.addEventListener('click',e=>{
 let profileMenuOpen=false;
 let appSettings={theme:'dark',desktopNotif:false,sound:false,compact:false,autorefresh:true};
 
+function toggleMobileNav(){
+  const nav=document.getElementById('sidebar-nav');
+  nav?.classList.toggle('mobile-open');
+}
 function toggleProfileMenu(){
   profileMenuOpen=!profileMenuOpen;
   const menu=document.getElementById('profile-menu');
@@ -5640,6 +5676,24 @@ function toggleCompact(){
   document.body.classList.toggle('compact-mode',appSettings.compact);
 }
 
+async function changePassword(){
+  const current=document.getElementById('pw-current')?.value;
+  const newPw=document.getElementById('pw-new')?.value;
+  if(!current||!newPw){toast('Bitte beide Felder ausfüllen.','error');return;}
+  if(newPw.length<6){toast('Neues Passwort muss mind. 6 Zeichen haben.','error');return;}
+  try{
+    const r=await fetch('/api/auth/change-password',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-session-token':sessionToken},
+      body:JSON.stringify({currentPassword:current,newPassword:newPw})
+    });
+    const d=await r.json();
+    if(!r.ok){toast(d.error||'Fehler beim Ändern.','error');return;}
+    toast('Passwort erfolgreich geändert ✓','success');
+    document.getElementById('pw-current').value='';
+    document.getElementById('pw-new').value='';
+  }catch(e){toast('Verbindungsfehler.','error');}
+}
 function toggleAutorefresh(){
   appSettings.autorefresh=!appSettings.autorefresh;
   document.getElementById('toggle-autorefresh').classList.toggle('on',appSettings.autorefresh);
