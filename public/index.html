@@ -2794,54 +2794,6 @@ async function doLogin(){
   }finally{
     if(btn){btn.disabled=false;btn.textContent='Anmelden';}
   }
-}function doLogin(){
-  const u=document.getElementById('l-user').value.trim().toLowerCase();
-  const p=document.getElementById('l-pass').value;
-  const err=document.getElementById('login-err');
-  const user=USERS[u];
-  const dev=getDeviceInfo();
-
-  // Track failed attempts
-  if(!user||user.pass!==p){
-    failedLogins[u]=(failedLogins[u]||0)+1;
-    const attempts=failedLogins[u];
-    logSecurityEvent('failed_login',
-      `Fehlgeschlagener Login-Versuch für "${u}" (${attempts}x) — ${dev.browser} auf ${dev.os}`,
-      attempts>=3?'high':'warn');
-    // Auto-lock check
-    if(checkBruteForce(u)){
-      err.style.display='block';
-      err.textContent=`Konto gesperrt nach zu vielen Fehlversuchen. Bitte Support kontaktieren.`;
-      return;
-    }
-    err.style.display='block';
-    err.textContent=attempts>=3
-      ?`Benutzername oder Passwort falsch. (${attempts} fehlgeschlagene Versuche)`
-      :'Benutzername oder Passwort falsch.';
-    addLog('Fehlgeschlagener Login',u||'Unbekannt','—',`Versuch ${attempts} — ${dev.browser}/${dev.os}`,'close');
-    return;
-  }
-  if(loginTab==='admin'&&user.role!=='admin'){err.style.display='block';err.textContent='Kein Admin-Zugang.';return;}
-  if(loginTab==='customer'&&user.role!=='customer'){err.style.display='block';err.textContent='Kein Kunden-Zugang.';return;}
-  initCustomerAccounts();
-  // Check if account is locked by security system
-  if(lockedAccounts[u]){
-    err.style.display='block';
-    err.textContent=`Konto gesperrt: ${lockedAccounts[u].reason}. Bitte Support kontaktieren.`;
-    logSecurityEvent('blocked_login',`Login blockiert für "${u}" (Konto gesperrt)`,'high');
-    return;
-  }
-  if(user.role==='customer'&&customerAccounts[u]&&!customerAccounts[u].active){
-    err.style.display='block';err.textContent='Dieses Konto wurde deaktiviert. Bitte kontaktieren Sie den Support.';return;
-  }
-  err.style.display='none';
-  failedLogins[u]=0; // Reset on success
-  const effectiveSla=(user.role==='customer'&&customerAccounts[u]?.sla)||user.sla;
-  currentUser={...user,username:u,sla:effectiveSla,loginDevice:dev,loginTime:Date.now()};
-  // Log successful login
-  addLog('Anmeldung',user.name,'—',`${dev.browser} auf ${dev.os} · ${dev.device}`,'assign');
-  logSecurityEvent('login',`Erfolgreiche Anmeldung: ${user.name} — ${dev.browser} auf ${dev.os}`,'ok');
-  startApp();
 }
 async function doLogout(){
   if(currentUser){

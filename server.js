@@ -17,6 +17,11 @@ if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 const DB_PATH = path.join(DATA_DIR, 'db.json');
 
 function readDB() {
+  // FORCE_RESET=true in Railway Variables setzt alles zurück
+  if (process.env.FORCE_RESET === 'true') {
+    process.env.FORCE_RESET = 'false'; // nur einmal zurücksetzen
+    return initDB();
+  }
   if (!fs.existsSync(DB_PATH)) return initDB();
   try { return JSON.parse(fs.readFileSync(DB_PATH, 'utf8')); }
   catch(e) { return initDB(); }
